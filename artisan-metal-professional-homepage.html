@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan Metal | Luxury Metal Wall Art & Home Decor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --nude-darkest: #3A2D28;
+            --nude-taupe: #A48374;
+            --nude-tan: #CBAD8D;
+            --nude-greige: #D1C7BD;
+            --nude-cream: #EBE3DB;
+            --nude-lightest: #F1EDE6;
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.3s ease;
+            --shadow-soft: 0 4px 20px rgba(58, 45, 40, 0.1);
+            --shadow-medium: 0 8px 30px rgba(58, 45, 40, 0.15);
+            --shadow-large: 0 15px 50px rgba(58, 45, 40, 0.2);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--nude-lightest);
+            color: var(--nude-darkest);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ============================================
+           NAVIGATION BAR - Desktop & Mobile
+        ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(241, 237, 230, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            z-index: 1000;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+
+        .navbar.scrolled {
+            height: 70px;
+            background: rgba(241, 237, 230, 0.98);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--nude-darkest);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: var(--transition-fast);
+        }
+
+        .logo:hover {
+            color: var(--nude-taupe);
+        }
+
+        .logo-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: var(--nude-taupe);
+            text-transform: uppercase;
+            margin-top: -5px;
+        }
+
+        /* Desktop Navigation */
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: var(--nude-darkest);
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            transition: var(--transition-fast);
+            padding: 5px 0;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--nude-taupe);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links li a:hover {
+            color: var(--nude-taupe);
+        }
+
+        /* Icons Section */
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--nude-taupe);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--nude-darkest);
+            transition: var(--transition-fast);
+            border-radius: 2px;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 80px;
+            left: -100%;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: var(--nude-lightest);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 30px;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--nude-darkest);
+            font-size: 1.3rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--nude-cream);
+            transition: var(--transition-fast);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--nude-taupe);
+            padding-left: 10px;
+        }
+
+        /* ============================================
+           HERO SECTION
+        ============================================ */
+       .hero-section {
+    margin-top: 10px;
+    text-align: center;
+    padding: 60px 5% 30px;
+    background: linear-gradient(135deg, var(--nude-lightest) 0%, var(--nude-cream) 50%, var(--nude-lightest) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--nude-taupe), transparent);
+        }
+
+        .company-name {
+            font-size: clamp(2rem, 7vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: var(--nude-darkest);
+            text-transform: uppercase;
+            margin-bottom: 1px;
+            animation: fadeInDown 1.2s ease-out;
+            position: relative;
+            display: inline-block;
+        }
+
+        .company-name::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--nude-taupe);
+        }
+
+        .tagline {
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            color: var(--nude-taupe);
+            font-style: italic;
+            animation: fadeInUp 1.4s ease-out;
+            margin-top: 35px;
+        }
+
+        .hero-description {
+            max-width: 700px;
+            margin: 30px auto 0;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--nude-darkest);
+            opacity: 0.8;
+            animation: fadeIn 1.6s ease-out;
+        }
+
+        /* ============================================
+           VIDEO SLIDER SECTION
+        ============================================ */
+        .slider-section {
+    position: relative;
+    width: 100%;
+    background-color: var(--nude-cream);
+    padding: 0;
+    margin: 0;
+}
+
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5px;
+            padding: 0 5%;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--nude-darkest);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--nude-taupe);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+       .slider-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--nude-darkest);
+}
+
+
+        .slider-wrapper {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .slide {
+            position: relative;
+            width: 33.333%;
+            height: 100%;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--nude-greige) 0%, var(--nude-cream) 100%);
+        }
+
+        .video-container {
+    position: relative;
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: transparent;
+}
+
+
+        .slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .slide.active video {
+            opacity: 1;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            color: var(--nude-lightest);
+            text-align: center;
+            border: 3px dashed var(--nude-taupe);
+            border-radius: 15px;
+            background: rgba(58, 45, 40, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+        }
+
+        .video-placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 5px;
+            opacity: 0.6;
+        }
+
+       .slide-title-container {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(241, 237, 230, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(164, 131, 116, 0.3);
+    position: relative;
+}
+
+
+        .slide-title {
+            font-size: clamp(1.8rem, 4vw, 3.2rem);
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: var(--nude-darkest);
+            text-transform: uppercase;
+        }
+
+        .slide-number {
+            position: absolute;
+            left: 5%;
+            font-size: 1rem;
+            color: var(--nude-taupe);
+            font-weight: 300;
+        }
+
+        /* Slider Controls */
+       .slider-dots {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 100;
+}
+
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--nude-cream);
+            border: 2px solid var(--nude-lightest);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .dot.active {
+            background-color: var(--nude-darkest);
+            transform: scale(1.4);
+            box-shadow: 0 0 15px rgba(58, 45, 40, 0.4);
+        }
+
+        .dot:hover {
+            background-color: var(--nude-taupe);
+        }
+
+       .slider-arrow {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    background: rgba(241, 237, 230, 0.4);
+    border: 1px solid rgba(241, 237, 230, 0.6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: var(--transition-fast);
+    font-size: 28px;
+    color: rgba(241, 237, 230, 0.9);
+    font-weight: 300;
+    backdrop-filter: blur(5px);
+}
+
+
+        .slider-arrow:hover {
+    background: rgba(241, 237, 230, 0.8);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border-color: rgba(241, 237, 230, 0.9);
+}
+
+        .arrow-left { left: 30px; }
+        .arrow-right { right: 30px; }
+
+       .progress-bar {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--nude-taupe) 0%, var(--nude-darkest) 100%);
+    z-index: 101;
+    transition: width 0.1s linear;
+}
+
+
+        /* ============================================
+           FEATURED CATEGORIES SECTION
+        ============================================ */
+        .categories-section {
+            padding: 100px 5%;
+            background: var(--nude-lightest);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .category-card {
+            position: relative;
+            height: 450px;
+            background: var(--nude-cream);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(135deg, var(--nude-greige), var(--nude-tan));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5rem;
+            color: var(--nude-lightest);
+            transition: var(--transition-smooth);
+        }
+
+        .category-card:hover .category-image {
+            transform: scale(1.05);
+        }
+
+        .category-info {
+            padding: 30px;
+            text-align: center;
+            background: var(--nude-lightest);
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .category-name {
+            font-size: 1.6rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            color: var(--nude-darkest);
+            margin-bottom: 8px;
+        }
+
+        .category-count {
+            font-size: 0.95rem;
+            color: var(--nude-taupe);
+            font-weight: 300;
+        }
+
+        /* ============================================
+           FEATURES SECTION
+        ============================================ */
+        .features-section {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, var(--nude-cream) 0%, var(--nude-greige) 50%, var(--nude-cream) 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(241, 237, 230, 0.5);
+            border-radius: 15px;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-item:hover {
+            background: rgba(241, 237, 230, 0.9);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--nude-taupe);
+            margin-bottom: 25px;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--nude-darkest);
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--nude-darkest);
+            opacity: 0.8;
+        }
+
+        /* ============================================
+           TESTIMONIALS SECTION
+        ============================================ */
+        .testimonials-section {
+            padding: 100px 5%;
+            background: var(--nude-lightest);
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 6rem;
+            color: var(--nude-cream);
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--nude-darkest);
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--nude-taupe), var(--nude-tan));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--nude-darkest);
+            margin-bottom: 3px;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: var(--nude-taupe);
+        }
+
+        /* ============================================
+           CTA SECTION
+        ============================================ */
+        .cta-section {
+            padding: 120px 5%;
+            background: linear-gradient(135deg, var(--nude-darkest) 0%, var(--nude-taupe) 100%);
+            text-align: center;
+            color: var(--nude-lightest);
+        }
+
+        .cta-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            margin-bottom: 25px;
+        }
+
+        .cta-description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 45px;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--nude-lightest);
+            color: var(--nude-darkest);
+            border-color: var(--nude-lightest);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--nude-lightest);
+            border-color: var(--nude-lightest);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--nude-lightest);
+            border-color: var(--nude-lightest);
+        }
+
+        .btn-secondary:hover {
+            background: var(--nude-lightest);
+            color: var(--nude-darkest);
+            transform: translateY(-3px);
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        .footer {
+            background: var(--nude-darkest);
+            color: var(--nude-cream);
+            padding: 80px 5% 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            margin-bottom: 25px;
+            color: var(--nude-lightest);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--nude-cream);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+            display: inline-block;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--nude-taupe);
+            transform: translateX(5px);
+        }
+
+        .footer-about {
+            line-height: 1.8;
+            color: var(--nude-cream);
+            opacity: 0.9;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--nude-taupe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: var(--nude-tan);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(164, 131, 116, 0.3);
+            color: var(--nude-cream);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ============================================
+           ANIMATIONS
+        ============================================ */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+        ============================================ */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 4%;
+                height: 70px;
+            }
+
+            .hero-section {
+                padding: 60px 4% 50px;
+                margin-top: 70px;
+            }
+
+            .slider-container {
+                height: 70vh;
+            }
+
+            .slider-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 22px;
+            }
+
+            .arrow-left { left: 15px; }
+            .arrow-right { right: 15px; }
+
+            .categories-section,
+            .features-section,
+            .testimonials-section {
+                padding: 70px 4%;
+            }
+
+            .cta-section {
+                padding: 80px 4%;
+            }
+
+            .footer {
+                padding: 60px 4% 30px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider-container {
+                height: 60vh;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-card {
+                height: 400px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        .slide video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    z-index: 1;
+}
+
+.video-placeholder {
+    z-index: 0;
+    display: none; /* Hide placeholders */
+}
+
+.slide.active video {
+    opacity: 1;
+    z-index: 1;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="logo-container">
+            <a href="#" class="logo">Artisan Metal</a>
+            <span class="logo-subtitle">Luxury Home Decor</span>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#collections">Collections</a></li>
+            <li><a href="#ai-cam">AI Cam</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <!-- Icons and Mobile Toggle -->
+        <div class="nav-icons">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <div style="position: relative;">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-count">0</span>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#collections">Collections</a>
+        <a href="ai.html">AI Cam</a>
+        <a href="#about">About Us</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+        <a href="#account">My Account</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <!-- <h1 class="company-name">Artisan Metal</h1> -->
+        <!-- <p class="tagline">Elevate Your Space with Timeless Elegance</p> -->
+        <div class="slider-container">
+            <div class="progress-bar" id="progressBar"></div>
+
+            <div class="slider-wrapper" id="sliderWrapper">
+                <!-- Slide 1: Metal Wall Art -->
+                <div class="slide active" data-slide="0">
+                    <div class="video-container">
+                       <video autoplay muted playsinline preload="auto" id="video1">
+
+                            <source src="video1.mp4" type="video/mp4">
+                            <source src="video1.webm" type="video/webm">
+                        </video>
+                        
+                        
+                    </div>
+                    <div class="slide-title-container">
+                        <span class="slide-number">01</span>
+                        <h3 class="slide-title">Metal Wall Art</h3>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Metal Wall Clock -->
+                <div class="slide" data-slide="1">
+                    <div class="video-container">
+                        <video autoplay muted playsinline preload="auto" id="video2">
+
+                            <source src="video2.mp4" type="video/mp4">
+                            <source src="video2.webm" type="video/webm">
+                        </video>
+                        
+                    </div>
+                    <div class="slide-title-container">
+                        <span class="slide-number">02</span>
+                        <h3 class="slide-title">Metal Wall Clock</h3>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Metal Wall Mirror -->
+                <div class="slide" data-slide="2">
+                    <div class="video-container">
+                        <video autoplay muted playsinline preload="auto" id="video3">
+
+                            <source src="video3.mp4" type="video/mp4">
+                            <source src="video3.webm" type="video/webm">
+                        </video>
+                        
+                    </div>
+                    <div class="slide-title-container">
+                        <span class="slide-number">03</span>
+                        <h3 class="slide-title">Metal Wall Mirror</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="slider-arrow arrow-left" id="prevBtn">‹</div>
+            <div class="slider-arrow arrow-right" id="nextBtn">›</div>
+            <div class="slider-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+        </div> 
+        <p class="hero-description">
+            Discover our curated collection of handcrafted metal wall art, elegant clocks, and stunning mirrors. 
+            Each piece is meticulously designed to transform your space into a sanctuary of sophistication and style.
+        </p>
+    </section>
+
+    <!-- Video Slider Section -->
+    <section class="slider-section" id="collections">
+        <div class="section-header">
+            <h2 class="section-title">Our Collections</h2>
+            <p class="section-subtitle">Explore the artistry of metal craftsmanship</p>
+        </div>
+
+        
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="categories-section" id="shop">
+        <div class="section-header">
+            <h2 class="section-title">Shop by Category</h2>
+            <p class="section-subtitle">Find the perfect piece for every room</p>
+        </div>
+
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-image">🎨</div>
+                <div class="category-info">
+                    <h3 class="category-name">Wall Art</h3>
+                    <p class="category-count">150+ Designs</p>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-image">🕐</div>
+                <div class="category-info">
+                    <h3 class="category-name">Wall Clocks</h3>
+                    <p class="category-count">80+ Designs</p>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-image">🪞</div>
+                <div class="category-info">
+                    <h3 class="category-name">Wall Mirrors</h3>
+                    <p class="category-count">60+ Designs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="section-header">
+            <h2 class="section-title">Why Choose Us</h2>
+            <p class="section-subtitle">Excellence in every detail</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">✨</div>
+                <h3 class="feature-title">Handcrafted Quality</h3>
+                <p class="feature-description">Each piece is meticulously crafted by skilled artisans using premium materials</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">🚚</div>
+                <h3 class="feature-title">Free Shipping</h3>
+                <p class="feature-description">Enjoy complimentary shipping on all orders across India</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Secure Payment</h3>
+                <p class="feature-description">Shop with confidence using our encrypted payment gateway</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">↩️</div>
+                <h3 class="feature-title">Easy Returns</h3>
+                <p class="feature-description">30-day hassle-free return policy for your peace of mind</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="section-header">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <p class="section-subtitle">Real experiences from real people</p>
+        </div>
+
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <p class="testimonial-text">
+                    The metal wall art I purchased has completely transformed my living room. 
+                    The craftsmanship is exceptional, and it arrived perfectly packaged.
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">P</div>
+                    <div class="author-info">
+                        <h4>Priya Sharma</h4>
+                        <p>Mumbai, Maharashtra</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-text">
+                    I love the modern clock design! It's not just functional but also a stunning piece of art. 
+                    Highly recommend Artisan Metal for quality home decor.
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">R</div>
+                    <div class="author-info">
+                        <h4>Rajesh Kumar</h4>
+                        <p>Bangalore, Karnataka</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-text">
+                    The mirror exceeded my expectations! Beautiful frame, perfect size, and the customer service was outstanding. 
+                    Will definitely order again.
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">A</div>
+                    <div class="author-info">
+                        <h4>Anita Desai</h4>
+                        <p>Delhi, NCR</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="ai-cam">
+        <h2 class="cta-title">Visualize Before You Buy</h2>
+        <p class="cta-description">
+            Use our AI Camera feature to see how our products look on your wall before making a purchase. 
+            Transform your space virtually!
+        </p>
+        <div class="cta-buttons">
+            <a href="ai.html" class="btn btn-primary">Try AI Camera</a>
+            <a href="#" class="btn btn-secondary">Browse Collection</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>About Artisan Metal</h3>
+                <p class="footer-about">
+                    We craft premium metal wall decor that brings elegance and sophistication to modern homes. 
+                    Every piece tells a story of artistry and passion.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">📷</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">▶</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#shop">Shop All</a></li>
+                    <li><a href="#collections">Collections</a></li>
+                    <li><a href="ai.html">AI Camera</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><a href="mailto:info@artisanmetal.com">info@artisanmetal.com</a></li>
+                    <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+                    <li><a href="#">Nashik, Maharashtra</a></li>
+                    <li><a href="#">Mon - Sat: 10 AM - 7 PM</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Artisan Metal. All rights reserved. Designed with passion for luxury living.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // NAVBAR SCROLL EFFECT
+        // ============================================
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // ============================================
+        // MOBILE MENU TOGGLE
+        // ============================================
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // ============================================
+        // VIDEO SLIDER FUNCTIONALITY - UPDATED
+        // ============================================
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const videos = [
+            document.getElementById('video1'),
+            document.getElementById('video2'),
+            document.getElementById('video3')
+        ];
+        const progressBar = document.getElementById('progressBar');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const sliderContainer = document.querySelector('.slider-container');
+
+        let currentSlide = 0;
+        let isAutoPlaying = true;
+        let progressInterval;
+        let autoSlideTimeout;
+        let videoDuration = 8000; // Default 8 seconds
+        let hasUserInteracted = false;
+
+        // Initialize on load
+        function init() {
+            console.log('Initializing slider...');
+            
+            // Set up video ended listeners
+            videos.forEach((video, index) => {
+                video.addEventListener('ended', () => {
+                    console.log(`Video ${index + 1} ended`);
+                    if (index === currentSlide && isAutoPlaying) {
+                        nextSlide();
+                    }
+                });
+
+                // When video metadata loads, get duration
+                video.addEventListener('loadedmetadata', () => {
+                    console.log(`Video ${index + 1} duration:`, video.duration, 'seconds');
+                });
+            });
+
+            // Start first video
+            playCurrentVideo();
+            startProgress();
+            setupAutoSlide();
+
+            // Set up intersection observer to play/pause when in view
+            setupIntersectionObserver();
+        }
+
+        // Play only the current video
+        function playCurrentVideo() {
+            console.log('Playing video:', currentSlide + 1);
+            
+            // Stop all videos
+            videos.forEach((video, index) => {
+                video.pause();
+                video.currentTime = 0;
+                video.style.opacity = '0';
+            });
+
+            // Play current video
+            const currentVideo = videos[currentSlide];
+            currentVideo.style.opacity = '1';
+
+            // Attempt to play
+            const playPromise = currentVideo.play();
+            
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        console.log('Video playing successfully');
+                        
+                        // Get actual duration if available
+                        if (currentVideo.duration && !isNaN(currentVideo.duration)) {
+                            videoDuration = Math.floor(currentVideo.duration * 1000);
+                            console.log('Using video duration:', videoDuration / 1000, 'seconds');
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Autoplay blocked, waiting for user interaction:', error);
+                        
+                        // Add one-time click listener to start video
+                        if (!hasUserInteracted) {
+                            const playOnClick = () => {
+                                currentVideo.play();
+                                hasUserInteracted = true;
+                                document.removeEventListener('click', playOnClick);
+                            };
+                            document.addEventListener('click', playOnClick);
+                        }
+                    });
+            }
+        }
+
+        // Update slider position and active states
+        function updateSlider() {
+            console.log('Updating slider to slide:', currentSlide + 1);
+            
+            sliderWrapper.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+
+            playCurrentVideo();
+            resetProgress();
+            setupAutoSlide();
+        }
+
+        // Progress bar animation
+        function startProgress() {
+            let progress = 0;
+            progressBar.style.width = '0%';
+
+            clearInterval(progressInterval);
+            
+            progressInterval = setInterval(() => {
+                progress += 0.5;
+                progressBar.style.width = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                }
+            }, videoDuration / 200);
+        }
+
+        function resetProgress() {
+            clearInterval(progressInterval);
+            startProgress();
+        }
+
+        // Auto-slide setup
+        function setupAutoSlide() {
+            if (!isAutoPlaying) return;
+
+            console.log('Setting up auto-slide for', videoDuration / 1000, 'seconds');
+            
+            clearTimeout(autoSlideTimeout);
+            
+            autoSlideTimeout = setTimeout(() => {
+                console.log('Auto-slide timeout reached');
+                nextSlide();
+            }, videoDuration);
+        }
+
+        function pauseAutoSlide() {
+            console.log('Pausing auto-slide');
+            isAutoPlaying = false;
+            clearTimeout(autoSlideTimeout);
+            clearInterval(progressInterval);
+        }
+
+        function resumeAutoSlide() {
+            console.log('Resuming auto-slide');
+            isAutoPlaying = true;
+            setupAutoSlide();
+            startProgress();
+        }
+
+        // Navigation functions
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            console.log('Next slide:', currentSlide + 1);
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            console.log('Previous slide:', currentSlide + 1);
+            updateSlider();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            console.log('Go to slide:', currentSlide + 1);
+            updateSlider();
+        }
+
+        // Intersection Observer - Play/Pause when in view
+        function setupIntersectionObserver() {
+            const sliderObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        console.log('Slider in view - resuming');
+                        if (!isAutoPlaying) {
+                            resumeAutoSlide();
+                        }
+                        videos[currentSlide].play().catch(() => {});
+                    } else {
+                        console.log('Slider out of view - pausing');
+                        pauseAutoSlide();
+                        videos[currentSlide].pause();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sliderObserver.observe(sliderContainer);
+        }
+
+        // Event Listeners - Arrows
+        nextBtn.addEventListener('click', () => {
+            pauseAutoSlide();
+            nextSlide();
+            setTimeout(resumeAutoSlide, 3000);
+        });
+
+        prevBtn.addEventListener('click', () => {
+            pauseAutoSlide();
+            prevSlide();
+            setTimeout(resumeAutoSlide, 3000);
+        });
+
+        // Event Listeners - Dots
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                pauseAutoSlide();
+                const slideIndex = parseInt(e.target.getAttribute('data-slide'));
+                goToSlide(slideIndex);
+                setTimeout(resumeAutoSlide, 3000);
+            });
+        });
+
+        // Touch/Swipe Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        sliderWrapper.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            pauseAutoSlide();
+        });
+
+        sliderWrapper.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            setTimeout(resumeAutoSlide, 3000);
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                pauseAutoSlide();
+                prevSlide();
+                setTimeout(resumeAutoSlide, 3000);
+            } else if (e.key === 'ArrowRight') {
+                pauseAutoSlide();
+                nextSlide();
+                setTimeout(resumeAutoSlide, 3000);
+            }
+        });
+
+        // Visibility API - Pause when tab hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                console.log('Tab hidden - pausing');
+                pauseAutoSlide();
+                videos[currentSlide].pause();
+            } else {
+                console.log('Tab visible - resuming');
+                resumeAutoSlide();
+                videos[currentSlide].play().catch(() => {});
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', init);
+
+        // Fallback - Click to start videos
+        document.addEventListener('click', () => {
+            if (!hasUserInteracted) {
+                hasUserInteracted = true;
+                videos[currentSlide].play().catch(() => {});
+                console.log('User interaction - video started');
+            }
+        }, { once: true });
+
+        // ============================================
+        // SMOOTH SCROLLING FOR ANCHOR LINKS
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // ============================================
+        // CART FUNCTIONALITY (BASIC)
+        // ============================================
+        let cartCount = 0;
+        const cartCountElement = document.querySelector('.cart-count');
+
+        function updateCart(count) {
+            cartCount = count;
+            cartCountElement.textContent = cartCount;
+        }
+
+        // ============================================
+        // INTERSECTION OBSERVER FOR ANIMATIONS
+        // ============================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.category-card, .feature-item, .testimonial-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+</script>
+
+</body>
+</html>
