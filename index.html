@@ -123,28 +123,35 @@
             flex-direction: column;
         }
 
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.4rem, 3vw, 1.8rem);
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            color: var(--cream);
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: var(--transition-fast);
-        }
+       .logo-text-container {
+    display: flex;
+    flex-direction: column;
+}
 
-        .logo:hover {
-            color: var(--gold-accent);
-        }
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);  /* Reduced from 1.4rem to 1.3rem */
+    font-weight: 600;
+    letter-spacing: 0.06em;  /* Reduced from 0.08em */
+    color: var(--cream);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: var(--transition-fast);
+    line-height: 1.2;  /* Added for tighter spacing */
+}
 
-        .logo-subtitle {
-            font-size: 0.6rem;
-            letter-spacing: 0.15em;
-            color: var(--green-light);
-            text-transform: uppercase;
-            margin-top: -3px;
-        }
+.logo:hover {
+    color: var(--gold-accent);
+}
+
+.logo-subtitle {
+    font-size: 0.55rem;  /* Reduced from 0.6rem */
+    letter-spacing: 0.12em;  /* Reduced from 0.15em */
+    color: var(--green-light);
+    text-transform: uppercase;
+    margin-top: -2px;  /* Reduced from -3px for tighter spacing */
+}
+
 
         /* Desktop Navigation */
         .nav-links {
@@ -1107,51 +1114,64 @@
 
 
         <!-- Desktop Navigation -->
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#shop">Products</a></li>
-            <li><a href="#collections">Collections</a></li>
-            <li><a href="#about">About</a></li>
-        </ul>
+       <!-- Desktop Navigation -->
+<ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="myprofile.html">My Profile</a></li>
+    <!-- <li><a href="gallery.html">Gallery</a></li> -->
+    <li><a href="ai.html">AI Cam</a></li>
+    <!-- <li><a href="about.html">About</a></li> -->
+    <li><a href="contact.html">Contact</a></li>
+</ul>
+
 
         <!-- Icons and Mobile Toggle -->
         <div class="nav-icons">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-            </svg>
-            <div style="position: relative;">
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                </svg>
-                <span class="cart-count">0</span>
-            </div>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+    <a href="products.html" style="display: flex; align-items: center;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+        </svg>
+    </a>
+    <a href="carts.html" style="position: relative; display: flex; align-items: center;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count">0</span>
+    </a>
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
     </nav>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#home">Home</a>
-        <a href="#shop">Products</a>
-        <a href="#collections">Collections</a>
-        <a href="ai.html">AI Cam</a>
-        <a href="#about">About Us</a>
-    </div>
+    <!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="myprofile.html">My Profile</a>
+    <!-- <a href="gallery.html">Gallery</a> -->
+    <a href="ai.html">AI Cam</a>
+    <!-- <a href="about.html">About Us</a> -->
+    <a href="contact.html">Contact</a>
+    <a href="carts.html">My Cart</a>
+</div>
+
 
     <!-- Hero Section -->
     <section class="hero-section" id="home">
-        <h1 class="company-name">Walltone Studio</h1>
-        <p class="tagline">Premium Metal Wall Art & Decor</p>
+        <!-- <h1 class="company-name">Walltone Studio</h1>
+        <p class="tagline">Premium Metal Wall Art & Decor</p> -->
         
         <!-- Quality Badges -->
-        <div class="quality-badges">
+        <!-- <div class="quality-badges">
             <div class="badge">
                 <span class="badge-icon">🏆</span>
                 <span class="badge-text">20+ Years Lifespan</span>
@@ -1164,7 +1184,7 @@
                 <span class="badge-icon">🎨</span>
                 <span class="badge-text">300+ Unique Designs</span>
             </div>
-        </div>
+        </div> -->
 
         <!-- Action Buttons Above Video -->
         <div class="hero-actions">
@@ -1239,8 +1259,9 @@
 
     <!-- Buttons Below Video Slider -->
     <div class="post-video-actions">
-        <a href="#" class="btn btn-primary">Buy Now</a>
-        <a href="#shop" class="btn btn-secondary">View Products</a>
+       <a href="products.html" class="btn btn-primary">Buy Now</a>
+        <a href="products.html" class="btn btn-secondary">View Products</a>
+
     </div>
 
     <!-- Featured Categories -->
@@ -1363,40 +1384,41 @@
     </footer>
 
     <!-- Bottom Taskbar (Sticky) -->
-    <nav class="bottom-taskbar">
-        <a href="#home" class="taskbar-btn active">
-            <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-            <span class="taskbar-label">Home</span>
-        </a>
-        
-        <a href="#shop" class="taskbar-btn">
-            <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
-                <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-            </svg>
-            <span class="taskbar-label">Products</span>
-        </a>
-        
-        <a href="#" class="taskbar-btn">
-            <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-            <span class="taskbar-label">Cart</span>
-        </a>
-        
-        <a href="ai.html" class="taskbar-btn">
-            <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                <circle cx="12" cy="13" r="4"></circle>
-            </svg>
-            <span class="taskbar-label">AI Cam</span>
-        </a>
-    </nav>
+    <!-- Bottom Taskbar (Sticky) -->
+<nav class="bottom-taskbar">
+    <a href="index.html" class="taskbar-btn active">
+        <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span class="taskbar-label">Home</span>
+    </a>
+    
+    <a href="products.html" class="taskbar-btn">
+        <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
+            <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+        <span class="taskbar-label">Products</span>
+    </a>
+    
+    <a href="carts.html" class="taskbar-btn">
+        <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="taskbar-label">Cart</span>
+    </a>
+    
+    <a href="ai.html" class="taskbar-btn">
+        <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+        </svg>
+        <span class="taskbar-label">AI Cam</span>
+    </a>
+</nav>
 
     <script>
 
@@ -1757,13 +1779,26 @@ document.addEventListener('click', () => {
 // ============================================
 // BOTTOM TASKBAR ACTIVE STATE
 // ============================================
+// ============================================
+// BOTTOM TASKBAR ACTIVE STATE
+// ============================================
 const taskbarBtns = document.querySelectorAll('.taskbar-btn');
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+// Set active state based on current page
 taskbarBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        taskbarBtns.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-    });
+    const btnHref = btn.getAttribute('href');
+    
+    // Check if button href matches current page
+    if (btnHref === currentPage || 
+        (currentPage === '' && btnHref === 'index.html') ||
+        (currentPage === 'index.html' && btnHref === 'index.html')) {
+        btn.classList.add('active');
+    } else {
+        btn.classList.remove('active');
+    }
 });
+
 
 // ============================================
 // SMOOTH SCROLLING FOR ANCHOR LINKS
