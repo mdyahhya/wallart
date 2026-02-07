@@ -389,13 +389,106 @@
         }
 
         /* Action Buttons Above Video */
-        .hero-actions {
+        /* .hero-actions {
             display: flex;
             justify-content: center;
             gap: 20px;
             margin: 30px auto 40px;
             flex-wrap: wrap;
-        }
+        } */
+@media (max-width: 768px) {
+    .btn-ai-cam-slider {
+        top: 15px;
+        right: 15px;
+        padding: 12px 20px;
+        font-size: 0.8rem;
+        gap: 8px;
+    }
+    
+    .btn-ai-cam-slider .ai-cam-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-ai-cam-slider {
+        top: 10px;
+        right: 10px;
+        padding: 10px 16px;
+        font-size: 0.75rem;
+    }
+    
+    .btn-ai-cam-slider .ai-cam-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .btn-ai-cam-slider span {
+        display: none; /* Hide text on very small screens, show only icon */
+    }
+}
+
+
+        /* AI Cam Button - Inside Slider (Top Right) */
+.btn-ai-cam-slider {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, var(--gold-accent), #B89647);
+    color: var(--green-darkest);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    border: 2px solid var(--gold-accent);
+    box-shadow: 0 5px 20px rgba(201, 169, 97, 0.4);
+    z-index: 150;
+    backdrop-filter: blur(10px);
+}
+
+.btn-ai-cam-slider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-ai-cam-slider:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-ai-cam-slider:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(201, 169, 97, 0.6);
+}
+
+.btn-ai-cam-slider .ai-cam-icon {
+    width: 20px;
+    height: 20px;
+    animation: aiPulse 2s infinite;
+    z-index: 1;
+}
+
+@keyframes aiPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
 
         .btn-ai-cam {
             display: flex;
@@ -1073,10 +1166,10 @@
                 height: 400px;
             }
 
-            .hero-actions {
+            /* .hero-actions {
                 flex-direction: column;
                 align-items: center;
-            }
+            } */
 
             .btn-ai-cam, .btn {
                 width: 100%;
@@ -1187,7 +1280,7 @@
         </div> -->
 
         <!-- Action Buttons Above Video -->
-        <div class="hero-actions">
+        <!-- <div class="hero-actions">
             <a href="ai.html" class="btn-ai-cam">
                 <svg class="ai-cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
@@ -1196,11 +1289,23 @@
                 </svg>
                 <span>Try AI Cam</span>
             </a>
-        </div>
+        </div> -->
 
         <!-- Video Slider -->
         <div class="slider-container">
             <div class="progress-bar" id="progressBar"></div>
+
+
+            <!-- AI Cam Button - Top Right Corner -->
+    <a href="ai.html" class="btn-ai-cam-slider">
+        <svg class="ai-cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+            <path d="M12 9v8M8 13h8" stroke-dasharray="2 2"></path>
+        </svg>
+        <span>Try AI Cam</span>
+    </a>  
+
 
             <div class="slider-wrapper" id="sliderWrapper">
                 <!-- Slide 1: Metal Wall Art -->
