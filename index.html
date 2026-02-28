@@ -1263,49 +1263,62 @@
     </a>  
 
 
-            <div class="slider-wrapper" id="sliderWrapper">
-                <!-- Slide 1: Metal Wall Art -->
-                <div class="slide active" data-slide="0">
-                    <div class="video-container">
-                        <video autoplay muted playsinline preload="auto" id="video1">
-                            <source src="https://zgpnzuzmmhafyyywvzum.supabase.co/storage/v1/object/public/Main%20Page%20Videos/wallart.mp4" type="video/mp4">
-                            <source src="video1.webm" type="video/webm">
-                        </video>
-                    </div>
-                    <div class="slide-title-container">
-                        <span class="slide-number">01</span>
-                        <h3 class="slide-title">Metal Wall Art</h3>
-                    </div>
-                </div>
+           <div class="slider-wrapper" id="sliderWrapper">
+    <!-- Slide 1: Metal Wall Art -->
+    <div class="slide active" data-slide="0">
+        <div class="video-container">
+            <!-- VIDEO (future): uncomment below and remove <img> when ready -->
+            <!-- <video autoplay muted playsinline preload="auto" id="video1">
+                <source src="YOUR_VIDEO_URL_1.mp4" type="video/mp4">
+            </video> -->
 
-                <!-- Slide 2: Metal Wall Clock -->
-                <div class="slide" data-slide="1">
-                    <div class="video-container">
-                        <video autoplay muted playsinline preload="auto" id="video2">
-                            <source src="https://zgpnzuzmmhafyyywvzum.supabase.co/storage/v1/object/public/Main%20Page%20Videos/wallclock.mp4" type="video/mp4">
-                            <source src="video2.webm" type="video/webm">
-                        </video>
-                    </div>
-                    <div class="slide-title-container">
-                        <span class="slide-number">02</span>
-                        <h3 class="slide-title">Metal Wall Clock</h3>
-                    </div>
-                </div>
+            <!-- IMAGE (current) -->
+            <img id="slide-img-1" src="art.jpg" alt="Metal Wall Art" 
+                style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+        </div>
+        <div class="slide-title-container">
+            <span class="slide-number">01</span>
+            <h3 class="slide-title">Metal Wall Art</h3>
+        </div>
+    </div>
 
-                <!-- Slide 3: Metal Wall Mirror -->
-                <div class="slide" data-slide="2">
-                    <div class="video-container">
-                        <video autoplay muted playsinline preload="auto" id="video3">
-                            <source src="https://zgpnzuzmmhafyyywvzum.supabase.co/storage/v1/object/public/Main%20Page%20Videos/wallmirror.mp4" type="video/mp4">
-                            <source src="video3.webm" type="video/webm">
-                        </video>
-                    </div>
-                    <div class="slide-title-container">
-                        <span class="slide-number">03</span>
-                        <h3 class="slide-title">Metal Wall Mirror</h3>
-                    </div>
-                </div>
-            </div>
+    <!-- Slide 2: Metal Wall Clock -->
+    <div class="slide" data-slide="1">
+        <div class="video-container">
+            <!-- VIDEO (future): uncomment below and remove <img> when ready -->
+            <!-- <video autoplay muted playsinline preload="auto" id="video2">
+                <source src="YOUR_VIDEO_URL_2.mp4" type="video/mp4">
+            </video> -->
+
+            <!-- IMAGE (current) -->
+            <img id="slide-img-2" src="clock.jpg" alt="Metal Wall Clock"
+                style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+        </div>
+        <div class="slide-title-container">
+            <span class="slide-number">02</span>
+            <h3 class="slide-title">Metal Wall Clock</h3>
+        </div>
+    </div>
+
+    <!-- Slide 3: Metal Wall Mirror -->
+    <div class="slide" data-slide="2">
+        <div class="video-container">
+            <!-- VIDEO (future): uncomment below and remove <img> when ready -->
+            <!-- <video autoplay muted playsinline preload="auto" id="video3">
+                <source src="YOUR_VIDEO_URL_3.mp4" type="video/mp4">
+            </video> -->
+
+            <!-- IMAGE (current) -->
+            <img id="slide-img-3" src="mirror.jpg" alt="Metal Wall Mirror"
+                style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+        </div>
+        <div class="slide-title-container">
+            <span class="slide-number">03</span>
+            <h3 class="slide-title">Metal Wall Mirror</h3>
+        </div>
+    </div>
+</div>
+
 
             <!-- Navigation -->
             <div class="slider-arrow arrow-left" id="prevBtn">‹</div>
@@ -1487,10 +1500,6 @@
 
 
 
-
-
-
-
         // ============================================
 // VERSION CONTROL & CACHE BUSTING
 // ============================================
@@ -1591,20 +1600,17 @@ let progressInterval;
 let autoSlideTimeout;
 let videoDuration = 8000;
 let hasUserInteracted = false;
-
 function init() {
     console.log('Initializing slider...');
-    
+
     videos.forEach((video, index) => {
         video.addEventListener('ended', () => {
-            console.log(`Video ${index + 1} ended`);
             if (index === currentSlide && isAutoPlaying) {
                 nextSlide();
             }
         });
-
         video.addEventListener('loadedmetadata', () => {
-            console.log(`Video ${index + 1} duration:`, video.duration, 'seconds');
+            console.log(`Video ${index + 1} duration:`, video.duration);
         });
     });
 
@@ -1615,9 +1621,7 @@ function init() {
 }
 
 function playCurrentVideo() {
-    console.log('Playing video:', currentSlide + 1);
-    
-    videos.forEach((video, index) => {
+    videos.forEach((video) => {
         video.pause();
         video.currentTime = 0;
         video.style.opacity = '0';
@@ -1627,20 +1631,19 @@ function playCurrentVideo() {
     currentVideo.style.opacity = '1';
 
     const playPromise = currentVideo.play();
-    
+
     if (playPromise !== undefined) {
         playPromise
             .then(() => {
                 console.log('Video playing successfully');
-                
                 if (currentVideo.duration && !isNaN(currentVideo.duration)) {
                     videoDuration = Math.floor(currentVideo.duration * 1000);
-                    console.log('Using video duration:', videoDuration / 1000, 'seconds');
                 }
             })
             .catch(error => {
-                console.log('Autoplay blocked, waiting for user interaction:', error);
-                
+                console.log('Autoplay blocked:', error);
+                // Fallback: advance after 8 seconds
+                autoSlideTimeout = setTimeout(() => nextSlide(), 8000);
                 if (!hasUserInteracted) {
                     const playOnClick = () => {
                         currentVideo.play();
