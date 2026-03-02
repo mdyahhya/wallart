@@ -1,0 +1,21 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBx5qg6s49tBvuSwPENAuzvzJv6vlzMbJc",
+  authDomain: "walltonedecor.firebaseapp.com",
+  projectId: "walltonedecor",
+  storageBucket: "walltonedecor.firebasestorage.app",
+  messagingSenderId: "939430920435",
+  appId: "1:939430920435:web:10d51beb501fe48662b786",
+  measurementId: "G-35RX37ZSGR"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
