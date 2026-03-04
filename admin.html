@@ -181,6 +181,39 @@
       .admin-header { padding:0 15px; }
       .logged-as { display:none; }
     }
+
+    /* MOBILE HAMBURGER */
+.mobile-menu-btn {
+  display:none; background:none; border:none; cursor:pointer;
+  padding:8px; border-radius:8px; transition:var(--transition);
+}
+.mobile-menu-btn:hover { background:var(--green-light); }
+.mobile-menu-btn svg { width:24px; height:24px; stroke:var(--black); fill:none; display:block; }
+
+.mobile-sidebar-overlay {
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4);
+  z-index:300; backdrop-filter:blur(2px);
+}
+.mobile-sidebar-overlay.open { display:block; }
+
+@media(max-width:768px) {
+  .mobile-menu-btn { display:block; }
+  .sidebar {
+    display:block !important;
+    position:fixed; top:0; left:-260px; height:100vh;
+    width:240px; z-index:400; transition:left 0.35s cubic-bezier(0.4,0,0.2,1);
+    padding-top:70px; box-shadow:var(--shadow-md);
+  }
+  .sidebar.mobile-open { left:0; }
+  .admin-content { padding:20px 15px; }
+  .form-row { grid-template-columns:1fr; }
+  .stats-row { grid-template-columns:repeat(2,1fr); }
+  .admin-header { padding:0 15px; }
+  .logged-as { display:none; }
+  .tbl-actions { flex-direction:column; gap:6px; }
+  .btn-edit, .btn-del { width:100%; text-align:center; }
+}
+
   </style>
 </head>
 <body>
@@ -203,17 +236,27 @@
 
   <!-- Header -->
   <header class="admin-header">
-    <div class="admin-header-left">
-      <img src="walltone.png" alt="logo" onerror="this.style.display='none'">
-      <div class="admin-title">Walltone <span>Admin</span></div>
-    </div>
-    <div class="admin-header-right">
-      <span class="logged-as" id="loggedAs"></span>
-      <button class="logout-btn" onclick="doLogout()">Logout</button>
-    </div>
-  </header>
+  <div class="admin-header-left">
+    <!-- Mobile hamburger -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileSidebar()">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <img src="walltone.png" alt="logo" onerror="this.style.display='none'"
+         style="width:38px;height:38px;border-radius:8px;border:2px solid var(--green);object-fit:cover;">
+    <div class="admin-title">Walltone <span>Admin</span></div>
+  </div>
+  <div class="admin-header-right">
+    <span class="logged-as" id="loggedAs"></span>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
+  </div>
+</header>
+
 
   <div class="admin-body">
+
+    <!-- Mobile sidebar overlay -->
+<div class="mobile-sidebar-overlay" id="mobileSidebarOverlay" onclick="toggleMobileSidebar()"></div>
+
 
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -448,17 +491,42 @@
     { password: "walltone@admin2024", name: "Main Admin"     },
     { password: "walltone@staff1",    name: "Staff Member 1" },
     { password: "walltone@staff2",    name: "Staff Member 2" },
-    // ➕ Add more: { password: "pass", name: "Name" },
+    // ➕ { password: "newpass", name: "Name" },
   ];
 
-  let allProductsCache = [];
+  let allProductsCache    = [];
   let currentEditImageUrl = '';
 
-  // ── LOGIN ──
+  // ══════════════════════════════════════════════
+  // SESSION PERSISTENCE — remembers login
+  // ══════════════════════════════════════════════
+  function checkSession() {
+    const saved = sessionStorage.getItem('wt_admin_session');
+    if (saved) {
+      const session = JSON.parse(saved);
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminPanel').style.display  = 'block';
+      document.getElementById('loggedAs').textContent      = `Logged in as: ${session.name}`;
+      loadAllProducts();
+    }
+  }
+
+  function saveSession(name) {
+    sessionStorage.setItem('wt_admin_session', JSON.stringify({ name }));
+  }
+
+  function clearSession() {
+    sessionStorage.removeItem('wt_admin_session');
+  }
+
+  // ══════════════════════════════════════════════
+  // LOGIN / LOGOUT
+  // ══════════════════════════════════════════════
   window.doLogin = function() {
     const val   = document.getElementById('passInput').value.trim();
     const match = ADMIN_PASSWORDS.find(p => p.password === val);
     if (match) {
+      saveSession(match.name);
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminPanel').style.display  = 'block';
       document.getElementById('loggedAs').textContent      = `Logged in as: ${match.name}`;
@@ -472,21 +540,48 @@
   };
 
   window.doLogout = function() {
+    clearSession();
     document.getElementById('adminPanel').style.display  = 'none';
     document.getElementById('loginScreen').style.display = 'flex';
-    document.getElementById('passInput').value = '';
+    document.getElementById('passInput').value           = '';
   };
 
-  // ── SECTION NAVIGATION ──
+  // ══════════════════════════════════════════════
+  // MOBILE SIDEBAR TOGGLE
+  // ══════════════════════════════════════════════
+  window.toggleMobileSidebar = function() {
+    const sidebar = document.getElementById('adminSidebar');
+    const overlay = document.getElementById('mobileSidebarOverlay');
+    const isOpen  = sidebar.classList.contains('mobile-open');
+    if (isOpen) {
+      sidebar.classList.remove('mobile-open');
+      overlay.classList.remove('open');
+    } else {
+      sidebar.classList.add('mobile-open');
+      overlay.classList.add('open');
+    }
+  };
+
+  function closeMobileSidebar() {
+    document.getElementById('adminSidebar').classList.remove('mobile-open');
+    document.getElementById('mobileSidebarOverlay').classList.remove('open');
+  }
+
+  // ══════════════════════════════════════════════
+  // SECTION NAVIGATION
+  // ══════════════════════════════════════════════
   window.showSection = function(id, btn) {
     document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(`panel-${id}`).classList.add('active');
     btn.classList.add('active');
     if (id === 'manageProducts') renderManageTable(allProductsCache);
+    closeMobileSidebar(); // auto-close sidebar on mobile after tap
   };
 
-  // ── TOAST ──
+  // ══════════════════════════════════════════════
+  // TOAST
+  // ══════════════════════════════════════════════
   function toast(msg, isError = false) {
     const t = document.getElementById('adminToast');
     t.textContent = msg;
@@ -495,23 +590,27 @@
     setTimeout(() => t.classList.remove('show'), 3200);
   }
 
-  // ── IMAGE PREVIEW ──
+  // ══════════════════════════════════════════════
+  // IMAGE PREVIEW
+  // ══════════════════════════════════════════════
   window.previewImages = function(input, previewId) {
     const wrap = document.getElementById(previewId);
     wrap.innerHTML = '';
     Array.from(input.files).forEach(file => {
       const img = document.createElement('img');
-      img.src = URL.createObjectURL(file);
+      img.src   = URL.createObjectURL(file);
       wrap.appendChild(img);
     });
   };
 
-  // ── UPLOAD IMAGE TO SUPABASE STORAGE ──
+  // ══════════════════════════════════════════════
+  // UPLOAD IMAGE TO SUPABASE STORAGE
+  // ══════════════════════════════════════════════
   async function uploadImage(file) {
     const wrap = document.getElementById('add-progress');
     const bar  = document.getElementById('add-progress-bar');
     wrap.style.display = 'block';
-    bar.style.width    = '40%';
+    bar.style.width    = '30%';
 
     const ext      = file.name.split('.').pop();
     const fileName = `product_${Date.now()}.${ext}`;
@@ -529,7 +628,9 @@
     return data.publicUrl;
   }
 
-  // ── ADD PRODUCT ──
+  // ══════════════════════════════════════════════
+  // ADD PRODUCT
+  // ══════════════════════════════════════════════
   window.addProduct = async function() {
     const name     = document.getElementById('f-name').value.trim();
     const no       = document.getElementById('f-no').value.trim();
@@ -565,13 +666,11 @@
       toast(`✅ "${name}" added successfully!`);
 
       // Reset form
-      document.getElementById('f-name').value     = '';
-      document.getElementById('f-no').value       = '';
-      document.getElementById('f-price').value    = '';
-      document.getElementById('f-category').value = '';
-      document.getElementById('f-stock').value    = 'true';
-      document.getElementById('f-image').value    = '';
-      document.getElementById('add-preview').innerHTML = '';
+      ['f-name','f-no','f-price'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('f-category').value          = '';
+      document.getElementById('f-stock').value             = 'true';
+      document.getElementById('f-image').value             = '';
+      document.getElementById('add-preview').innerHTML     = '';
 
       loadAllProducts();
     } catch (err) {
@@ -581,7 +680,9 @@
     }
   };
 
-  // ── LOAD ALL PRODUCTS ──
+  // ══════════════════════════════════════════════
+  // LOAD ALL PRODUCTS
+  // ══════════════════════════════════════════════
   async function loadAllProducts() {
     try {
       const { data, error } = await db
@@ -600,7 +701,9 @@
     }
   }
 
-  // ── DASHBOARD ──
+  // ══════════════════════════════════════════════
+  // DASHBOARD
+  // ══════════════════════════════════════════════
   function updateDashboard() {
     const all = allProductsCache;
     document.getElementById('stat-total').textContent  = all.length;
@@ -622,7 +725,9 @@
           </tr>`).join('');
   }
 
-  // ── MANAGE TABLE ──
+  // ══════════════════════════════════════════════
+  // MANAGE TABLE
+  // ══════════════════════════════════════════════
   function renderManageTable(products) {
     const tbody = document.getElementById('manage-body');
     if (!products || products.length === 0) {
@@ -661,7 +766,9 @@
     });
   };
 
-  // ── OPEN EDIT MODAL ──
+  // ══════════════════════════════════════════════
+  // EDIT MODAL
+  // ══════════════════════════════════════════════
   window.openEdit = function(id) {
     const p = allProductsCache.find(x => x.id === id);
     if (!p) return;
@@ -674,19 +781,20 @@
     document.getElementById('edit-stock').value    = p.in_stock ? 'true' : 'false';
     document.getElementById('edit-image').value    = '';
     document.getElementById('edit-preview').innerHTML = `
-      <img src="${p.image_url}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--green-mid);" alt="current">
+      <img src="${p.image_url}"
+           style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--green-mid);"
+           alt="current">
       <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Current image</p>`;
     document.getElementById('editModal').classList.add('open');
   };
 
   window.closeModal = function() {
     document.getElementById('editModal').classList.remove('open');
-    document.getElementById('edit-image').value = '';
-    document.getElementById('edit-preview').innerHTML = '';
+    document.getElementById('edit-image').value        = '';
+    document.getElementById('edit-preview').innerHTML  = '';
     currentEditImageUrl = '';
   };
 
-  // ── SAVE EDIT ──
   window.saveEdit = async function() {
     const id       = document.getElementById('edit-id').value;
     const name     = document.getElementById('edit-name').value.trim();
@@ -705,12 +813,7 @@
 
     try {
       const updates = { name, product_no: no, category, price, in_stock: inStock };
-
-      if (imgFile) {
-        updates.image_url = await uploadImage(imgFile);
-      } else {
-        updates.image_url = currentEditImageUrl;
-      }
+      updates.image_url = imgFile ? await uploadImage(imgFile) : currentEditImageUrl;
 
       const { error } = await db.from('products').update(updates).eq('id', id);
       if (error) throw error;
@@ -725,7 +828,9 @@
     }
   };
 
-  // ── DELETE ──
+  // ══════════════════════════════════════════════
+  // DELETE
+  // ══════════════════════════════════════════════
   window.deleteProduct = async function(id, name) {
     if (!confirm(`⚠️ Delete "${name}"?\n\nThis cannot be undone.`)) return;
     try {
@@ -742,6 +847,12 @@
   document.getElementById('editModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
+
+  // ══════════════════════════════════════════════
+  // INIT — check session on page load
+  // ══════════════════════════════════════════════
+  checkSession();
 </script>
+
 </body>
 </html>
