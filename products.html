@@ -314,34 +314,30 @@
     Profile
   </a>
 </nav>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <!-- ===================== FIREBASE SDK ===================== -->
-<script type="module">
-  // ══════════════════════════════════════════════════════
-  // 🔥 PASTE YOUR FIREBASE CONFIG HERE
-  // Go to Firebase Console → Project Settings → Your Apps → Web App
-  // ══════════════════════════════════════════════════════
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, query, where, getDocs, orderBy }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<script>
+  // ══════════════════════════════════════════════
+  // SUPABASE CONFIG — paste your values here
+  // Supabase Dashboard → Project Settings → API
+  // ══════════════════════════════════════════════
+  const SUPABASE_URL  = 'https://sujqcavxkoxkoxwvlzci.supabase.co';  // e.g. https://xxxx.supabase.co
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1anFjYXZ4a294a294d3ZsemNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MDY2MjgsImV4cCI6MjA4ODE4MjYyOH0.ZBMF7adIuR_QR4pOME2UPRHUdnjPbljkt629vK7mJgY';  // your anon/public key
 
-  const firebaseConfig = {
-    apiKey:            "YOUR_API_KEY",
-    authDomain:        "YOUR_PROJECT.firebaseapp.com",
-    projectId:         "YOUR_PROJECT_ID",
-    storageBucket:     "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId:             "YOUR_APP_ID"
-  };
+ 
 
-  const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
+  // ══════════════════════════════════════════════
+  // SUPABASE CLIENT (no npm needed)
+  // ══════════════════════════════════════════════
+  const { createClient } = supabase;
+  const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  // ══════════════════════════════════════════════════════
-  // CART HELPERS (localStorage)
-  // ══════════════════════════════════════════════════════
-  function getCart() { return JSON.parse(localStorage.getItem('walltone_cart') || '[]'); }
-  function saveCart(cart) { localStorage.setItem('walltone_cart', JSON.stringify(cart)); updateCartCount(); }
+  // ══════════════════════════════════════════════
+  // CART HELPERS
+  // ══════════════════════════════════════════════
+  function getCart()       { return JSON.parse(localStorage.getItem('walltone_cart') || '[]'); }
+  function saveCart(cart)  { localStorage.setItem('walltone_cart', JSON.stringify(cart)); updateCartCount(); }
 
   function updateCartCount() {
     const total = getCart().reduce((sum, i) => sum + i.quantity, 0);
@@ -351,11 +347,8 @@
   function addToCart(product) {
     const cart = getCart();
     const idx  = cart.findIndex(i => i.id === product.id);
-    if (idx > -1) {
-      cart[idx].quantity += 1;
-    } else {
-      cart.push({ ...product, quantity: 1 });
-    }
+    if (idx > -1) cart[idx].quantity += 1;
+    else cart.push({ ...product, quantity: 1 });
     saveCart(cart);
     showToast(`✅ "${product.name}" added to cart!`);
   }
@@ -367,23 +360,25 @@
     setTimeout(() => t.classList.remove('show'), 2800);
   }
 
-  // ══════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════
   // BUILD PRODUCT CARD HTML
-  // ══════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════
+  const allProducts = {};
+
   function buildCard(p) {
-    const inStock = p.inStock !== false;
+    const inStock = p.in_stock !== false;
     return `
       <div class="product-card" id="card-${p.id}">
         <div class="product-img-wrap">
-          <img src="${p.imageUrl || 'https://via.placeholder.com/400x400?text=No+Image'}"
+          <img src="${p.image_url || 'https://via.placeholder.com/400x400?text=No+Image'}"
                alt="${p.name}"
                onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
-          <span class="product-no-badge">${p.productNo || ''}</span>
+          <span class="product-no-badge">${p.product_no || ''}</span>
           ${!inStock ? '<div class="out-of-stock-overlay">Out of Stock</div>' : ''}
         </div>
         <div class="product-body">
           <div class="product-name">${p.name}</div>
-          <div class="product-no"># ${p.productNo || 'N/A'}</div>
+          <div class="product-no"># ${p.product_no || 'N/A'}</div>
           <div class="product-price">₹${Number(p.price).toLocaleString('en-IN')} <span>incl. taxes</span></div>
           <div class="product-actions">
             ${inStock
@@ -398,46 +393,50 @@
       </div>`;
   }
 
-  // ══════════════════════════════════════════════════════
-  // LOAD PRODUCTS FROM FIRESTORE
-  // ══════════════════════════════════════════════════════
-  const allProducts = {};
-
+  // ══════════════════════════════════════════════
+  // LOAD PRODUCTS FROM SUPABASE
+  // ══════════════════════════════════════════════
   async function loadCategory(category) {
     const gridEl  = document.getElementById(`grid-${category}`);
     const badgeEl = document.getElementById(`badge-${category}`);
     try {
-      const q       = query(collection(db, 'products'), where('category', '==', category), orderBy('createdAt', 'desc'));
-      const snap    = await getDocs(q);
-      const items   = [];
-      snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-      allProducts[category] = items;
+      const { data, error } = await db
+        .from('products')
+        .select('*')
+        .eq('category', category)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      allProducts[category] = data;
 
       // Update counts
-      badgeEl.textContent = `${items.length} Products`;
-      document.getElementById(`count-${category}`).textContent = items.length;
+      badgeEl.textContent = `${data.length} Products`;
+      document.getElementById(`count-${category}`).textContent = data.length;
       const allCount = Object.values(allProducts).flat().length;
       document.getElementById('count-all').textContent = allCount;
 
       // Render
       gridEl.classList.remove('loading-grid');
-      if (items.length === 0) {
-        gridEl.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-          <h3>No products yet</h3><p>Check back soon!</p></div>`;
+      if (data.length === 0) {
+        gridEl.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            <h3>No products yet</h3><p>Check back soon!</p>
+          </div>`;
       } else {
-        gridEl.innerHTML = items.map(buildCard).join('');
+        gridEl.innerHTML = data.map(buildCard).join('');
       }
     } catch (err) {
       console.error('Error loading', category, err);
       badgeEl.textContent = 'Error';
-      gridEl.innerHTML = `<p style="color:red;padding:20px;grid-column:1/-1">Failed to load products. Check Firebase config.</p>`;
+      gridEl.innerHTML = `<p style="color:red;padding:20px;grid-column:1/-1">Failed to load. Check Supabase config.</p>`;
     }
   }
 
-  // ══════════════════════════════════════════════════════
-  // GLOBAL HANDLERS (called from inline onclick)
-  // ══════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════
+  // GLOBAL HANDLERS
+  // ══════════════════════════════════════════════
   window.handleAddCart = function(productId) {
     const product = Object.values(allProducts).flat().find(p => p.id === productId);
     if (product) addToCart(product);
@@ -452,9 +451,9 @@
     }
   };
 
-  // ══════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════
   // SCROLL TO SECTION + ACTIVE TAB
-  // ══════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════
   window.scrollToSection = function(cat) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     if (cat === 'all') {
@@ -467,7 +466,6 @@
     }
   };
 
-  // Highlight active tab on scroll
   window.addEventListener('scroll', () => {
     const cats = ['wall_art','wall_clock','wall_mirror'];
     let found = 'all';
@@ -479,13 +477,14 @@
     document.getElementById(`tab-${found}`).classList.add('active');
   });
 
-  // ══════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════
   // INIT
-  // ══════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════
   updateCartCount();
   loadCategory('wall_art');
   loadCategory('wall_clock');
   loadCategory('wall_mirror');
 </script>
+
 </body>
 </html>
