@@ -197,6 +197,31 @@
       .product-body { padding:12px; }
       .nav-link { display:none; }
     }
+
+    /* HIDE/SHOW CATEGORY SECTIONS */
+.category-section { display:block; }
+.category-section.hidden { display:none; }
+
+/* FIX: category tabs scroll on mobile without wrapping */
+@media(max-width:600px) {
+  .category-tabs {
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    justify-content:flex-start;
+    padding:14px 4% 12px;
+    gap:8px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .category-tabs::-webkit-scrollbar { display:none; }
+  .tab-btn {
+    flex-shrink:0;
+    padding:9px 16px;
+    font-size:0.75rem;
+    white-space:nowrap;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -454,28 +479,36 @@
   // ══════════════════════════════════════════════
   // SCROLL TO SECTION + ACTIVE TAB
   // ══════════════════════════════════════════════
-  window.scrollToSection = function(cat) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    if (cat === 'all') {
-      document.getElementById('tab-all').classList.add('active');
-      window.scrollTo({ top: document.querySelector('.main-content').offsetTop - 130, behavior: 'smooth' });
-    } else {
-      document.getElementById(`tab-${cat}`).classList.add('active');
-      const sec = document.getElementById(`section-${cat}`);
-      window.scrollTo({ top: sec.offsetTop - 130, behavior: 'smooth' });
-    }
-  };
+ window.scrollToSection = function(cat) {
+  // Update active tab
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`tab-${cat === 'all' ? 'all' : cat}`).classList.add('active');
 
-  window.addEventListener('scroll', () => {
-    const cats = ['wall_art','wall_clock','wall_mirror'];
-    let found = 'all';
-    cats.forEach(c => {
-      const sec = document.getElementById(`section-${c}`);
-      if (sec && window.scrollY >= sec.offsetTop - 200) found = c;
+  const sections = ['wall_art', 'wall_clock', 'wall_mirror'];
+
+  if (cat === 'all') {
+    // Show all sections
+    sections.forEach(c => {
+      document.getElementById(`section-${c}`).classList.remove('hidden');
     });
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(`tab-${found}`).classList.add('active');
-  });
+    window.scrollTo({ top: document.querySelector('.main-content').offsetTop - 130, behavior: 'smooth' });
+  } else {
+    // Hide all, show only selected
+    sections.forEach(c => {
+      const sec = document.getElementById(`section-${c}`);
+      if (c === cat) {
+        sec.classList.remove('hidden');
+        setTimeout(() => {
+          window.scrollTo({ top: sec.offsetTop - 130, behavior: 'smooth' });
+        }, 50);
+      } else {
+        sec.classList.add('hidden');
+      }
+    });
+  }
+};
+
+
 
   // ══════════════════════════════════════════════
   // INIT
