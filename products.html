@@ -157,13 +157,15 @@
     .empty-state h3 { font-size:1.4rem; color:var(--black); margin-bottom:10px; }
 
     /* TOAST */
-    .toast {
-      position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(100px);
+   .toast {
+  position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(200px);
+  pointer-events:none; opacity:0;
       background:var(--green); color:var(--white); padding:14px 28px; border-radius:50px;
       font-size:0.9rem; font-weight:500; z-index:9999; transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
       box-shadow:0 8px 25px rgba(46,125,50,0.4); white-space:nowrap;
     }
-    .toast.show { transform:translateX(-50%) translateY(0); }
+   .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
 
     /* BOTTOM NAV */
     .bottom-nav {
@@ -379,11 +381,15 @@
   }
 
   function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
-  }
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.remove('show');        // reset first
+  void t.offsetWidth;                // force browser reflow so animation restarts
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);  // cancel any previous timer
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
 
   // ══════════════════════════════════════════════
   // BUILD PRODUCT CARD HTML
