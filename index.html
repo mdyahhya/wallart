@@ -800,6 +800,12 @@ h1, h2, h3, h4 {
     transition: var(--transition-smooth);
 }
 
+.category-image svg {
+    width: 80px;
+    height: 80px;
+    stroke: var(--green-dark);
+}
+
 .category-card:hover .category-image {
     transform: scale(1.05);
 }
@@ -862,6 +868,14 @@ h1, h2, h3, h4 {
 .feature-icon {
     font-size: 3.5rem;
     margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    color: var(--green);
+}
+
+.feature-icon svg {
+    width: 60px;
+    height: 60px;
 }
 
 .feature-title {
@@ -1092,21 +1106,8 @@ h1, h2, h3, h4 {
         <!-- <h1 class="company-name">Walltone Studio</h1>
         <p class="tagline">Premium Metal Wall Art & Decor</p> -->
         
-        <!-- Quality Badges -->
-        <!-- <div class="quality-badges">
-            <div class="badge">
-                <span class="badge-icon">🏆</span>
-                <span class="badge-text">20+ Years Lifespan</span>
-            </div>
-            <div class="badge">
-                <span class="badge-icon">✋</span>
-                <span class="badge-text">Handmade Quality</span>
-            </div>
-            <div class="badge">
-                <span class="badge-icon">🎨</span>
-                <span class="badge-text">300+ Unique Designs</span>
-            </div>
-        </div> -->
+        
+        <!-- Video Slider -->
 
         <!-- Action Buttons Above Video -->
         <!-- <div class="hero-actions">
@@ -1194,8 +1195,13 @@ h1, h2, h3, h4 {
 
 
             <!-- Navigation -->
-            <div class="slider-arrow arrow-left" id="prevBtn">‹</div>
-            <div class="slider-arrow arrow-right" id="nextBtn">›</div>
+            <!-- Navigation -->
+            <div class="slider-arrow arrow-left" id="prevBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </div>
+            <div class="slider-arrow arrow-right" id="nextBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
             <div class="slider-dots">
                 <span class="dot active" data-slide="0"></span>
                 <span class="dot" data-slide="1"></span>
@@ -1208,7 +1214,28 @@ h1, h2, h3, h4 {
     <div class="post-video-actions">
        <a href="products.html" class="btn btn-primary">Buy Now</a>
         <a href="products.html" class="btn btn-secondary">View Products</a>
+    </div>
 
+    <!-- Quality Badges Moved Below Buttons -->
+    <div class="quality-badges" style="margin-top: 0; padding-top: 0; padding-bottom: 40px;">
+        <div class="badge">
+            <span class="badge-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            </span>
+            <span class="badge-text">20+ Years Lifespan</span>
+        </div>
+        <div class="badge">
+            <span class="badge-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 1"/><path d="m19 3-1 1"/><path d="m5 21 1-1"/><path d="m19 21-1-1"/></svg>
+            </span>
+            <span class="badge-text">Handmade Quality</span>
+        </div>
+        <div class="badge">
+            <span class="badge-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.71-.74 1.71-1.67 0-.43-.16-.83-.46-1.13-.29-.29-.48-.74-.48-1.2 0-.93.74-1.71 1.67-1.71H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>
+            </span>
+            <span class="badge-text">300+ Unique Designs</span>
+        </div>
     </div>
 
     <!-- Featured Categories -->
@@ -1219,27 +1246,36 @@ h1, h2, h3, h4 {
         </div>
 
         <div class="categories-grid">
-            <div class="category-card">
-                <div class="category-image">🎨</div>
+            <div class="category-card" onclick="window.location.href='wallart.html'">
+                <div class="category-image">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.71-.74 1.71-1.67 0-.43-.16-.83-.46-1.13-.29-.29-.48-.74-.48-1.2 0-.93.74-1.71 1.67-1.71H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>
+                </div>
                 <div class="category-info">
                     <h3 class="category-name">Metal Wall Art</h3>
                     <p class="category-count">150+ Designs</p>
+                    <a href="wallart.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.8rem; margin-top: 15px;">Shop Wall Art</a>
                 </div>
             </div>
 
-            <div class="category-card">
-                <div class="category-image">🕐</div>
+            <div class="category-card" onclick="window.location.href='wallclock.html'">
+                <div class="category-image">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
                 <div class="category-info">
                     <h3 class="category-name">Metal Wall Clocks</h3>
                     <p class="category-count">100+ Designs</p>
+                    <a href="wallclock.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.8rem; margin-top: 15px;">Shop Clocks</a>
                 </div>
             </div>
 
-            <div class="category-card">
-                <div class="category-image">🪞</div>
+            <div class="category-card" onclick="window.location.href='wallmirror.html'">
+                <div class="category-image">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 18v2"/><path d="M12 4v2"/><path d="M18 12h2"/><path d="M4 12h2"/></svg>
+                </div>
                 <div class="category-info">
                     <h3 class="category-name">Metal Wall Mirrors</h3>
                     <p class="category-count">80+ Designs</p>
+                    <a href="wallmirror.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.8rem; margin-top: 15px;">Shop Mirrors</a>
                 </div>
             </div>
         </div>
@@ -1254,25 +1290,33 @@ h1, h2, h3, h4 {
 
         <div class="features-grid">
             <div class="feature-item">
-                <div class="feature-icon">✨</div>
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 1"/><path d="m19 3-1 1"/><path d="m5 21 1-1"/><path d="m19 21-1-1"/></svg>
+                </div>
                 <h3 class="feature-title">Handcrafted Quality</h3>
                 <p class="feature-description">Each piece is meticulously handcrafted by skilled artisans with 20+ years lifespan guarantee</p>
             </div>
 
             <div class="feature-item">
-                <div class="feature-icon">🎨</div>
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.71-.74 1.71-1.67 0-.43-.16-.83-.46-1.13-.29-.29-.48-.74-.48-1.2 0-.93.74-1.71 1.67-1.71H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>
+                </div>
                 <h3 class="feature-title">300+ Unique Designs</h3>
                 <p class="feature-description">Extensive collection of exclusive metal art designs for every style and space</p>
             </div>
 
             <div class="feature-item">
-                <div class="feature-icon">🚚</div>
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="13" x="2" y="4" rx="2"/><path d="M18 8h3l3 3v6h-3"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+                </div>
                 <h3 class="feature-title">Free Shipping</h3>
                 <p class="feature-description">Complimentary shipping on all orders across India with secure packaging</p>
             </div>
 
             <div class="feature-item">
-                <div class="feature-icon">🏆</div>
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                </div>
                 <h3 class="feature-title">Premium Materials</h3>
                 <p class="feature-description">Made with high-grade metal ensuring durability and timeless elegance</p>
             </div>
@@ -1289,9 +1333,15 @@ h1, h2, h3, h4 {
                     Every piece is handmade with passion and features unique designs.
                 </p>
                 <div class="social-links">
-                    <a href="#" class="social-icon">f</a>
-                    <a href="#" class="social-icon">📷</a>
-                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
                 </div>
             </div>
 
@@ -1461,7 +1511,7 @@ const videos = [
     document.getElementById('video1'),
     document.getElementById('video2'),
     document.getElementById('video3')
-];
+].filter(v => v !== null); // Filter out null videos to avoid errors
 const progressBar = document.getElementById('progressBar');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -1476,20 +1526,22 @@ let hasUserInteracted = false;
 function init() {
     console.log('Initializing slider...');
 
-    videos.forEach((video, index) => {
-        video.addEventListener('ended', () => {
-            if (index === currentSlide && isAutoPlaying) {
-                nextSlide();
-            }
+    if (videos && videos.length > 0) {
+        videos.forEach((video, index) => {
+            video.addEventListener('ended', () => {
+                if (index === currentSlide && isAutoPlaying) {
+                    nextSlide();
+                }
+            });
+            video.addEventListener('loadedmetadata', () => {
+                console.log(`Video ${index + 1} duration:`, video.duration);
+            });
         });
-        video.addEventListener('loadedmetadata', () => {
-            console.log(`Video ${index + 1} duration:`, video.duration);
-        });
-    });
+    }
 
-    playCurrentVideo();
-    startProgress();
-    setupAutoSlide();
+    // Explicitly set autoPlay for the initial load
+    isAutoPlaying = true;
+    updateSlider(); // This will call setupAutoSlide and startProgress
     setupIntersectionObserver();
 }
 
