@@ -8,6 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="icon" type="image/png" href="/walltone.png"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
@@ -243,7 +246,13 @@
       .btn-edit, .btn-del { width:100%; text-align:center; }
       .bulk-info-cards { grid-template-columns:repeat(3,1fr); }
     }
+
+    /* CROPPER STYLES */
+    .crop-container { max-height: 450px; background: #333; border-radius: 12px; overflow: hidden; position: relative; }
+    #cropTarget { display: block; max-width: 100%; }
+    .crop-btn-group { display: flex; gap: 10px; margin-top: 20px; }
   </style>
+
 </head>
 <body>
 
@@ -276,6 +285,8 @@
       <span class="logged-as" id="loggedAs"></span>
       <button class="logout-btn" onclick="doLogout()">Logout</button>
     </div>
+
+
   </header>
 
   <div class="admin-body">
@@ -303,6 +314,11 @@
       <button class="sidebar-btn" onclick="showSection('manageProducts',this)">
         <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         Manage Products
+      </button>
+
+      <button class="sidebar-btn" onclick="showSection('aiModels',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        AI Transparent Images
       </button>
     </aside>
 
@@ -370,13 +386,14 @@
           <div class="form-group">
             <label>Product Image *</label>
             <div class="img-upload-area" onclick="document.getElementById('f-image').click()">
-              <input type="file" id="f-image" accept="image/*" onchange="previewImages(this,'add-preview')"/>
+              <input type="file" id="f-image" accept="image/*" onchange="openCropper(this)"/>
               <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              <p>Click to upload image (JPG, PNG, WEBP)</p>
+              <p id="upload-status-text">Click to upload image (JPG, PNG, WEBP)</p>
             </div>
             <div class="img-preview-wrap" id="add-preview"></div>
             <div class="upload-progress" id="add-progress"><div class="upload-progress-bar" id="add-progress-bar"></div></div>
           </div>
+
           <button class="btn-submit" id="addBtn" onclick="addProduct()">➕ Add Product to Store</button>
         </div>
       </div>
@@ -537,6 +554,47 @@
         </div>
       </div>
 
+      <!-- AI TRANSPARENT UPLOAD -->
+      <div class="section-panel" id="panel-aiModels">
+        <div class="panel-title">Upload AI Models</div>
+        <div class="panel-sub">Upload transparent images mapped to a specific product number</div>
+        
+        <div class="form-card">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Category *</label>
+              <select id="ai-category" onchange="checkProductForAI()">
+                <option value="">-- Select --</option>
+                <option value="wall_art">🎨 Wall Art</option>
+                <option value="wall_clock">🕐 Wall Clock</option>
+                <option value="wall_mirror">🪞 Wall Mirror</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Product No. *</label>
+              <input type="text" id="ai-no" placeholder="e.g. WA001" oninput="checkProductForAI()"/>
+            </div>
+          </div>
+          
+          <div id="ai-product-preview" style="display:none; margin-bottom: 20px; padding: 15px; background: var(--green-light); border-radius: 8px; align-items: center; gap: 15px;">
+             <!-- Preview of existing product -->
+          </div>
+
+          <div class="form-group" style="margin-top: 10px;">
+            <label>Transparent Image (PNG/WEBP)</ *</label>
+            <div class="img-upload-area" onclick="document.getElementById('ai-image').click()">
+              <input type="file" id="ai-image" accept="image/png, image/webp" onchange="previewImages(this, 'ai-preview')"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+              <p>Click to upload Transparent Image without background</p>
+            </div>
+            <div class="img-preview-wrap" id="ai-preview"></div>
+            <div class="upload-progress" id="ai-progress" style="display:none;"><div class="upload-progress-bar" id="ai-progress-bar"></div></div>
+          </div>
+
+          <button class="btn-submit" id="aiUploadBtn" onclick="uploadAiImage()" disabled>➕ Upload AI Asset</button>
+        </div>
+      </div>
+
     </main>
   </div>
 </div>
@@ -593,7 +651,22 @@
   </div>
 </div>
 
+<!-- CROP MODAL -->
+<div class="modal-overlay" id="cropModal" style="z-index: 9999;">
+  <div class="modal" style="max-width: 700px;">
+    <div class="modal-title">✂️ Crop Image</div>
+    <div class="crop-container">
+      <img id="cropTarget" src="">
+    </div>
+    <div class="crop-btn-group">
+      <button class="btn-submit" onclick="applyCrop()">✅ Apply Crop</button>
+      <button class="btn-cancel" onclick="closeCropModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="adminToast"></div>
+
 
 <script>
   const SUPABASE_URL  = 'https://sujqcavxkoxkoxwvlzci.supabase.co';
@@ -602,6 +675,61 @@
   const { createClient } = supabase;
   const db     = createClient(SUPABASE_URL, SUPABASE_ANON);
   const BUCKET = 'product-images';
+
+  let allProductsCache    = [];
+  let currentEditImageUrl = '';
+  let bulkFiles           = [];
+  let cropper             = null;
+  let croppedBlob         = null;
+
+  // ── CROPPER FUNCTIONS ──
+  window.openCropper = function(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('cropTarget').src = e.target.result;
+      document.getElementById('cropModal').classList.add('open');
+      
+      if (cropper) cropper.destroy();
+      
+      setTimeout(() => {
+        const image = document.getElementById('cropTarget');
+        cropper = new Cropper(image, {
+          aspectRatio: NaN, // Free crop
+          viewMode: 1,
+          autoCropArea: 0.9,
+          background: false
+        });
+      }, 100);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.closeCropModal = function() {
+    document.getElementById('cropModal').classList.remove('open');
+    if (cropper) cropper.destroy();
+    document.getElementById('f-image').value = '';
+  };
+
+  window.applyCrop = function() {
+    if (!cropper) return;
+    
+    cropper.getCroppedCanvas({
+      maxWidth: 2000,
+      maxHeight: 2000,
+      imageSmoothingQuality: 'high'
+    }).toBlob((blob) => {
+      croppedBlob = blob;
+      const previewUrl = URL.createObjectURL(blob);
+      const wrap = document.getElementById('add-preview');
+      wrap.innerHTML = `<img src="${previewUrl}" style="width:120px;height:120px;border:2px solid var(--green);">`;
+      document.getElementById('upload-status-text').textContent = "✅ Image Cropped & Ready";
+      document.getElementById('cropModal').classList.remove('open');
+      if (cropper) cropper.destroy();
+    }, 'image/jpeg', 0.9);
+  };
 
   const ADMIN_PASSWORDS = [
     { password: "1234",             name: "Main Admin"     },
@@ -616,11 +744,8 @@
     wall_mirror: { prefix: 'WM', label: 'Metal Wall Mirror'}
   };
 
-  let allProductsCache    = [];
-  let currentEditImageUrl = '';
-  let bulkFiles           = [];
-
   // ── SESSION ──
+
   function checkSession() {
    const saved = localStorage.getItem('wt_admin_session');
 
@@ -705,12 +830,20 @@
   };
 
   // ── UPLOAD IMAGE (with folders & custom names) ──
+
+
   async function uploadImage(file, folder, customName, progressId, barId) {
     if (progressId) {
       document.getElementById(progressId).style.display = 'block';
       document.getElementById(barId).style.width = '30%';
     }
-    const ext = file.name.split('.').pop();
+    
+    // Safely get extension (Blobs don't have .name)
+    let ext = 'jpg';
+    if (file.name) {
+      ext = file.name.split('.').pop();
+    }
+    
     // Path: folder/customName.ext (e.g. wall_art/WA001.jpg)
     const filePath = `${folder}/${customName}.${ext}`;
 
@@ -872,16 +1005,18 @@
     const no      = document.getElementById('f-no').value.trim();
     const cat     = document.getElementById('f-category').value;
     const price   = parseFloat(document.getElementById('f-price').value);
-    const inStock = document.getElementById('f-stock').value === 'true';
-    const imgFile = document.getElementById('f-image').files[0];
 
+    const inStock = document.getElementById('f-stock').value === 'true';
+    
     if (!name || !no || !cat || !price || isNaN(price)) { toast('❌ Please fill in all fields.', true); return; }
-    if (!imgFile) { toast('❌ Please select a product image.', true); return; }
+    if (!croppedBlob) { toast('❌ Please select and crop an image first.', true); return; }
 
     const btn = document.getElementById('addBtn');
     btn.disabled = true; btn.textContent = '⏳ Uploading...';
     try {
-      const imageUrl = await uploadImage(imgFile, cat, no, 'add-progress', 'add-progress-bar');
+      const fileExt = "jpg"; // Cropped images are JPEGs
+      const fileName = `${no}.${fileExt}`;
+      const imageUrl = await uploadImage(croppedBlob, cat, no, 'add-progress', 'add-progress-bar');
       const { error } = await db.from('products').insert([{ name, product_no:no, category:cat, price, in_stock:inStock, image_url:imageUrl }]);
       if (error) throw error;
       toast(`✅ "${name}" added!`);
@@ -890,11 +1025,110 @@
       document.getElementById('f-stock').value    = 'true';
       document.getElementById('f-image').value    = '';
       document.getElementById('add-preview').innerHTML = '';
+      croppedBlob = null;
+      document.getElementById('upload-status-text').textContent = "Click to upload image (JPG, PNG, WEBP)";
       loadAllProducts();
+
     } catch (err) {
       toast('❌ Failed: ' + err.message, true);
     } finally {
       btn.disabled = false; btn.textContent = '➕ Add Product to Store';
+    }
+  };
+
+  // ══════════════════════════════════════════════
+  // AI ASSET LOGIC
+  // ══════════════════════════════════════════════
+  window.checkProductForAI = function() {
+    const no = document.getElementById('ai-no').value.trim().toUpperCase();
+    const cat = document.getElementById('ai-category').value;
+    const preview = document.getElementById('ai-product-preview');
+    const btn = document.getElementById('aiUploadBtn');
+
+    if (!cat || !no) {
+      preview.style.display = 'none';
+      btn.disabled = true;
+      return;
+    }
+
+    const matchedProd = allProductsCache.find(p => p.category === cat && p.product_no.toUpperCase() === no);
+    
+    if (matchedProd) {
+      preview.innerHTML = `
+        <img src="${matchedProd.image_url}" style="width:60px;height:60px;border-radius:8px;object-fit:cover; border: 2px solid var(--green);">
+        <div>
+          <div style="font-weight:600;font-size:0.95rem;">${matchedProd.name}</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);">Matches exactly! You can upload the transparent image for this product.</div>
+        </div>
+      `;
+      preview.style.display = 'flex';
+      btn.disabled = false;
+    } else {
+      preview.innerHTML = `<div style="color:#C62828;font-size:0.85rem;padding:5px;">❌ Product not found. Ensure Category and Product No. are correct.</div>`;
+      preview.style.display = 'block';
+      btn.disabled = true;
+    }
+  };
+
+  window.uploadAiImage = async function() {
+    const no = document.getElementById('ai-no').value.trim().toUpperCase();
+    const cat = document.getElementById('ai-category').value;
+    const fileInput = document.getElementById('ai-image');
+    
+    if (!fileInput.files.length) {
+      toast('❌ Please select a transparent image file.', true);
+      return; 
+    }
+    const file = fileInput.files[0];
+
+    const btn = document.getElementById('aiUploadBtn');
+    btn.disabled = true; btn.textContent = '⏳ Uploading AI Asset...';
+
+    try {
+      document.getElementById('ai-progress').style.display = 'block';
+      document.getElementById('ai-progress-bar').style.width = '30%';
+      
+      const ext = file.name ? file.name.split('.').pop() : 'png';
+      const filePath = `transparent_${cat}/${no}.${ext}`;
+      
+      const { error: uploadErr } = await db.storage.from('ai-images').upload(filePath, file, { cacheControl:'3600', upsert:true });
+      if (uploadErr) throw uploadErr;
+
+      document.getElementById('ai-progress-bar').style.width = '100%';
+      const transparentUrl = db.storage.from('ai-images').getPublicUrl(filePath).data.publicUrl;
+
+      // Check if exists
+      const { data: existingAsset } = await db.from('ai_assets').select('id').eq('product_no', no).single();
+      
+      if (existingAsset) {
+        // Update
+        const { error: dbErr } = await db.from('ai_assets').update({
+          transparent_image_url: transparentUrl,
+          category: cat
+        }).eq('id', existingAsset.id);
+        if (dbErr) throw dbErr;
+      } else {
+        // Insert
+        const { error: dbErr } = await db.from('ai_assets').insert([{
+           product_no: no,
+           category: cat,
+           transparent_image_url: transparentUrl
+        }]);
+        if (dbErr) throw dbErr;
+      }
+
+      toast(`✅ AI image for ${no} uploaded!`);
+      document.getElementById('ai-no').value = '';
+      document.getElementById('ai-category').value = '';
+      document.getElementById('ai-image').value = '';
+      document.getElementById('ai-preview').innerHTML = '';
+      document.getElementById('ai-product-preview').style.display = 'none';
+      setTimeout(() => { document.getElementById('ai-progress').style.display = 'none'; document.getElementById('ai-progress-bar').style.width = '0%'; }, 500);
+
+    } catch (err) {
+      toast('❌ AI Upload failed: ' + err.message, true);
+    } finally {
+      btn.textContent = '➕ Upload AI Asset';
     }
   };
 
