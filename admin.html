@@ -156,6 +156,34 @@
     .btn-del  { padding:7px 16px; background:#FFEBEE; color:#C62828; border:1px solid #FFCDD2; border-radius:20px; font-size:0.78rem; font-weight:600; cursor:pointer; transition:var(--transition); font-family:'Montserrat',sans-serif; }
     .btn-del:hover  { background:#C62828; color:var(--white); }
 
+    /* MULTI-SELECT DISPLAY */
+    .checkbox-col { width: 40px; text-align: center; display: none; }
+    .checkbox-col.show { display: table-cell; }
+    .select-checkbox {
+      width: 18px; height: 18px; cursor: pointer;
+      accent-color: var(--green);
+    }
+    .bulk-delete-bar {
+      display: none; align-items: center; justify-content: space-between;
+      background: #FFF3F3; border: 1px solid #FFCDD2; border-radius: 12px;
+      padding: 12px 20px; margin-bottom: 20px; animation: slideDown 0.3s ease;
+    }
+    .bulk-delete-bar.show { display: flex; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    .btn-bulk-del {
+      padding: 8px 18px; background: #C62828; color: var(--white); border: none;
+      border-radius: 50px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      transition: var(--transition); font-family: 'Montserrat', sans-serif;
+    }
+    .btn-bulk-del:hover { background: #b71c1c; box-shadow: 0 4px 12px rgba(198, 40, 40, 0.2); }
+    .btn-select-mode {
+      padding: 10px 18px; border: 2px solid var(--green-mid); border-radius: 50px;
+      font-size: 0.88rem; font-family: 'Montserrat', sans-serif; cursor: pointer;
+      background: var(--white); transition: var(--transition);
+    }
+    .btn-select-mode.active { background: var(--green); color: var(--white); border-color: var(--green); }
+
+
     /* BULK UPLOAD */
     .bulk-info-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:28px; max-width:700px; }
     .bulk-info-card  { background:var(--white); border:2px solid var(--green-light); border-radius:12px; padding:18px; text-align:center; }
@@ -471,18 +499,37 @@
         <div class="table-toolbar">
           <input class="search-box" type="text" id="tableSearch"
                  placeholder="🔍 Search products..." oninput="filterTable(this.value)"/>
-          <select class="filter-select" id="catFilter" onchange="filterByCategory(this.value)">
-            <option value="">All Categories</option>
-            <option value="wall_art">🎨 Wall Art</option>
-            <option value="wall_clock">🕐 Wall Clock</option>
-            <option value="wall_mirror">🪞 Wall Mirror</option>
-          </select>
+          <div style="display: flex; gap: 10px;">
+            <select class="filter-select" id="catFilter" onchange="filterByCategory(this.value)">
+              <option value="">All Categories</option>
+              <option value="wall_art">🎨 Wall Art</option>
+              <option value="wall_clock">🕐 Wall Clock</option>
+              <option value="wall_mirror">🪞 Wall Mirror</option>
+            </select>
+            <button class="btn-select-mode" id="selectModeBtn" onclick="toggleSelectMode()">✅ Select</button>
+          </div>
         </div>
+
+        <!-- Bulk Delete Bar -->
+        <div class="bulk-delete-bar" id="bulkDeleteBar">
+          <div style="font-size: 0.88rem; font-weight: 500;">
+            <span id="selectedCount">0</span> products selected
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-cancel" style="padding: 7px 18px; font-size: 0.78rem;" onclick="cancelSelection()">Cancel</button>
+            <button class="btn-bulk-del" onclick="bulkDelete()">🗑️ Delete Selected</button>
+          </div>
+        </div>
+
         <div class="table-wrap">
           <table class="prod-table">
             <thead>
-              <tr><th>Image</th><th>Name</th><th>No.</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+              <tr>
+                <th class="checkbox-col" id="header-checkbox-col"><input type="checkbox" class="select-checkbox" onclick="toggleAllCheckboxes(this)"></th>
+                <th>Image</th><th>Name</th><th>No.</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th>
+              </tr>
             </thead>
+
             <tbody id="manage-body">
               <tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-muted)">Loading...</td></tr>
             </tbody>
@@ -657,21 +704,24 @@
     });
   };
 
-  // ── UPLOAD SINGLE IMAGE ──
-  async function uploadImage(file, progressId, barId) {
+  // ── UPLOAD IMAGE (with folders & custom names) ──
+  async function uploadImage(file, folder, customName, progressId, barId) {
     if (progressId) {
       document.getElementById(progressId).style.display = 'block';
       document.getElementById(barId).style.width = '30%';
     }
-    const ext      = file.name.split('.').pop();
-    const fileName = `product_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-    const { error } = await db.storage.from(BUCKET).upload(fileName, file, { cacheControl:'3600', upsert:false });
+    const ext = file.name.split('.').pop();
+    // Path: folder/customName.ext (e.g. wall_art/WA001.jpg)
+    const filePath = `${folder}/${customName}.${ext}`;
+
+    const { error } = await db.storage.from(BUCKET).upload(filePath, file, { cacheControl:'3600', upsert:true });
     if (error) throw error;
+
     if (progressId) {
       document.getElementById(barId).style.width = '100%';
       setTimeout(() => { document.getElementById(progressId).style.display = 'none'; document.getElementById(barId).style.width = '0%'; }, 500);
     }
-    return db.storage.from(BUCKET).getPublicUrl(fileName).data.publicUrl;
+    return db.storage.from(BUCKET).getPublicUrl(filePath).data.publicUrl;
   }
 
   // ══════════════════════════════════════════════
@@ -777,7 +827,7 @@
       overallBar.style.width = `${Math.round(((i) / bulkFiles.length) * 100)}%`;
 
       try {
-        const imageUrl = await uploadImage(file, null, null);
+        const imageUrl = await uploadImage(file, cat, code, null, null);
         const { error } = await db.from('products').insert([{
           name,
           product_no : code,
@@ -831,7 +881,7 @@
     const btn = document.getElementById('addBtn');
     btn.disabled = true; btn.textContent = '⏳ Uploading...';
     try {
-      const imageUrl = await uploadImage(imgFile, 'add-progress', 'add-progress-bar');
+      const imageUrl = await uploadImage(imgFile, cat, no, 'add-progress', 'add-progress-bar');
       const { error } = await db.from('products').insert([{ name, product_no:no, category:cat, price, in_stock:inStock, image_url:imageUrl }]);
       if (error) throw error;
       toast(`✅ "${name}" added!`);
@@ -884,14 +934,89 @@
   }
 
   // ── MANAGE TABLE ──
+  let isSelectMode = false;
+  let selectedProductIds = new Set();
+
+  window.toggleSelectMode = function() {
+    isSelectMode = !isSelectMode;
+    const btn = document.getElementById('selectModeBtn');
+    const cols = document.querySelectorAll('.checkbox-col');
+    const deleteBar = document.getElementById('bulkDeleteBar');
+
+    if (isSelectMode) {
+      btn.classList.add('active');
+      btn.textContent = '✕ Close Select';
+      cols.forEach(c => c.classList.add('show'));
+    } else {
+      btn.classList.remove('active');
+      btn.textContent = '✅ Select';
+      cols.forEach(c => c.classList.remove('show'));
+      cancelSelection();
+    }
+  };
+
+  window.toggleAllCheckboxes = function(master) {
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+    selectedProductIds.clear();
+    checkboxes.forEach(cb => {
+      cb.checked = master.checked;
+      if (cb.checked) selectedProductIds.add(cb.dataset.id);
+    });
+    updateSelectedCount();
+  };
+
+  window.handleRowCheckbox = function(cb) {
+    const id = cb.dataset.id;
+    if (cb.checked) selectedProductIds.add(id);
+    else selectedProductIds.delete(id);
+    updateSelectedCount();
+  };
+
+  function updateSelectedCount() {
+    const count = selectedProductIds.size;
+    document.getElementById('selectedCount').textContent = count;
+    const deleteBar = document.getElementById('bulkDeleteBar');
+    if (count > 0) deleteBar.classList.add('show');
+    else deleteBar.classList.remove('show');
+  }
+
+  window.cancelSelection = function() {
+    selectedProductIds.clear();
+    document.querySelectorAll('.row-checkbox').forEach(cb => cb.checked = false);
+    const master = document.querySelector('#header-checkbox-col input');
+    if (master) master.checked = false;
+    updateSelectedCount();
+  };
+
+  window.bulkDelete = async function() {
+    const count = selectedProductIds.size;
+    if (count === 0) return;
+    if (!confirm(`⚠️ Are you sure you want to delete ${count} selected product(s)?\n\nThis action cannot be undone.`)) return;
+
+    try {
+      const idsToDelete = Array.from(selectedProductIds);
+      const { error } = await db.from('products').delete().in('id', idsToDelete);
+      if (error) throw error;
+
+      toast(`🗑️ ${count} products deleted successfully.`);
+      cancelSelection();
+      loadAllProducts();
+    } catch (err) {
+      toast('❌ Bulk delete failed: ' + err.message, true);
+    }
+  };
+
   function renderManageTable(products) {
     const tbody = document.getElementById('manage-body');
     if (!products || products.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted)">No products found.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-muted)">No products found.</td></tr>`;
       return;
     }
     tbody.innerHTML = products.map(p => `
       <tr data-cat="${p.category}" data-name="${p.name.toLowerCase()}">
+        <td class="checkbox-col ${isSelectMode ? 'show' : ''}">
+          <input type="checkbox" class="select-checkbox row-checkbox" data-id="${p.id}" onchange="handleRowCheckbox(this)" ${selectedProductIds.has(p.id) ? 'checked' : ''}>
+        </td>
         <td><img class="tbl-img" src="${p.image_url}" onerror="this.src='https://via.placeholder.com/52'" alt=""></td>
         <td><strong>${p.name}</strong></td>
         <td>${p.product_no}</td>
@@ -906,6 +1031,7 @@
         </td>
       </tr>`).join('');
   }
+
 
   window.filterTable = function(val) {
     const v = val.toLowerCase();
@@ -955,7 +1081,7 @@
     saveBtn.disabled = true; saveBtn.textContent = '⏳ Saving...';
     try {
       const updates = { name, product_no:no, category:cat, price, in_stock:inStock };
-      updates.image_url = imgFile ? await uploadImage(imgFile, null, null) : currentEditImageUrl;
+      updates.image_url = imgFile ? await uploadImage(imgFile, cat, no, null, null) : currentEditImageUrl;
       const { error } = await db.from('products').update(updates).eq('id', id);
       if (error) throw error;
       toast(`✅ "${name}" updated!`);
