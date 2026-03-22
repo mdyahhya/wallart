@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Walltone Decors</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/walltone.png">
+    <style>
+        :root {
+            --green: #2E7D32;
+            --green-light: #E8F5E9;
+            --green-mid: #A5D6A7;
+            --green-dark: #1B5E20;
+            --white: #FFFFFF;
+            --black: #111111;
+            --text-secondary: #333333;
+            --text-muted: #555555;
+            --gold-accent: #C9A961;
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-soft: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-medium: 0 8px 30px rgba(0,0,0,0.12);
+            --radius-lg: 15px;
+            --radius-md: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #f8f9fa; color: var(--black); padding-bottom: 80px; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* NAVBAR (same as index.html) */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; height: 80px;
+            background: var(--white); border-bottom: 2px solid var(--green);
+            padding: 0 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+            box-shadow: var(--shadow-soft);
+        }
+        .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--black); }
+        .logo-image-img { width: 42px; height: 42px; border-radius: 8px; border: 2px solid var(--green); object-fit: cover; }
+        .logo-text-container { display: flex; flex-direction: column; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; text-transform: uppercase; line-height: 1.2; }
+        .logo-subtitle { font-size: 0.55rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; }
+
+        .nav-icons { display: flex; gap: 25px; align-items: center; }
+        .nav-icon-link { position: relative; display: flex; align-items: center; color: var(--black); transition: var(--transition-smooth); text-decoration: none; }
+        .nav-icon-link:hover { color: var(--green); transform: scale(1.1); }
+        .nav-icon { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; }
+        .cart-count {
+            position: absolute; top: -8px; right: -8px; background: var(--green); color: var(--white);
+            font-size: 0.7rem; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 600;
+        }
+
+        /* MAIN CONTENT */
+        .cart-container { max-width: 1200px; margin: 120px auto 100px; padding: 0 5%; min-height: 400px; }
+        .cart-title { font-size: 2.5rem; margin-bottom: 40px; text-align: left; }
+
+        .cart-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; }
+
+        /* CART ITEMS */
+        .cart-items-section { background: var(--white); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-soft); border: 1px solid rgba(0,0,0,0.05); }
+        .cart-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+        .select-all-wrap { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--text-muted); cursor: pointer; user-select: none; }
+        .btn-remove-all { background: #fee2e2; border: none; color: #dc2626; padding: 8px 16px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-transform: uppercase; display: none; transition: 0.2s; }
+        .btn-remove-all:hover { background: #fecaca; }
+        .btn-remove-all.show { display: block; }
+
+        .cart-items-list { display: flex; flex-direction: column; }
+        .cart-item { display: grid; grid-template-columns: 40px 100px 1fr 140px 140px; align-items: center; gap: 20px; padding: 25px 0; border-bottom: 1px solid #f2f2f2; transition: var(--transition-smooth); }
+        .cart-item:last-child { border-bottom: none; }
+        .checkbox { cursor: pointer; width: 22px; height: 22px; accent-color: var(--green); }
+        .item-img { width: 100px; height: 100px; border-radius: var(--radius-md); object-fit: cover; background: #f5f5f5; border: 1px solid #eee; transition: transform 0.3s; }
+        .cart-item:hover .item-img { transform: scale(1.03); }
+        .item-info { display: flex; flex-direction: column; gap: 5px; }
+        .item-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 500; color: var(--black); text-decoration: none; transition: 0.2s; }
+        .item-name:hover { color: var(--green); }
+        .item-sku { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; }
+        
+        .item-qty { display: flex; align-items: center; gap: 15px; background: #f1f3f5; padding: 8px 15px; border-radius: 50px; width: fit-content; }
+        .qty-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--green); display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; transition: 0.2s; border-radius: 50%; }
+        .qty-btn:hover { background: var(--green-mid); color: var(--white); }
+        .qty-value { font-weight: 600; font-size: 1rem; width: 30px; text-align: center; }
+
+        .item-price-wrap { text-align: right; }
+        .item-price { font-size: 1.2rem; font-weight: 600; color: var(--green); }
+        .item-unit-price { font-size: 0.75rem; color: #888; margin-top: 2px; }
+        .item-remove-single { background: none; border: none; color: #aaa; cursor: pointer; margin-top: 10px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; transition: 0.2s; border-bottom: 1px solid transparent; }
+        .item-remove-single:hover { color: #dc2626; border-color: #dc2626; }
+
+        /* SUMMARY */
+        .summary-section { background: var(--white); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-soft); height: fit-content; position: sticky; top: 120px; border: 1px solid rgba(0,0,0,0.05); }
+        .summary-title { font-size: 1.6rem; margin-bottom: 25px; border-bottom: 2px solid var(--green-light); padding-bottom: 15px; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 18px; font-size: 0.95rem; color: var(--text-muted); }
+        .summary-row.total { border-top: 2px solid #eee; padding-top: 20px; margin-top: 15px; font-size: 1.4rem; font-weight: 700; color: var(--black); }
+        .summary-row.total .total-price { color: var(--green); }
+        .btn-checkout { 
+            width: 100%; padding: 20px; background: var(--green); color: var(--white); border: none; border-radius: 50px; 
+            font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; 
+            margin-top: 30px; cursor: pointer; transition: var(--transition-smooth); 
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.25);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn-checkout:hover { background: var(--green-dark); transform: translateY(-3px); box-shadow: 0 15px 35px rgba(46, 125, 50, 0.4); }
+        .btn-checkout svg { width: 20px; height: 20px; stroke: currentColor; fill: none; }
+
+        /* EMPTY STATE */
+        .empty-cart { text-align: center; padding: 100px 20px; display: none; background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); max-width: 800px; margin: 40px auto; }
+        .empty-icon { width: 120px; height: 120px; color: var(--green-mid); margin-bottom: 30px; opacity: 0.5; }
+        .empty-cart h3 { font-size: 2rem; margin-bottom: 15px; color: var(--black); }
+        .empty-cart p { color: var(--text-muted); margin-bottom: 40px; font-size: 1.1rem; }
+        .btn-continue { 
+            display: inline-flex; align-items: center; gap: 10px; padding: 18px 45px; background: var(--green); color: var(--white); 
+            border-radius: 50px; font-weight: 600; text-decoration: none; transition: 0.3s; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .btn-continue:hover { background: var(--green-dark); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        /* BOTTOM TASKBAR (same as index.html) */
+        .bottom-taskbar {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 70px;
+            background: var(--white); border-top: 2px solid var(--green-light);
+            display: flex; justify-content: space-around; align-items: center; z-index: 1000;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
+        }
+        .taskbar-btn {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+            padding: 8px; text-decoration: none; color: var(--text-muted); flex: 1; transition: 0.2s;
+        }
+        .taskbar-btn.active, .taskbar-btn:hover { color: var(--green); background: var(--green-light); }
+        .taskbar-icon-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+        .taskbar-icon { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2; }
+        .taskbar-label { font-size: 0.65rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        @media (max-width: 1024px) {
+            .cart-layout { grid-template-columns: 1fr; gap: 30px; }
+            .summary-section { position: relative; top: 0; }
+            .cart-title { font-size: 2rem; margin-bottom: 30px; }
+        }
+        @media (max-width: 768px) {
+            .cart-item { grid-template-columns: 30px 80px 1fr; grid-template-rows: auto auto; column-gap: 15px; row-gap: 10px; border-bottom: 1px solid #eee; padding: 20px 0; }
+            .item-qty { grid-column: 2 / 3; grid-row: 2 / 3; }
+            .item-price-wrap { grid-column: 3 / 4; grid-row: 2 / 3; align-self: center; }
+            .item-img { width: 80px; height: 80px; }
+            .item-name { font-size: 1.1rem; }
+            .navbar { height: 70px; }
+            .cart-container { margin-top: 90px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="walltone.png" class="logo-image-img" alt="Logo">
+            <div class="logo-text-container">
+                <span class="logo">Walltone Decors</span>
+                <span class="logo-subtitle">Premium Metal Art</span>
+            </div>
+        </a>
+        <div class="nav-icons">
+            <a href="products.html" class="nav-icon-link" title="Explore Products">
+                <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+            </a>
+            <a href="cart.html" class="nav-icon-link" title="Your Cart">
+                <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span class="cart-count js-cart-count">0</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="cart-container">
+        <div id="cartContent">
+            <h1 class="cart-title">Shopping Cart</h1>
+            
+            <div class="cart-layout" id="cartLayout">
+                <!-- Left Side: Items -->
+                <div class="cart-items-section">
+                    <div class="cart-header">
+                        <label class="select-all-wrap">
+                            <input type="checkbox" id="selectAll" class="checkbox">
+                            <span>Select All Items</span>
+                        </label>
+                        <button class="btn-remove-all" id="removeSelected">Remove Selected</button>
+                        <span id="itemsCountText" style="font-size: 0.9rem; color: var(--text-muted); font-weight: 500;">0 Items</span>
+                    </div>
+
+                    <div class="cart-items-list" id="cartItemsList">
+                        <!-- Items pumped via JS -->
+                    </div>
+                </div>
+
+                <!-- Right Side: Summary -->
+                <div class="summary-section">
+                    <h3 class="summary-title">Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>GST (18%)</span>
+                        <span id="tax">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping Cost</span>
+                        <span style="color: var(--green); font-weight: 600;">FREE</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Order Total</span>
+                        <span id="total" class="total-price">₹0</span>
+                    </div>
+
+                    <button class="btn-checkout" onclick="handleCheckout()">
+                        Checkout
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                    <div style="text-align: center; margin-top: 15px; font-size: 0.75rem; color: #999;">Secure Checkout & Payments</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty Cart State -->
+        <div class="empty-cart" id="emptyCart">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                <path d="m16 10-4 4-4-4"></path>
+            </svg>
+            <h3>Start Your Collection</h3>
+            <p>Your shopping cart is waiting for some premium metal art. Explore our designs and transform your walls.</p>
+            <a href="products.html" class="btn-continue">
+                Back to Products
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </main>
+
+    <!-- BOTTOM TASKBAR -->
+    <nav class="bottom-taskbar">
+        <a href="index.html" class="taskbar-btn">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </div>
+            <span class="taskbar-label">Home</span>
+        </a>
+        <a href="products.html" class="taskbar-btn">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            </div>
+            <span class="taskbar-label">Products</span>
+        </a>
+        <a href="ai.html" class="taskbar-btn">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            </div>
+            <span class="taskbar-label">AI Cam</span>
+        </a>
+        <a href="cart.html" class="taskbar-btn active">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span class="cart-count js-cart-count">0</span>
+            </div>
+            <span class="taskbar-label">Cart</span>
+        </a>
+        <a href="myprofile.html" class="taskbar-btn">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <span class="taskbar-label">Profile</span>
+        </a>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://sujqcavxkoxkoxwvlzci.supabase.co';
+        const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1anFjYXZ4a294a294d3ZsemNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MDY2MjgsImV4cCI6MjA4ODE4MjYyOH0.ZBMF7adIuR_QR4pOME2UPRHUdnjPbljkt629vK7mJgY';
+        const { createClient } = supabase;
+        const db = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+        async function handleCheckout() {
+            const { data: { session } } = await db.auth.getSession();
+            if (!session) {
+                window.location.href = 'myprofile.html?redirect=checkout';
+            } else {
+                alert('Authentication successful! Final processing...');
+            }
+        }
+        // ═══ PERSISTENT CART LOGIC ═══
+        const STO_KEY = 'walltone_cart';
+
+        function getCart() {
+            try { return JSON.parse(localStorage.getItem(STO_KEY) || '[]'); } 
+            catch { return []; }
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem(STO_KEY, JSON.stringify(cart));
+            renderCart();
+            updateGlobalCounts();
+        }
+
+        function updateGlobalCounts() {
+            const cart = getCart();
+            const totalQty = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            document.querySelectorAll('.js-cart-count').forEach(el => {
+                el.textContent = totalQty;
+                el.style.display = totalQty > 0 ? 'flex' : 'none';
+            });
+            const countText = document.getElementById('itemsCountText');
+            if(countText) countText.textContent = `${cart.length} Item${cart.length !== 1 ? 's' : ''}`;
+        }
+
+        function renderCart() {
+            const cart = getCart();
+            const listEl = document.getElementById('cartItemsList');
+            const cartContent = document.getElementById('cartContent');
+            const emptyEl = document.getElementById('emptyCart');
+
+            if (cart.length === 0) {
+                cartContent.style.display = 'none';
+                emptyEl.style.display = 'block';
+                return;
+            }
+
+            cartContent.style.display = 'block';
+            emptyEl.style.display = 'none';
+
+            listEl.innerHTML = cart.map((item, index) => `
+                <div class="cart-item" data-id="${item.id}">
+                    <div style="display:flex; align-items:center; justify-content:center;">
+                        <input type="checkbox" class="checkbox item-checkbox" data-id="${item.id}">
+                    </div>
+                    <img src="${item.image_url || 'https://via.placeholder.com/150'}" class="item-img" alt="${item.name}">
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-sku">ID: ${item.product_no || 'N/A'}</div>
+                        <button class="item-remove-single" onclick="removeItem('${item.id}')">Remove</button>
+                    </div>
+                    <div class="item-qty">
+                        <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                        <span class="qty-value">${item.quantity || 1}</span>
+                        <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+                    </div>
+                    <div class="item-price-wrap">
+                        <div class="item-price">₹${((item.price || 0) * (item.quantity || 1)).toLocaleString('en-IN')}</div>
+                        <div class="item-unit-price">₹${Number(item.price || 0).toLocaleString('en-IN')} each</div>
+                    </div>
+                </div>
+            `).join('');
+
+            calculateTotals(cart);
+            setupSelectionHandlers();
+        }
+
+        function calculateTotals(cart) {
+            const subtotal = cart.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 1)), 0);
+            const tax = Math.round(subtotal * 0.18);
+            const total = subtotal + tax;
+
+            if(document.getElementById('subtotal')) document.getElementById('subtotal').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+            if(document.getElementById('tax')) document.getElementById('tax').textContent = `₹${tax.toLocaleString('en-IN')}`;
+            if(document.getElementById('total')) document.getElementById('total').textContent = `₹${total.toLocaleString('en-IN')}`;
+        }
+
+        function updateQty(id, delta) {
+            let cart = getCart();
+            const idx = cart.findIndex(item => item.id === id);
+            if (idx > -1) {
+                cart[idx].quantity = (cart[idx].quantity || 1) + delta;
+                if (cart[idx].quantity < 1) cart[idx].quantity = 1;
+                saveCart(cart);
+            }
+        }
+
+        function removeItem(id) {
+            let cart = getCart();
+            cart = cart.filter(item => item.id !== id);
+            saveCart(cart);
+        }
+
+        // ═══ MULTI-SELECT HANDLERS ═══
+        function setupSelectionHandlers() {
+            const selectAll = document.getElementById('selectAll');
+            const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+            const removeSelectedBtn = document.getElementById('removeSelected');
+
+            if(!selectAll) return;
+
+            selectAll.onchange = (e) => {
+                itemCheckboxes.forEach(cb => cb.checked = e.target.checked);
+                toggleBtn();
+            };
+
+            itemCheckboxes.forEach(cb => {
+                cb.onchange = () => {
+                    selectAll.checked = Array.from(itemCheckboxes).every(c => c.checked);
+                    toggleBtn();
+                };
+            });
+
+            function toggleBtn() {
+                const checkedCount = Array.from(itemCheckboxes).filter(c => c.checked).length;
+                removeSelectedBtn.classList.toggle('show', checkedCount > 0);
+                removeSelectedBtn.textContent = `Remove Selected (${checkedCount})`;
+            }
+
+            removeSelectedBtn.onclick = () => {
+                if (!confirm('Remove selected items?')) return;
+                const checkedIds = Array.from(itemCheckboxes).filter(c => c.checked).map(c => c.dataset.id);
+                let cart = getCart();
+                cart = cart.filter(item => !checkedIds.includes(item.id));
+                saveCart(cart);
+                selectAll.checked = false;
+            };
+        }
+
+        // ═══ INIT & SYNC ═══
+        window.addEventListener('load', () => {
+            renderCart();
+            updateGlobalCounts();
+        });
+
+        // Sync count if storage changed from another tab
+        window.addEventListener('storage', (e) => {
+            if (e.key === STO_KEY) {
+                renderCart();
+                updateGlobalCounts();
+            }
+        });
+    </script>
+</body>
+</html>
