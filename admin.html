@@ -1040,38 +1040,47 @@
   // AI ASSET LOGIC
   // ══════════════════════════════════════════════
   window.checkProductForAI = function() {
-    const no = document.getElementById('ai-no').value.trim().toUpperCase();
+    const rawNo = document.getElementById('ai-no').value.trim().toUpperCase();
     const cat = document.getElementById('ai-category').value;
     const preview = document.getElementById('ai-product-preview');
     const btn = document.getElementById('aiUploadBtn');
 
-    if (!cat || !no) {
+    if (!cat || !rawNo) {
       preview.style.display = 'none';
       btn.disabled = true;
+      delete btn.dataset.realNo;
       return;
     }
 
-    const matchedProd = allProductsCache.find(p => p.category === cat && p.product_no.toUpperCase() === no);
+    const matchedProd = allProductsCache.find(p => {
+      if (p.category !== cat) return false;
+      const pNo = p.product_no.toUpperCase();
+      // Match exact, suffix match, or purely digits match 
+      return pNo === rawNo || pNo.endsWith(rawNo) || pNo.replace(/\D/g, '') === rawNo.replace(/\D/g, '');
+    });
     
     if (matchedProd) {
       preview.innerHTML = `
         <img src="${matchedProd.image_url}" style="width:60px;height:60px;border-radius:8px;object-fit:cover; border: 2px solid var(--green);">
         <div>
-          <div style="font-weight:600;font-size:0.95rem;">${matchedProd.name}</div>
+          <div style="font-weight:600;font-size:0.95rem;">${matchedProd.name} <span style="color:var(--green)">(${matchedProd.product_no})</span></div>
           <div style="font-size:0.8rem;color:var(--text-muted);">Matches exactly! You can upload the transparent image for this product.</div>
         </div>
       `;
       preview.style.display = 'flex';
+      btn.dataset.realNo = matchedProd.product_no;
       btn.disabled = false;
     } else {
       preview.innerHTML = `<div style="color:#C62828;font-size:0.85rem;padding:5px;">❌ Product not found. Ensure Category and Product No. are correct.</div>`;
       preview.style.display = 'block';
       btn.disabled = true;
+      delete btn.dataset.realNo;
     }
   };
 
   window.uploadAiImage = async function() {
-    const no = document.getElementById('ai-no').value.trim().toUpperCase();
+    const btn = document.getElementById('aiUploadBtn');
+    const no = btn.dataset.realNo; // Retrieve precisely matched product number
     const cat = document.getElementById('ai-category').value;
     const fileInput = document.getElementById('ai-image');
     
@@ -1081,7 +1090,6 @@
     }
     const file = fileInput.files[0];
 
-    const btn = document.getElementById('aiUploadBtn');
     btn.disabled = true; btn.textContent = '⏳ Uploading AI Asset...';
 
     try {
