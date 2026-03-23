@@ -371,7 +371,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px;
+            padding: 20px;
             overflow: auto;
             min-height: 0;
             position: relative;
@@ -607,8 +607,8 @@
         }
 
         .fullscreen-image {
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
         }
 
@@ -766,8 +766,8 @@
             }
 
             .toolbar-btn {
-                font-size: 11px;
-                padding: 6px 10px;
+                font-size: 13px;
+                padding: 10px 14px;
                 min-width: auto;
                 flex: 0 0 auto;
             }
@@ -776,15 +776,9 @@
                 display: none;
             }
 
-            .toolbar-btn {
-                font-size: 12px;
-                padding: 8px 12px;
-                min-width: fit-content;
-            }
-
             .toolbar-btn svg {
-                width: 14px;
-                height: 14px;
+                width: 16px;
+                height: 16px;
             }
 
             .realism-controls {
@@ -1130,11 +1124,17 @@
                     </svg>
                     Reset
                 </button>
-                <button class="toolbar-btn primary" onclick="exportImage()" title="Export Image">
+                <button class="toolbar-btn" onclick="applyAiEnhance()" title="AI Enhance Quality" style="background: linear-gradient(135deg, #4f46e5, #9333ea); color: white; border: none; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09l2.846.813-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
+                    </svg>
+                    AI
+                </button>
+                <button class="toolbar-btn primary" onclick="exportImage()" title="Download Image">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m14-7l-5 5-5-5m5-4v12" />
                     </svg>
-                    Export
+                    Download
                 </button>
                 <button class="toolbar-btn" onclick="toggleFullscreen()" title="Fullscreen Preview">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1480,23 +1480,44 @@
 
             reader.onload = function (e) {
                 fabric.Image.fromURL(e.target.result, function (img) {
-                    // Scale image to fit canvas
-                    const scale = Math.min(
-                        canvas.width / img.width,
-                        canvas.height / img.height
+                    // Set canvas size dynamically to match wrapper, getting max available area
+                    const wrapper = document.querySelector('.canvas-wrapper');
+                    const maxWidth = wrapper.clientWidth;
+                    const maxHeight = wrapper.clientHeight;
+                    
+                    // Adjust canvas size to fill the screen better based on image ratio
+                    const aspectRatio = img.width / img.height;
+                    let newWidth = maxWidth;
+                    let newHeight = newWidth / aspectRatio;
+
+                    if (newHeight > maxHeight) {
+                        newHeight = maxHeight;
+                        newWidth = newHeight * aspectRatio;
+                    }
+
+                    // Dynamically set canvas to match the image dimensions inside the wrapper
+                    canvas.setWidth(newWidth);
+                    canvas.setHeight(newHeight);
+                    canvas.setZoom(1); // Keep zoom natural
+
+                    // Scale image to perfectly stretch across the entire canvas
+                    const scale = Math.max(
+                        newWidth / img.width,
+                        newHeight / img.height
                     );
 
                     img.scale(scale);
-                    // Center and scale image properly
-                    const centerLeft = (canvas.width / canvas.getZoom() - img.width * scale) / 2;
-                    const centerTop = (canvas.height / canvas.getZoom() - img.height * scale) / 2;
+                    
+                    // Center the image within the newly sized canvas
+                    const centerLeft = (newWidth - img.width * scale) / 2;
+                    const centerTop = (newHeight - img.height * scale) / 2;
 
                     img.set({
                         left: centerLeft,
                         top: centerTop,
-                        selectable: true,
-                        evented: true,
-                        lockRotation: false
+                        selectable: false, // Backgrounds shouldn't be moved manually usually
+                        evented: false,
+                        lockRotation: true
                     });
 
 
@@ -1693,6 +1714,52 @@
         }
 
         // ===============================================
+        // AI ENHANCE FUNCTIONALITY
+        // ===============================================
+        
+        function applyAiEnhance() {
+            if (!canvas.getObjects().some(obj => obj !== backgroundImage)) {
+                alert("Please add at least one decor item first!");
+                return;
+            }
+
+            // Show futuristic AI processing animation
+            document.getElementById('aiProcessingText').textContent = "Maximizing realism...";
+            const overlay = document.getElementById('aiProcessingOverlay');
+            overlay.classList.add('active');
+            
+            // Allow the overlay some time to show
+            setTimeout(() => {
+                
+                // Add soft, realistic shadows naturally without changing the structural filters
+                const objects = canvas.getObjects();
+                objects.forEach(obj => {
+                    if (obj !== backgroundImage) {
+                        obj.set('shadow', new fabric.Shadow({
+                            color: 'rgba(0,0,0,0.5)',
+                            blur: 15,
+                            offsetX: 5,
+                            offsetY: 8
+                        }));
+                        
+                        // Slightly bump contrast to pop
+                        obj.filters.push(new fabric.Image.filters.Contrast({ contrast: 0.05 }));
+                        obj.applyFilters();
+                    }
+                });
+                
+                canvas.renderAll();
+                
+                // Hide animation after "processing"
+                setTimeout(() => {
+                    overlay.classList.remove('active');
+                    if (navigator.vibrate) navigator.vibrate([100, 50, 100]); // Futuristic double vibrate
+                }, 1500);
+
+            }, 500);
+        }
+
+        // ===============================================
         // EXPORT & SHARING
         // ===============================================
 
@@ -1701,11 +1768,11 @@
             canvas.discardActiveObject();
             canvas.renderAll();
 
-            // Export as data URL
+            // Export as data URL (Mutiplier 4 for Ultra High Quality Desktop/Mobile Download)
             const dataURL = canvas.toDataURL({
                 format: 'png',
                 quality: 1,
-                multiplier: 2 // Higher resolution export
+                multiplier: 4 // Maximum resolution export
             });
 
             // Show export options
@@ -1728,13 +1795,13 @@
             `;
 
             dialog.innerHTML = `
-                <h3 style="margin: 0 0 16px 0; font-size: 18px;">Export Your Design</h3>
+                <h3 style="margin: 0 0 16px 0; font-size: 18px;">Download Your Design</h3>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
                     <button onclick="downloadImage('${dataURL}')" class="upload-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m14-7l-5 5-5-5m5-4v12"/>
                         </svg>
-                        Download PNG
+                        Download HD Image
                     </button>
                     <button onclick="shareToWhatsApp('${dataURL}')" class="upload-btn" style="background: #25D366;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
@@ -1772,13 +1839,13 @@
             fetch(dataURL)
                 .then(res => res.blob())
                 .then(blob => {
-                    const file = new File([blob], 'wall-decor.png', { type: 'image/png' });
+                    const file = new File([blob], 'walltone-design.png', { type: 'image/png' });
 
                     if (navigator.share && navigator.canShare({ files: [file] })) {
                         navigator.share({
                             files: [file],
-                            title: 'My Wall Decor Design',
-                            text: 'Check out my wall decor design!'
+                            title: 'Walltone Design',
+                            text: 'Make yours using AI Decor Visualizer by Walltone: https://walltone.in'
                         }).then(() => {
                             closeExportDialog();
                         }).catch(err => {
@@ -1792,7 +1859,7 @@
         }
 
         function fallbackWhatsAppShare() {
-            const message = encodeURIComponent('Check out my wall decor design!');
+            const message = encodeURIComponent('Make yours using AI Decor Visualizer by Walltone: https://walltone.in');
             const whatsappUrl = `https://wa.me/?text=${message}`;
             window.open(whatsappUrl, '_blank');
             closeExportDialog();
