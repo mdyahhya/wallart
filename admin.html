@@ -583,7 +583,7 @@
           <div class="form-group" style="margin-top: 10px;">
             <label>Transparent Image (PNG/WEBP)</ *</label>
             <div class="img-upload-area" onclick="document.getElementById('ai-image').click()">
-              <input type="file" id="ai-image" accept="image/png, image/webp" onchange="previewImages(this, 'ai-preview')"/>
+              <input type="file" id="ai-image" accept="image/png, image/webp" onchange="previewImages(this, 'ai-preview')" onclick="this.value=null"/>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
               <p>Click to upload Transparent Image without background</p>
             </div>
@@ -1052,6 +1052,12 @@
       return;
     }
 
+    if (allProductsCache.length === 0) {
+      preview.innerHTML = `<div style="color:var(--text-muted);font-size:0.85rem;padding:5px;">⏳ Syncing with database...</div>`;
+      preview.style.display = 'block';
+      return;
+    }
+
     const matchedProd = allProductsCache.find(p => {
       if (p.category !== cat) return false;
       const pNo = p.product_no.toUpperCase();
@@ -1064,14 +1070,14 @@
         <img src="${matchedProd.image_url}" style="width:60px;height:60px;border-radius:8px;object-fit:cover; border: 2px solid var(--green);">
         <div>
           <div style="font-weight:600;font-size:0.95rem;">${matchedProd.name} <span style="color:var(--green)">(${matchedProd.product_no})</span></div>
-          <div style="font-size:0.8rem;color:var(--text-muted);">Matches exactly! You can upload the transparent image for this product.</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);">Matches found! Click upload below to attach transparent overlay.</div>
         </div>
       `;
       preview.style.display = 'flex';
       btn.dataset.realNo = matchedProd.product_no;
       btn.disabled = false;
     } else {
-      preview.innerHTML = `<div style="color:#C62828;font-size:0.85rem;padding:5px;">❌ Product not found. Ensure Category and Product No. are correct.</div>`;
+      preview.innerHTML = `<div style="color:#C62828;font-size:0.85rem;padding:5px;">❌ Product not found in ${cat.replace(/_/g,' ')}. Check the No.</div>`;
       preview.style.display = 'block';
       btn.disabled = true;
       delete btn.dataset.realNo;
@@ -1080,17 +1086,28 @@
 
   window.uploadAiImage = async function() {
     const btn = document.getElementById('aiUploadBtn');
-    const no = btn.dataset.realNo; // Retrieve precisely matched product number
+    const no = btn.dataset.realNo;
     const cat = document.getElementById('ai-category').value;
     const fileInput = document.getElementById('ai-image');
     
+    if (!no) {
+      toast('❌ No product matched. Check Product No.', true);
+      return;
+    }
     if (!fileInput.files.length) {
-      toast('❌ Please select a transparent image file.', true);
+      toast('❌ Please select a transparent image first.', true);
       return; 
     }
-    const file = fileInput.files[0];
 
-    btn.disabled = true; btn.textContent = '⏳ Uploading AI Asset...';
+    const file = fileInput.files[0];
+    if (!['image/png', 'image/webp'].includes(file.type)) {
+      toast('❌ AI assets must be PNG or WEBP only.', true);
+      return;
+    }
+
+    btn.disabled = true; 
+    const originalText = btn.textContent;
+    btn.textContent = '⏳ Uploading AI Asset...';
 
     try {
       document.getElementById('ai-progress').style.display = 'block';
@@ -1099,44 +1116,41 @@
       const ext = file.name ? file.name.split('.').pop() : 'png';
       const filePath = `transparent_${cat}/${no}.${ext}`;
       
+      // 1. Storage Upload
       const { error: uploadErr } = await db.storage.from('ai-images').upload(filePath, file, { cacheControl:'3600', upsert:true });
       if (uploadErr) throw uploadErr;
 
       document.getElementById('ai-progress-bar').style.width = '100%';
       const transparentUrl = db.storage.from('ai-images').getPublicUrl(filePath).data.publicUrl;
 
-      // Check if exists
-      const { data: existingAsset } = await db.from('ai_assets').select('id').eq('product_no', no).single();
+      // 2. Table Upsert
+      const { error: dbErr } = await db.from('ai_assets').upsert({
+         product_no: no,
+         category: cat,
+         transparent_image_url: transparentUrl
+      }, { onConflict: 'product_no' });
       
-      if (existingAsset) {
-        // Update
-        const { error: dbErr } = await db.from('ai_assets').update({
-          transparent_image_url: transparentUrl,
-          category: cat
-        }).eq('id', existingAsset.id);
-        if (dbErr) throw dbErr;
-      } else {
-        // Insert
-        const { error: dbErr } = await db.from('ai_assets').insert([{
-           product_no: no,
-           category: cat,
-           transparent_image_url: transparentUrl
-        }]);
-        if (dbErr) throw dbErr;
-      }
+      if (dbErr) throw dbErr;
 
       toast(`✅ AI image for ${no} uploaded!`);
+      
+      // Reset form
       document.getElementById('ai-no').value = '';
-      document.getElementById('ai-category').value = '';
       document.getElementById('ai-image').value = '';
       document.getElementById('ai-preview').innerHTML = '';
       document.getElementById('ai-product-preview').style.display = 'none';
-      setTimeout(() => { document.getElementById('ai-progress').style.display = 'none'; document.getElementById('ai-progress-bar').style.width = '0%'; }, 500);
+      delete btn.dataset.realNo;
 
     } catch (err) {
+      console.error("AI Upload error:", err);
       toast('❌ AI Upload failed: ' + err.message, true);
     } finally {
-      btn.textContent = '➕ Upload AI Asset';
+      btn.textContent = originalText;
+      // Button will be re-enabled when person types new product no.
+      setTimeout(() => { 
+        document.getElementById('ai-progress').style.display = 'none'; 
+        document.getElementById('ai-progress-bar').style.width = '0%'; 
+      }, 500);
     }
   };
 
