@@ -521,7 +521,7 @@
         .fab-container {
             display: none;
             position: fixed;
-            bottom: 24px;
+            bottom: 80px;
             right: 24px;
             z-index: 1000;
             flex-direction: column;
@@ -552,40 +552,87 @@
             height: 24px;
         }
 
-        /* Mobile Drawer */
-        .mobile-drawer {
+        /* Mobile Bottom Bar & Popup */
+        .mobile-bottom-bar {
             display: none;
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             background: white;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.1);
-            z-index: 200;
-            transform: translateY(calc(100% - 60px));
-            transition: transform 0.3s ease;
-            max-height: 70vh;
+            padding: 12px 20px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
 
-        .mobile-drawer.open {
-            transform: translateY(0);
+        .mobile-bottom-bar .upload-large-btn {
+            width: 100%;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
-        .drawer-handle {
-            width: 40px;
-            height: 4px;
-            background: #ccc;
-            border-radius: 2px;
-            margin: 12px auto;
+        .mobile-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 2000;
+            overflow-y: auto;
+            flex-direction: column;
+            animation: slideUp 0.3s ease;
+        }
+
+        .mobile-popup.open {
+            display: flex;
+        }
+
+        .mobile-popup-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e5e5;
+            z-index: 10;
+        }
+
+        .mobile-popup-header h2 {
+            font-size: 18px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .mobile-popup-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            line-height: 1;
+            padding: 0 10px;
             cursor: pointer;
         }
 
-        .drawer-content {
-            padding: 0 20px 20px;
-            overflow-y: auto;
-            max-height: calc(70vh - 80px);
+        .mobile-popup-content {
+            padding: 20px;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
 
         /* Fullscreen Mode */
@@ -840,7 +887,7 @@
                 right: 16px;
             }
 
-            .mobile-drawer {
+            .mobile-bottom-bar {
                 display: block;
             }
 
@@ -1155,7 +1202,6 @@
             </div>
         </aside>
 
-        <!-- Canvas Area -->
         <main class="canvas-container-wrapper">
             <!-- Toolbar -->
             <div class="canvas-toolbar">
@@ -1165,25 +1211,11 @@
                     </svg>
                     Undo
                 </button>
-                <button class="toolbar-btn" onclick="redoAction()" title="Redo">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 7v6h-6M3 17a9 9 0 019-9 9 9 0 016 2.3l3 2.7" />
-                    </svg>
-                    Redo
-                </button>
                 <button class="toolbar-btn danger" onclick="deleteSelected()" title="Delete Selected">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
                     </svg>
                     Delete
-                </button>
-                <button class="toolbar-btn" onclick="toggleRealism()" title="Realism Controls">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="3" />
-                        <path
-                            d="M12 1v6m0 6v6M5.6 5.6l4.2 4.2m4.2 4.2l4.2 4.2M1 12h6m6 0h6M5.6 18.4l4.2-4.2m4.2-4.2l4.2-4.2" />
-                    </svg>
-                    Effects
                 </button>
                 <button class="toolbar-btn" onclick="resetCanvas()" title="Reset All">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1205,12 +1237,6 @@
                         <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m14-7l-5 5-5-5m5-4v12" />
                     </svg>
                     Download
-                </button>
-                <button class="toolbar-btn" onclick="toggleFullscreen()" title="Fullscreen Preview">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path
-                            d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
-                    </svg>
                 </button>
             </div>
 
@@ -1257,10 +1283,23 @@
             </div>
         </main>
 
-        <!-- Mobile Drawer -->
-        <div class="mobile-drawer" id="mobileDrawer">
-            <div class="drawer-handle" onclick="toggleDrawer()"></div>
-            <div class="drawer-content">
+        <!-- Mobile Bottom Bar -->
+        <div class="mobile-bottom-bar">
+            <button class="upload-large-btn" onclick="toggleMobilePopup()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                </svg>
+                Upload / Add Decor
+            </button>
+        </div>
+
+        <!-- Mobile Popup -->
+        <div class="mobile-popup" id="mobilePopup">
+            <div class="mobile-popup-header">
+                <h2>Add Wall Image or Decor</h2>
+                <button class="mobile-popup-close" onclick="toggleMobilePopup()">&times;</button>
+            </div>
+            <div class="mobile-popup-content">
                 <div class="upload-section">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                         <button class="upload-btn" onclick="triggerFileUpload()">
@@ -1436,7 +1475,6 @@
             initializeCanvas();
             loadProducts();
             setupDragAndDrop();
-            setupMobileDrawer();
         });
 
         function initializeCanvas() {
@@ -1641,11 +1679,8 @@
                     hideSpinner();
                     saveHistory();
 
-                    // Close sidebar automatically on mobile
-                    if (window.innerWidth <= 768) {
-                        const sidebar = document.getElementById('sidebar');
-                        sidebar.classList.remove('open');
-                    }
+                    // Close popup automatically on adding wall
+                    closeMobilePopup();
                 });
             };
 
@@ -1686,8 +1721,8 @@
                     hideAiProcessing();
                 }, 800);
 
-                // Close mobile drawer if open
-                closeMobileDrawer();
+                // Close mobile popup if open
+                closeMobilePopup();
 
                 // Haptic feedback on mobile if supported
                 if (navigator.vibrate) {
@@ -2031,40 +2066,17 @@
         }
 
         // ===============================================
-        // MOBILE DRAWER
+        // MOBILE POPUP
         // ===============================================
 
-        function setupMobileDrawer() {
-            const drawer = document.getElementById('mobileDrawer');
-            const handle = drawer.querySelector('.drawer-handle');
-
-            let startY = 0;
-            let currentY = 0;
-
-            handle.addEventListener('touchstart', function (e) {
-                startY = e.touches[0].clientY;
-            });
-
-            handle.addEventListener('touchmove', function (e) {
-                currentY = e.touches[0].clientY;
-                const diff = startY - currentY;
-
-                if (diff > 50 && !drawer.classList.contains('open')) {
-                    drawer.classList.add('open');
-                } else if (diff < -50 && drawer.classList.contains('open')) {
-                    drawer.classList.remove('open');
-                }
-            });
+        function toggleMobilePopup() {
+            const popup = document.getElementById('mobilePopup');
+            popup.classList.toggle('open');
         }
 
-        function toggleDrawer() {
-            const drawer = document.getElementById('mobileDrawer');
-            drawer.classList.toggle('open');
-        }
-
-        function closeMobileDrawer() {
-            const drawer = document.getElementById('mobileDrawer');
-            drawer.classList.remove('open');
+        function closeMobilePopup() {
+            const popup = document.getElementById('mobilePopup');
+            popup.classList.remove('open');
         }
 
         // ===============================================
