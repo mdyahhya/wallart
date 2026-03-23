@@ -582,11 +582,11 @@
 
           <div class="form-group" style="margin-top: 10px;">
             <label>Transparent Image (PNG/WEBP)</ *</label>
-            <div class="img-upload-area" onclick="document.getElementById('ai-image').click()">
-              <input type="file" id="ai-image" accept="image/png, image/webp" onchange="previewImages(this, 'ai-preview')" onclick="this.value=null"/>
+            <label class="img-upload-area" for="ai-image" style="display: block;">
+              <input type="file" id="ai-image" accept="image/png, image/webp" onchange="previewImages(this, 'ai-preview')" onclick="event.stopPropagation(); this.value=null;"/>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-              <p>Click to upload Transparent Image without background</p>
-            </div>
+              <p>Click to select Transparent Image (PNG/WEBP)</p>
+            </label>
             <div class="img-preview-wrap" id="ai-preview"></div>
             <div class="upload-progress" id="ai-progress" style="display:none;"><div class="upload-progress-bar" id="ai-progress-bar"></div></div>
           </div>
@@ -1091,23 +1091,25 @@
     const fileInput = document.getElementById('ai-image');
     
     if (!no) {
-      toast('❌ No product matched. Check Product No.', true);
+      toast('❌ Match a product first (check No. and Category).', true);
       return;
     }
-    if (!fileInput.files.length) {
-      toast('❌ Please select a transparent image first.', true);
+    if (!fileInput.files || !fileInput.files.length) {
+      toast('❌ No file selected. Please pick a transparent image.', true);
       return; 
     }
 
     const file = fileInput.files[0];
     if (!['image/png', 'image/webp'].includes(file.type)) {
-      toast('❌ AI assets must be PNG or WEBP only.', true);
+      toast('❌ Only PNG or WEBP allowed for transparent AI assets.', true);
       return;
     }
 
     btn.disabled = true; 
     const originalText = btn.textContent;
     btn.textContent = '⏳ Uploading AI Asset...';
+
+    console.log("Starting AI upload for:", no, cat, file.name);
 
     try {
       document.getElementById('ai-progress').style.display = 'block';
@@ -1117,20 +1119,27 @@
       const filePath = `transparent_${cat}/${no}.${ext}`;
       
       // 1. Storage Upload
-      const { error: uploadErr } = await db.storage.from('ai-images').upload(filePath, file, { cacheControl:'3600', upsert:true });
-      if (uploadErr) throw uploadErr;
+      const { data: storageData, error: uploadErr } = await db.storage.from('ai-images').upload(filePath, file, { cacheControl:'3600', upsert:true });
+      if (uploadErr) {
+        console.error("Storage upload failed:", uploadErr);
+        throw new Error("Storage: " + uploadErr.message);
+      }
 
       document.getElementById('ai-progress-bar').style.width = '100%';
       const transparentUrl = db.storage.from('ai-images').getPublicUrl(filePath).data.publicUrl;
 
       // 2. Table Upsert
+      // We explicitly use 'onConflict: product_no' but it works best if product_no is unique or primary key
       const { error: dbErr } = await db.from('ai_assets').upsert({
          product_no: no,
          category: cat,
          transparent_image_url: transparentUrl
       }, { onConflict: 'product_no' });
       
-      if (dbErr) throw dbErr;
+      if (dbErr) {
+         console.error("Database upsert failed:", dbErr);
+         throw new Error("Database Table: " + dbErr.message);
+      }
 
       toast(`✅ AI image for ${no} uploaded!`);
       
@@ -1143,10 +1152,10 @@
 
     } catch (err) {
       console.error("AI Upload error:", err);
-      toast('❌ AI Upload failed: ' + err.message, true);
+      toast('❌ Failed: ' + err.message, true);
     } finally {
       btn.textContent = originalText;
-      // Button will be re-enabled when person types new product no.
+      btn.disabled = true; // Stay disabled until next product match
       setTimeout(() => { 
         document.getElementById('ai-progress').style.display = 'none'; 
         document.getElementById('ai-progress-bar').style.width = '0%'; 
