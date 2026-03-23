@@ -1433,9 +1433,18 @@
             const maxHeight = wrapper.clientHeight;
 
             if (backgroundImage) {
-                // Keep the canvas covering the wrapper area, but don't squish or reset the image bounds
-                canvas.setWidth(maxWidth);
-                canvas.setHeight(maxHeight);
+                // Update canvas dimension boundaries to fit within the new resizing wrapper smoothly
+                const aspectRatio = backgroundImage.width / backgroundImage.height;
+                let newWidth = maxWidth;
+                let newHeight = newWidth / aspectRatio;
+
+                if (newHeight > maxHeight) {
+                    newHeight = maxHeight;
+                    newWidth = newHeight * aspectRatio;
+                }
+                
+                canvas.setWidth(newWidth);
+                canvas.setHeight(newHeight);
                 canvas.renderAll();
             } else {
                 const aspectRatio = 4 / 3;
@@ -1564,25 +1573,18 @@
                         newWidth = newHeight * aspectRatio;
                     }
 
-                    // Dynamically set canvas to match the wrapper perfectly
-                    canvas.setWidth(maxWidth);
-                    canvas.setHeight(maxHeight);
+                    // Dynamically set canvas to exactly match the fitted dimensions
+                    canvas.setWidth(newWidth);
+                    canvas.setHeight(newHeight);
                     canvas.setZoom(1); // Keep zoom natural
 
-                    // Scale image to perfectly cover the entire canvas wrapper
-                    const scaleX = maxWidth / img.width;
-                    const scaleY = maxHeight / img.height;
-                    const scale = Math.max(scaleX, scaleY);
-
+                    // Scale image to perfectly stretch across this newly fitted canvas
+                    const scale = newWidth / img.width;
                     img.scale(scale);
 
-                    // Center the image within the newly sized canvas
-                    const centerLeft = (maxWidth - img.width * scale) / 2;
-                    const centerTop = (maxHeight - img.height * scale) / 2;
-
                     img.set({
-                        left: centerLeft,
-                        top: centerTop,
+                        left: 0,
+                        top: 0,
                         selectable: true, // Allow user to manually move/resize the wall
                         evented: true,
                         lockRotation: true // Prevent accidental rotation of the wall
