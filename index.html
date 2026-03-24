@@ -5,7 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walltone Decors | Premium Metal Wall Art & Home Decor</title>
-    <script>if('serviceWorker'in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(sw){sw.unregister();});});caches.keys().then(function(k){k.forEach(function(c){caches.delete(c);});});}</script>
+    <script>
+        // Kill Switch: overwrite any old SW + clear all caches
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+                regs.forEach(function(sw) { sw.unregister(); });
+            });
+            // Force-register the new kill-switch to be sure it cleans up
+            navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                console.log('SW Kill Switch Active');
+            });
+            caches.keys().then(function(k) {
+                k.forEach(function(c) { caches.delete(c); });
+            });
+        }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
