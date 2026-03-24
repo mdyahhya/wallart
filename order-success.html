@@ -7,7 +7,21 @@
     <meta name="description" content="Your order request has been placed successfully. Our team will contact you within an hour.">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="/walltone.png">
-    <link rel="manifest" href="/manifest.json">
+    <script>
+        // Kill Switch: overwrite any old SW + clear all caches (Main Site Repo)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+                regs.forEach(function(sw) { sw.unregister(); });
+            });
+            // Force-register the new kill-switch to be sure it cleans up
+            navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                console.log('SW Kill Switch Active');
+            });
+            caches.keys().then(function(k) {
+                k.forEach(function(c) { caches.delete(c); });
+            });
+        }
+    </script>
     <style>
         :root {
             --green: #2E7D32;
