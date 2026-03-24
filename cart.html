@@ -477,7 +477,9 @@
                 const result = await resp.json();
                 if (resp.ok && result.success) {
                     console.log('✅ NOTIFICATION SUCCESS:', result);
-                    console.log(`Alerted ${result.results.length} admin device(s).`);
+                    // Use result.stats.success to see how many were sent
+                    const count = (result.stats && result.stats.success) || 0;
+                    console.log(`Alerted ${count} admin device(s).`);
                 } else {
                     console.error('❌ NOTIFICATION FAILED:', result);
                     console.error(`Status: ${resp.status}. Error: ${result.error || 'Unknown error'}`);
