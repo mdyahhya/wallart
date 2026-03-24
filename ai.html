@@ -225,22 +225,6 @@
             padding: 12px;
         }
 
-        /* ICONS ON AI MODELS */
-        .ai-actions {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.4);
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            opacity: 0; transition: all 0.2s; z-index: 5;
-        }
-        .product-item:hover .ai-actions { opacity: 1; }
-        .ai-icon-btn {
-            width: 32px; height: 32px; background: rgba(255,255,255,0.9);
-            border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 0.2s; color: #1a1a1a;
-        }
-        .ai-icon-btn:hover { transform: scale(1.15); background: #1a1a1a; color: white; }
-        .ai-icon-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
-
-
         /* Canvas Area */
         .canvas-container-wrapper {
             flex: 1;
@@ -1623,19 +1607,11 @@
                 item.innerHTML = `
             <img src="${product.src}" alt="${product.name}" draggable="false" crossorigin="anonymous">
             <div class="product-caption">${product.sourceCode}</div>
-            <div class="ai-actions">
-               <button class="ai-icon-btn" onclick="event.stopPropagation(); openImagePreview('${product.src}', '${product.sourceCode}')">
-                  <svg viewBox="0 0 24 24"><polyline points="11 3 21 3 21 13"/><polyline points="13 21 3 21 3 11"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-               </button>
-               <button class="ai-icon-btn" onclick="event.stopPropagation(); downloadWatermarked('${product.src}', '${product.sourceCode}')">
-                  <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-               </button>
-            </div>
         `;
-
                 item.onclick = () => addProductToCanvas(product);
                 container.appendChild(item);
             });
+
         }
 
 
@@ -1999,12 +1975,31 @@
         }
 
         function downloadImage(dataURL) {
-            const link = document.createElement('a');
-            link.download = `wall-decor-${Date.now()}.png`;
-            link.href = dataURL;
-            link.click();
-            closeExportDialog();
+            const img = new Image();
+            img.src = dataURL;
+            img.onload = function() {
+                const canvasW = document.createElement("canvas");
+                canvasW.width = img.width; canvasW.height = img.height;
+                const ctx = canvasW.getContext("2d");
+                
+                // Draw design
+                ctx.drawImage(img, 0, 0);
+
+                // Add Black Watermark (Bottom Right)
+                const size = Math.floor(canvasW.width * 0.035);
+                ctx.font = `600 ${size}px sans-serif`;
+                ctx.fillStyle = "rgba(0, 0, 0, 0.4)"; // Black transparent watermarking
+                ctx.textAlign = "right";
+                ctx.fillText("WALLTONE.IN", canvasW.width - size, canvasW.height - size);
+
+                const link = document.createElement('a');
+                link.download = `walltone-design-${Date.now()}.png`;
+                link.href = canvasW.toDataURL("image/png");
+                link.click();
+                closeExportDialog();
+            };
         }
+
 
         function shareToWhatsApp(dataURL) {
             // Convert canvas to blob and share
@@ -2216,22 +2211,14 @@
                 item.innerHTML = `
             <img src="${product.src}" alt="${product.name}" draggable="false" crossorigin="anonymous">
             <div class="product-caption">${product.sourceCode}</div>
-            <div class="ai-actions">
-               <button class="ai-icon-btn" onclick="event.stopPropagation(); openImagePreview('${product.src}', '${product.sourceCode}')">
-                  <svg viewBox="0 0 24 24"><polyline points="11 3 21 3 21 13"/><polyline points="13 21 3 21 3 11"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-               </button>
-               <button class="ai-icon-btn" onclick="event.stopPropagation(); downloadWatermarked('${product.src}', '${product.sourceCode}')">
-                  <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-               </button>
-            </div>
         `;
-
                 item.onclick = () => {
                     addProductToCanvas(product);
                     closeViewAll();
                 };
                 grid.appendChild(item);
             });
+
         }
 
         function filterProducts() {
@@ -2262,54 +2249,8 @@
             }, 100);
         }
 
-        // ===============================================
-        // PREVIEW & WATERMARKED DOWNLOAD
-        // ===============================================
-        window.openImagePreview = function(url, no) {
-           const wrap = document.createElement('div');
-           wrap.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:11000;display:flex;align-items:center;justify-content:center;padding:20px;cursor:pointer;`;
-           wrap.onclick = () => document.body.removeChild(wrap);
-           
-           const img = document.createElement('img');
-           img.src = url;
-           img.style.cssText = `max-width:100%;max-height:90vh;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,0.5);object-fit:contain;`;
-           
-           const cap = document.createElement('div');
-           cap.textContent = `Product No: ${no}`;
-           cap.style.cssText = `position:absolute;bottom:30px;color:white;font-weight:600;font-size:1.2rem;letter-spacing:1px;`;
-           
-           wrap.appendChild(img);
-           wrap.appendChild(cap);
-           document.body.appendChild(wrap);
-        };
-
-        window.downloadWatermarked = function(imgUrl, pNo) {
-            const img = new Image();
-            img.crossOrigin = "Anonymous";
-            img.src = imgUrl;
-            img.onload = function() {
-                const canvas = document.createElement("canvas");
-                canvas.width = img.width; canvas.height = img.height;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0);
-
-                const size = Math.floor(canvas.width * 0.04);
-                ctx.font = `600 ${size}px sans-serif`;
-                ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-                ctx.textAlign = "right";
-
-                ctx.fillText(pNo, canvas.width - (size), size * 1.5);
-                ctx.font = `italic 500 ${size * 0.7}px sans-serif`;
-                ctx.fillText("walltone.in", canvas.width - (size), canvas.height - (size));
-
-                const link = document.createElement("a");
-                link.download = `WALLTONE_${pNo}.jpg`;
-                link.href = canvas.toDataURL("image/jpeg", 0.9);
-                link.click();
-            };
-        };
-
     </script>
+
 
 </body>
 
