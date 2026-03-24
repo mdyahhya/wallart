@@ -6,6 +6,7 @@
     <title>Shopping Cart | Walltone Decors</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="/walltone.png">
+
     <style>
         :root {
             --green: #2E7D32;
@@ -100,7 +101,59 @@
             display: flex; justify-content: center; align-items: center; gap: 10px;
         }
         .btn-checkout:hover { background: var(--green-dark); transform: translateY(-3px); box-shadow: 0 15px 35px rgba(46, 125, 50, 0.4); }
+        .btn-checkout:disabled { background: #aaa; cursor: not-allowed; transform: none; box-shadow: none; }
         .btn-checkout svg { width: 20px; height: 20px; stroke: currentColor; fill: none; }
+        .btn-orders-link {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 14px; background: var(--green-light); color: var(--green-dark); 
+            border: 2px solid var(--green-mid); border-radius: 50px;
+            font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+            margin-top: 12px; text-decoration: none; transition: var(--transition-smooth);
+        }
+        .btn-orders-link:hover { background: var(--green-mid); transform: translateY(-2px); }
+        .btn-orders-link svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        /* PWA Install Banner */
+        .pwa-banner {
+            position: fixed; bottom: 80px; left: 15px; right: 15px;
+            background: linear-gradient(135deg, #1B5E20, #2E7D32);
+            color: white; border-radius: 18px; padding: 18px 20px;
+            display: flex; align-items: center; gap: 14px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2); z-index: 1500;
+            transform: translateY(200px); transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+            max-width: 500px; margin: 0 auto;
+        }
+        .pwa-banner.show { transform: translateY(0); }
+        .pwa-banner-icon { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.3); object-fit: cover; }
+        .pwa-banner-text { flex: 1; }
+        .pwa-banner-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 2px; }
+        .pwa-banner-sub { font-size: 0.75rem; opacity: 0.85; }
+        .pwa-install-btn { background: white; color: var(--green-dark); border: none; padding: 10px 18px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; cursor: pointer; flex-shrink: 0; transition: 0.2s; }
+        .pwa-install-btn:hover { background: #f0fdf4; }
+        .pwa-dismiss-btn { background: none; border: none; color: rgba(255,255,255,0.7); cursor: pointer; font-size: 1.1rem; padding: 5px; flex-shrink: 0; }
+
+        /* Profile Incomplete Modal */
+        .profile-modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            z-index: 2000; align-items: center; justify-content: center; padding: 20px;
+        }
+        .profile-modal-overlay.open { display: flex; }
+        .profile-modal {
+            background: white; border-radius: 22px; padding: 40px 35px; max-width: 420px; width: 100%;
+            text-align: center; box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+            animation: modalPop 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+        }
+        @keyframes modalPop { from { opacity:0; transform: scale(0.85); } to { opacity:1; transform: scale(1); } }
+        .profile-modal-icon { width: 70px; height: 70px; background: #FFF3CD; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .profile-modal-icon svg { width: 35px; height: 35px; stroke: #C9A961; fill: none; stroke-width: 2; }
+        .profile-modal h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 12px; }
+        .profile-modal p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 25px; }
+        .profile-modal-btns { display: flex; gap: 10px; flex-direction: column; }
+        .btn-go-profile { display: block; padding: 15px; background: var(--green); color: white; border-radius: 50px; font-weight: 700; font-size: 0.85rem; text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em; transition: 0.2s; }
+        .btn-go-profile:hover { background: var(--green-dark); }
+        .btn-cancel-modal { background: none; border: 1px solid #eee; color: var(--text-muted); padding: 12px; border-radius: 50px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; }
+        .btn-cancel-modal:hover { background: #f5f5f5; }
 
         /* EMPTY STATE */
         .empty-cart { text-align: center; padding: 100px 20px; display: none; background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); max-width: 800px; margin: 40px auto; }
@@ -208,11 +261,15 @@
                         <span id="total" class="total-price">₹0</span>
                     </div>
 
-                    <button class="btn-checkout" onclick="handleCheckout()">
-                        Checkout
+                    <button class="btn-checkout" id="checkoutBtn" onclick="handleCheckout()">
+                        Place Order
                         <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
-                    <div style="text-align: center; margin-top: 15px; font-size: 0.75rem; color: #999;">Secure Checkout & Payments</div>
+                    <a href="my-orders.html" class="btn-orders-link">
+                        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1" ry="1"/><path d="M9 12h6M9 16h4"/></svg>
+                        My Orders
+                    </a>
+                    <div style="text-align: center; margin-top: 15px; font-size: 0.75rem; color: #999;">Secure Order — Pay on Delivery</div>
                 </div>
             </div>
         </div>
@@ -232,6 +289,23 @@
             </a>
         </div>
     </main>
+
+    <!-- Profile Incomplete Modal -->
+    <div class="profile-modal-overlay" id="profileModal">
+        <div class="profile-modal">
+            <div class="profile-modal-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h3>Profile Incomplete</h3>
+            <p id="profileModalMsg">To place an order, please complete your profile with your phone number and delivery address first.</p>
+            <div class="profile-modal-btns">
+                <a href="myprofile.html?redirect=checkout" class="btn-go-profile">Complete My Profile</a>
+                <button class="btn-cancel-modal" onclick="document.getElementById('profileModal').classList.remove('open')">Not Now</button>
+            </div>
+        </div>
+    </div>
+
+
 
     <!-- BOTTOM TASKBAR -->
     <nav class="bottom-taskbar">
@@ -274,13 +348,113 @@
         const { createClient } = supabase;
         const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
+        // ═══ CHECKOUT FLOW ═══
         async function handleCheckout() {
+            const cart = getCart();
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            const btn = document.getElementById('checkoutBtn');
+
+            // 1. Check auth
             const { data: { session } } = await db.auth.getSession();
             if (!session) {
                 window.location.href = 'myprofile.html?redirect=checkout';
-            } else {
-                alert('Authentication successful! Final processing...');
+                return;
             }
+
+            // 2. Check profile completeness
+            btn.disabled = true;
+            btn.innerHTML = `<span>Verifying...</span>`;
+
+            const { data: profile } = await db
+                .from('profiles')
+                .select('full_name, phone, address')
+                .eq('id', session.user.id)
+                .single();
+
+            if (!profile || !profile.phone || !profile.address) {
+                btn.disabled = false;
+                btn.innerHTML = `Place Order <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+                const msg = !profile || (!profile.phone && !profile.address)
+                    ? 'Please add your phone number and delivery address to place an order.'
+                    : !profile.phone
+                        ? 'Please add your phone number to place an order.'
+                        : 'Please add your delivery address to place an order.';
+                document.getElementById('profileModalMsg').textContent = msg;
+                document.getElementById('profileModal').classList.add('open');
+                return;
+            }
+
+            // 3. Calculate totals
+            const subtotal = cart.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0);
+            const tax = Math.round(subtotal * 0.18);
+            const total = subtotal + tax;
+
+            btn.innerHTML = `<span>Placing Order...</span>`;
+
+            // 4. Save order to Supabase
+            const { data: orderData, error: orderError } = await db
+                .from('orders')
+                .insert({
+                    user_id: session.user.id,
+                    user_name: profile.full_name || session.user.user_metadata?.full_name || 'Customer',
+                    user_email: session.user.email,
+                    phone: profile.phone,
+                    shipping_address: profile.address,
+                    items: cart,
+                    subtotal: subtotal,
+                    tax: tax,
+                    total_amount: total,
+                    status: 'pending',
+                    created_at: new Date().toISOString()
+                })
+                .select()
+                .single();
+
+            if (orderError) {
+                btn.disabled = false;
+                btn.innerHTML = `Place Order <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+                alert('Failed to place order. Please try again. Error: ' + orderError.message);
+                return;
+            }
+
+            // 5. Send push notification to admin via Netlify function
+            try {
+                await fetch('/.netlify/functions/notify-admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        orderId: orderData.id,
+                        userName: profile.full_name || 'Customer',
+                        phone: profile.phone,
+                        totalAmount: total,
+                        items: cart.map(i => ({
+                            name: i.name,
+                            quantity: i.quantity || 1,
+                            price: i.price,
+                            image_url: i.image_url,
+                            product_no: i.product_no
+                        }))
+                    })
+                });
+            } catch(e) {
+                console.log('Push notification send attempt (non-critical):', e);
+            }
+
+            // 6. Clear cart & store order details for success page
+            sessionStorage.setItem('walltone_last_order', JSON.stringify({
+                order_id: '#' + orderData.id.slice(0,8).toUpperCase(),
+                items: cart,
+                total: total
+            }));
+
+            localStorage.removeItem('walltone_cart');
+
+            // 7. Redirect to success page
+            window.location.href = 'order-success.html';
         }
         // ═══ PERSISTENT CART LOGIC ═══
         const STO_KEY = 'walltone_cart';
@@ -424,6 +598,8 @@
                 updateGlobalCounts();
             }
         });
+
+
     </script>
 </body>
 </html>
