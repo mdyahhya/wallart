@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart | Walltone Decors</title>
-    <!-- Unregister any old service workers + clear their caches (main site has no SW) -->
+    <!-- Kill Switch: register cleanup service worker to force-clear cache (Main Site) -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(regs => {
-                regs.forEach(reg => reg.unregister());
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+                regs.forEach(function(sw) { sw.unregister(); });
             });
-            caches.keys().then(keys => {
-                keys.forEach(key => caches.delete(key));
+            // Force-register the new kill-switch to be sure it cleans up
+            navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                console.log('SW Kill Switch Active');
+            });
+            caches.keys().then(function(k) {
+                k.forEach(function(c) { caches.delete(c); });
             });
         }
     </script>
