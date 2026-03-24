@@ -1,7 +1,11 @@
+# Netlify Configuration for Main Site
 [build]
   functions = "netlify/functions"
   publish = "."
 
+# This plugin automatically installs dependencies inside netlify/functions/package.json
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
 [functions]
-  # This tells Netlify to use esbuild and bundle all requirements from package.json
   node_bundler = "esbuild"
