@@ -100,125 +100,31 @@
         }
 
         /* Gallery */
-        .gallery-container {
-            padding: 80px 5%;
-            text-align: center;
-        }
+        .gallery-container { padding: 60px 5%; text-align: center; min-height: 50vh; }
+        .section-title { font-weight: 800; font-size: 2.2rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; position: relative; display: inline-block; }
+        .section-title::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: var(--green); }
 
-        .section-title {
-            font-weight: 800;
-            font-size: 2.2rem;
-            margin-bottom: 50px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            display: inline-block;
-        }
+        /* Loader inside section */
+        .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; gap: 15px; }
+        .spinner { width: 40px; height: 40px; border: 3px solid #eee; border-top: 3px solid var(--green); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loading-text { font-size: 0.9rem; font-weight: 600; color: #666; }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 4px;
-            background: var(--green);
-        }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; margin-top: 40px; }
+        
+        .gallery-card { position: relative; display: flex; flex-direction: column; transition: transform 0.3s; }
+        .gallery-card:hover { transform: translateY(-5px); }
+        
+        .image-box { aspect-ratio: 1; background: var(--gray); border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 15px; cursor: pointer; }
+        .image-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 35px;
-            margin-top: 60px;
-        }
+        .info-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 5px; }
+        .product-id { font-size: 1rem; font-weight: 800; color: var(--black); letter-spacing: 1px; }
 
-        .gallery-card {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            background: var(--gray);
-            aspect-ratio: 1;
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
+        .download-btn-small { background: #f0f0f0; color: #1a1a1a; width: 34px; height: 34px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .download-btn-small:hover { background: var(--green); color: white; transform: scale(1.1); }
+        .download-btn-small svg { width: 14px; height: 14px; }
 
-        .gallery-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.18);
-        }
-
-        .gallery-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 15px;
-            transition: scale 0.7s ease;
-        }
-
-        .gallery-card:hover img {
-            scale: 1.08;
-        }
-
-        .card-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 25px;
-            color: white;
-            transition: opacity 0.3s;
-        }
-
-        .product-no {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--green);
-            margin-bottom: 5px;
-            background: white;
-            width: fit-content;
-            padding: 2px 10px;
-            border-radius: 4px;
-        }
-
-        .product-name {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .download-btn {
-            background: var(--white);
-            color: var(--black);
-            border: none;
-            padding: 14px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: fit-content;
-            transition: all 0.2s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .download-btn:hover {
-            background: var(--green);
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
-        }
-
-        .download-btn svg {
-            width: 18px;
-            height: 18px;
-        }
 
         /* Modal for Preview */
         .preview-modal {
@@ -290,10 +196,6 @@
         <a href="index.html" style="text-decoration: none; color: var(--green); font-weight:600;">← Back to Home</a>
     </nav>
 
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-        <div class="loading-text">Loading models...</div>
-    </div>
 
     <header class="hero">
 
@@ -305,11 +207,14 @@
     </header>
 
     <main class="gallery-container">
-        <h2 class="section-title">Exclusive Collection 🕒</h2>
-        <div class="gallery-grid" id="galleryGrid">
-            <!-- Products loaded via JS -->
+        <h2 class="section-title">Exclusive Collection</h2>
+        <div class="loading-container" id="loadingContainer">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading models...</div>
         </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
     </main>
+
 
     <div class="preview-modal" id="previewModal">
         <span class="close-modal" id="closeModal">&times;</span>
@@ -322,7 +227,7 @@
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
         async function loadClocks() {
-            const overlay = document.getElementById('loadingOverlay');
+            const loader = document.getElementById('loadingContainer');
             try {
                 const { data, error } = await db.from('products').select('*').eq('category', 'wall_clock').order('product_no', { ascending: true });
                 if (error) throw error;
@@ -331,13 +236,13 @@
                 data.forEach(p => {
                     const card = document.createElement('div');
                     card.className = 'gallery-card';
-                    card.onclick = () => openPreview(p.image_url);
                     card.innerHTML = `
-                        <img src="${p.image_url}" alt="${p.name}" crossorigin="anonymous">
-                        <div class="card-overlay">
-                            <div class="product-no"># ${p.product_no}</div>
-                            <div class="product-name">${p.name}</div>
-                            <button class="download-btn" onclick="event.stopPropagation(); downloadWithWatermark('${p.image_url}', '${p.product_no}')">
+                        <div class="image-box" onclick="openPreview('${p.image_url}')">
+                            <img src="${p.image_url}" alt="${p.name}" crossorigin="anonymous">
+                        </div>
+                        <div class="info-row">
+                            <div class="product-id"># ${p.product_no}</div>
+                            <button class="download-btn-small" onclick="downloadWithWatermark('${p.image_url}', '${p.product_no}')" title="Download">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             </button>
                         </div>
@@ -347,10 +252,10 @@
             } catch (e) {
                 console.error(e);
             } finally {
-                overlay.style.opacity = '0';
-                setTimeout(() => overlay.style.display = 'none', 500);
+                loader.style.display = 'none';
             }
         }
+
 
 
         function openPreview(url) {
