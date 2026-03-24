@@ -3,6 +3,5 @@
   publish = "."
 
 [functions]
-  # This tells Netlify to use esbuild to bundle dependencies from package.json
+  # This tells Netlify to use esbuild and bundle all requirements from package.json
   node_bundler = "esbuild"
-  external_node_modules = ["web-push"]
