@@ -497,8 +497,11 @@
 
             localStorage.removeItem('walltone_cart');
 
-            // 7. Redirect to success page
-            window.location.href = 'order-success.html';
+            // 7. Pause briefly so we can see the DIAGNOSTIC logs above in console
+            console.log('Redirecting to success page in 1.5 seconds...');
+            setTimeout(() => {
+                window.location.href = 'order-success.html';
+            }, 1500);
         }
         // ═══ PERSISTENT CART LOGIC ═══
         const STO_KEY = 'walltone_cart';
