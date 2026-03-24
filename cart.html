@@ -453,6 +453,9 @@
                     ? 'http://localhost:8888/.netlify/functions/notify-admin'
                     : `${window.location.origin}/.netlify/functions/notify-admin`;
 
+                console.log('--- ADMIN NOTIFICATION START ---');
+                console.log('Targeting URL:', notifyUrl);
+
                 const resp = await fetch(notifyUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -470,10 +473,19 @@
                         }))
                     })
                 });
+                
                 const result = await resp.json();
-                console.log('Notify admin result:', result);
+                if (resp.ok && result.success) {
+                    console.log('✅ NOTIFICATION SUCCESS:', result);
+                    console.log(`Alerted ${result.results.length} admin device(s).`);
+                } else {
+                    console.error('❌ NOTIFICATION FAILED:', result);
+                    console.error(`Status: ${resp.status}. Error: ${result.error || 'Unknown error'}`);
+                }
+                console.log('--- ADMIN NOTIFICATION END ---');
             } catch(e) {
-                console.log('Push notification send attempt (non-critical):', e);
+                console.error('⚠️ PUSH NOTIFICATION NETWORK ERROR:', e);
+                console.log('This means the function was not reached at all. Is it deployed?');
             }
 
             // 6. Clear cart & store order details for success page
