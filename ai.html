@@ -265,7 +265,15 @@
             flex-shrink: 0;
         }
 
+        .toolbar-btn.info {
+            background: #fef9c3;
+            color: #854d0e;
+            border-color: #fde047;
+            font-weight: 600;
+        }
+
         .toolbar-btn:hover {
+
             background: #f5f5f5;
             border-color: #1a1a1a;
         }
@@ -653,11 +661,32 @@
             display: flex;
         }
 
-        .fullscreen-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+        /* Instructions Modal */
+        .instr-modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px); z-index: 5000; align-items: center; justify-content: center; padding: 20px;
         }
+        .instr-modal.active { display: flex; }
+        .instr-content {
+            background: white; width: 100%; max-width: 500px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative;
+            animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modalPop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .instr-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .lang-toggle { display: flex; gap: 8px; align-items: center; background: #f5f5f5; padding: 4px; border-radius: 50px; cursor: pointer; border: 1px solid #e5e5e5; }
+        .lang-btn { padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 700; transition: all 0.2s; }
+        .lang-btn.active { background: var(--black); color: white; }
+        
+        .instr-body { padding: 20px; max-height: 70vh; overflow-y: auto; }
+        .instr-video-wrap { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+        .instr-step { margin-bottom: 15px; display: flex; gap: 15px; align-items: flex-start; }
+        .step-num { width: 24px; height: 24px; background: #1a1a1a; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+        .step-txt { font-size: 14px; line-height: 1.5; color: #444; }
+        
+        .close-instr { width: 36px; height: 36px; border-radius: 50%; border: none; background: #f5f5f5; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .close-instr:hover { background: #fee2e2; color: #ef4444; }
 
         .fullscreen-close {
             position: absolute;
@@ -1205,6 +1234,12 @@
         <main class="canvas-container-wrapper">
             <!-- Toolbar -->
             <div class="canvas-toolbar">
+            <!-- How to Use Guide -->
+            <button class="toolbar-btn info" onclick="openInstructions()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                How to Use?
+            </button>
+
                 <button class="toolbar-btn" onclick="undoAction()" title="Undo">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 7v6h6M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" />
@@ -1409,6 +1444,31 @@
                 <div class="modal-grid" id="modalGrid"></div>
                 <div class="no-results" id="noResults" style="display: none;">
                     No products found
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div class="instr-modal" id="instrModal">
+        <div class="instr-content">
+            <div class="instr-header">
+                <div class="lang-toggle" onclick="toggleLanguage()">
+                    <div class="lang-btn active" id="btnEn">English</div>
+                    <div class="lang-btn" id="btnHi">हिन्दी</div>
+                </div>
+                <button class="close-instr" onclick="closeInstructions()">&times;</button>
+            </div>
+            <div class="instr-body">
+                <div class="instr-video-wrap">
+                    <!-- ADD SUPABASE VIDEO LINK HERE in the src below -->
+                    <video id="guideVideo" width="100%" height="100%" controls poster="walltone.png">
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div id="instrSteps">
+                    <!-- Steps injected by JS -->
                 </div>
             </div>
         </div>
@@ -1985,12 +2045,15 @@
                 // Draw design
                 ctx.drawImage(img, 0, 0);
 
-                // Add Black Watermark (Bottom Right)
-                const size = Math.floor(canvasW.width * 0.035);
-                ctx.font = `600 ${size}px sans-serif`;
-                ctx.fillStyle = "rgba(0, 0, 0, 0.4)"; // Black transparent watermarking
+                // Add Bold White Watermark (Bottom Right)
+                const size = Math.floor(canvasW.width * 0.04);
+                ctx.font = `800 ${size}px sans-serif`;
+                ctx.fillStyle = "rgba(255, 255, 255, 0.5)"; // White transparent
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 10;
                 ctx.textAlign = "right";
                 ctx.fillText("WALLTONE.IN", canvasW.width - size, canvasW.height - size);
+
 
                 const link = document.createElement('a');
                 link.download = `walltone-design-${Date.now()}.png`;
@@ -2249,7 +2312,57 @@
             }, 100);
         }
 
+        // ===============================================
+        // INSTRUCTIONS LOGIC (EN/HI)
+        // ===============================================
+        let currentLang = 'en';
+        const instructions = {
+            en: [
+                "1. Click 'Upload Wall' to choose a photo of your empty wall.",
+                "2. Click on any metal art from the left sidebar to add it.",
+                "3. Drag and resize the art with your fingers to fit the wall.",
+                "4. Click 'AI Enhance' to make it look realistic with shadows.",
+                "5. Download your finished design to your phone!"
+            ],
+            hi: [
+                "1. 'Upload Wall' बटन दबाएं और अपनी खाली दीवार की फोटो चुनें।",
+                "2. बाईं ओर से अपनी पसंद की आर्ट चुनें, वह दीवार पर आ जाएगी।",
+                "3. आर्ट को अपनी उंगली से दीवार पर सही जगह सेट करें।",
+                "4. 'AI Enhance' बटन दबाएं ताकि आर्ट असली दीवार जैसी दिखे।",
+                "5. अपना डिज़ाइन पूरा होने पर 'Download' बटन दबाकर फोन में सेव करें।"
+            ]
+        };
+
+        function openInstructions() {
+            renderInstructions();
+            document.getElementById('instrModal').classList.add('active');
+        }
+
+        function closeInstructions() {
+            document.getElementById('instrModal').classList.remove('active');
+            const video = document.getElementById('guideVideo');
+            video.pause();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'hi' : 'en';
+            document.getElementById('btnEn').classList.toggle('active', currentLang === 'en');
+            document.getElementById('btnHi').classList.toggle('active', currentLang === 'hi');
+            renderInstructions();
+        }
+
+        function renderInstructions() {
+            const container = document.getElementById('instrSteps');
+            container.innerHTML = instructions[currentLang].map(step => `
+                <div class="instr-step">
+                    <div class="step-num">${step.split('.')[0]}</div>
+                    <div class="step-txt">${step.split('.')[1]}</div>
+                </div>
+            `).join('');
+        }
+
     </script>
+
 
 
 </body>
