@@ -1,1115 +1,1250 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walltone Studio | Premium Metal Wall Art & Home Decor</title>
+    <title>Walltone Decors | Premium Metal Wall Art & Home Decor</title>
+    <script>if('serviceWorker'in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(sw){sw.unregister();});});caches.keys().then(function(k){k.forEach(function(c){caches.delete(c);});});}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-     <!-- SEO meta -->
-  <meta name="description"
+    <!-- SEO meta -->
+    <meta name="description"
         content="Walltone Decors offers premium handmade metal wall arts, wall clocks and wall mirrors. Transform your walls with unique designer metal decor, crafted in India.">
-  <meta name="keywords"
+    <meta name="keywords"
         content="Walltone Decors, walltone.in, metal wall art, metal wall clocks, metal wall mirrors, handmade wall decor, home decor India">
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="Walltone Decors">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Walltone Decors">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Walltone Decors | Handmade Metal Wall Decor">
-  <meta property="og:description"
+    <!-- Open Graph -->
+    <meta property="og:title" content="Walltone Decors | Handmade Metal Wall Decor">
+    <meta property="og:description"
         content="Shop handmade metal wall arts, clocks and mirrors from Walltone Decors and give your walls a premium designer look.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://walltone.in/">
-  <meta property="og:image" content="https://walltone.in/walltone.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://walltone.in/">
+    <meta property="og:image" content="https://walltone.in/walltone.jpg">
 
-  <!-- Canonical -->
-  <link rel="canonical" href="https://walltone.in/">
+    <!-- Canonical -->
+    <link rel="canonical" href="https://walltone.in/">
 
-  <!-- Favicon line (this is what makes your icon eligible in Google search) -->
-  <link rel="icon" type="image/png" href="/walltone.png">
+    <!-- Favicon line (this is what makes your icon eligible in Google search) -->
+    <link rel="icon" type="image/png" href="/walltone.png">
 
-  <!-- Optional: apple touch icon -->
-  <link rel="apple-touch-icon" href="/walltone.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-   <style>
-   
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    <!-- Optional: apple touch icon -->
+    <link rel="apple-touch-icon" href="/walltone.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-:root {
-    --green: #2E7D32;
-    --green-light: #E8F5E9;
-    --green-mid: #A5D6A7;
-    --green-dark: #1B5E20;
-    --green-muted: #4CAF50;
-    --white: #FFFFFF;
-    --black: #111111;
-    --text-secondary: #333333;
-    --text-muted: #555555;
-    --gold-accent: #C9A961;
+        :root {
+            --green: #2E7D32;
+            --green-light: #E8F5E9;
+            --green-mid: #A5D6A7;
+            --green-dark: #1B5E20;
+            --green-muted: #4CAF50;
+            --white: #FFFFFF;
+            --black: #111111;
+            --text-secondary: #333333;
+            --text-muted: #555555;
+            --gold-accent: #C9A961;
 
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: all 0.3s ease;
-    --shadow-soft: 0 4px 20px rgba(0,0,0,0.08);
-    --shadow-medium: 0 8px 30px rgba(0,0,0,0.12);
-    --shadow-large: 0 15px 50px rgba(0,0,0,0.18);
-}
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.3s ease;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-large: 0 15px 50px rgba(0, 0, 0, 0.18);
+        }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: var(--white);
-    color: var(--black);
-    overflow-x: hidden;
-    line-height: 1.6;
-    padding-bottom: 80px;
-}
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
 
-h1, h2, h3, h4 {
-    font-family: 'Playfair Display', serif;
-}
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+        }
 
-/* ============================================
+        /* ============================================
    NAVIGATION BAR
 ============================================ */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: var(--white);
-    border-bottom: 2px solid var(--green);
-    backdrop-filter: blur(10px);
-    padding: 0 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
-    z-index: 1000;
-    box-shadow: var(--shadow-soft);
-    transition: var(--transition-smooth);
-}
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-bottom: 2px solid var(--green);
+            backdrop-filter: blur(10px);
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            z-index: 1000;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
 
-.navbar.scrolled {
-    height: 70px;
-    box-shadow: var(--shadow-medium);
-}
+        .navbar.scrolled {
+            height: 70px;
+            box-shadow: var(--shadow-medium);
+        }
 
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-.logo-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, var(--green), var(--green-dark));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    color: var(--white);
-    font-weight: 600;
-    border: 2px solid var(--green);
-    transition: var(--transition-fast);
-}
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            font-weight: 600;
+            border: 2px solid var(--green);
+            transition: var(--transition-fast);
+        }
 
-.logo-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
-}
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
 
-.logo-image-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 2px solid var(--green);
-    transition: var(--transition-fast);
-    cursor: pointer;
-}
+        .logo-image-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid var(--green);
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
 
-.logo-image-img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
-}
+        .logo-image-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
 
-.logo-text-container {
-    display: flex;
-    flex-direction: column;
-}
+        .logo-text-container {
+            display: flex;
+            flex-direction: column;
+        }
 
-.logo {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1rem, 2vw, 1.3rem);
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    color: var(--black);
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: var(--transition-fast);
-    line-height: 1.2;
-}
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: var(--black);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: var(--transition-fast);
+            line-height: 1.2;
+        }
 
-.logo:hover {
-    color: var(--green);
-}
+        .logo:hover {
+            color: var(--green);
+        }
 
-.logo-subtitle {
-    font-size: 0.55rem;
-    letter-spacing: 0.12em;
-    color: var(--green);
-    text-transform: uppercase;
-    margin-top: -2px;
-}
+        .logo-subtitle {
+            font-size: 0.55rem;
+            letter-spacing: 0.12em;
+            color: var(--green);
+            text-transform: uppercase;
+            margin-top: -2px;
+        }
 
-.nav-links {
-    display: flex;
-    gap: 40px;
-    list-style: none;
-}
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
 
-.nav-links li a {
-    text-decoration: none;
-    color: var(--black);
-    font-size: 0.95rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    position: relative;
-    transition: var(--transition-fast);
-    padding: 5px 0;
-}
+        .nav-links li a {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            transition: var(--transition-fast);
+            padding: 5px 0;
+        }
 
-.nav-links li a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--green);
-    transition: width 0.3s ease;
-}
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--green);
+            transition: width 0.3s ease;
+        }
 
-.nav-links li a:hover::after {
-    width: 100%;
-}
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
 
-.nav-links li a:hover {
-    color: var(--green);
-}
+        .nav-links li a:hover {
+            color: var(--green);
+        }
 
-.nav-icons {
-    display: flex;
-    gap: 25px;
-    align-items: center;
-}
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
 
-.nav-icon {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    position: relative;
-    stroke: var(--black);
-}
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            position: relative;
+            stroke: var(--black);
+        }
 
-.nav-icon:hover {
-    transform: scale(1.1);
-    stroke: var(--green);
-}
+        .nav-icon:hover {
+            transform: scale(1.1);
+            stroke: var(--green);
+        }
 
-.cart-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: var(--green);
-    color: var(--white);
-    font-size: 0.7rem;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-}
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--green);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+        }
 
-.menu-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 6px;
-    cursor: pointer;
-    padding: 10px;
-}
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+        }
 
-.menu-toggle span {
-    width: 28px;
-    height: 3px;
-    background: var(--black);
-    transition: var(--transition-fast);
-    border-radius: 2px;
-}
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--black);
+            transition: var(--transition-fast);
+            border-radius: 2px;
+        }
 
-.menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
-}
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
 
-.menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-}
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
 
-.menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(8px, -8px);
-}
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
 
-.mobile-menu {
-    position: fixed;
-    top: 80px;
-    left: -100%;
-    width: 100%;
-    height: calc(100vh - 80px);
-    background: var(--white);
-    border-top: 2px solid var(--green-light);
-    display: flex;
-    flex-direction: column;
-    padding: 40px 30px;
-    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 999;
-    overflow-y: auto;
-}
+        .mobile-menu {
+            position: fixed;
+            top: 80px;
+            left: -100%;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: var(--white);
+            border-top: 2px solid var(--green-light);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 30px;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+            overflow-y: auto;
+        }
 
-.mobile-menu.active {
-    left: 0;
-}
+        .mobile-menu.active {
+            left: 0;
+        }
 
-.mobile-menu a {
-    text-decoration: none;
-    color: var(--black);
-    font-size: 1.3rem;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--green-light);
-    transition: var(--transition-fast);
-}
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 1.3rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--green-light);
+            transition: var(--transition-fast);
+        }
 
-.mobile-menu a:hover {
-    color: var(--green);
-    padding-left: 10px;
-}
+        .mobile-menu a:hover {
+            color: var(--green);
+            padding-left: 10px;
+        }
 
-/* ============================================
+        /* ============================================
    HERO SECTION
 ============================================ */
-.hero-section {
-    margin-top: 80px;
-    text-align: center;
-    padding: 60px 5% 30px;
-    background: var(--white);
-    position: relative;
-    overflow: hidden;
-}
+        .hero-section {
+            margin-top: 80px;
+            text-align: center;
+            padding: 60px 5% 30px;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
 
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--green), transparent);
-}
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--green), transparent);
+        }
 
-.company-name {
-    font-size: clamp(2rem, 7vw, 4.5rem);
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    color: var(--black);
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    animation: fadeInDown 1.2s ease-out;
-    position: relative;
-    display: inline-block;
-}
+        .company-name {
+            font-size: clamp(2rem, 7vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: var(--black);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            animation: fadeInDown 1.2s ease-out;
+            position: relative;
+            display: inline-block;
+        }
 
-.company-name::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 2px;
-    background: var(--green);
-}
+        .company-name::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--green);
+        }
 
-.tagline {
-    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-    font-weight: 300;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
-    font-style: italic;
-    animation: fadeInUp 1.4s ease-out;
-    margin-top: 35px;
-}
+        .tagline {
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            font-style: italic;
+            animation: fadeInUp 1.4s ease-out;
+            margin-top: 35px;
+        }
 
-.quality-badges {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin: 40px auto 30px;
-    max-width: 900px;
-}
+        .quality-badges {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 40px auto 30px;
+            max-width: 900px;
+        }
 
-.badge {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 25px;
-    background: var(--green-light);
-    border: 1px solid var(--green-mid);
-    border-radius: 50px;
-    transition: var(--transition-fast);
-}
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: var(--green-light);
+            border: 1px solid var(--green-mid);
+            border-radius: 50px;
+            transition: var(--transition-fast);
+        }
 
-.badge:hover {
-    background: var(--green-mid);
-    border-color: var(--green);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
-}
+        .badge:hover {
+            background: var(--green-mid);
+            border-color: var(--green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
+        }
 
-.badge-icon {
-    font-size: 1.5rem;
-}
+        .badge-icon {
+            font-size: 1.5rem;
+        }
 
-.badge-text {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--black);
-    letter-spacing: 0.05em;
-}
+        .badge-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--black);
+            letter-spacing: 0.05em;
+        }
 
-/* AI Cam Button - Inside Slider */
-.btn-ai-cam-slider {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 28px;
-    background: var(--green);
-    color: var(--white);
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 50px;
-    transition: var(--transition-smooth);
-    cursor: pointer;
-    border: 2px solid var(--green);
-    box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
-    z-index: 150;
-}
+        /* AI Cam Button - Inside Slider */
+        .btn-ai-cam-slider {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: var(--green);
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            border: 2px solid var(--green);
+            box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
+            z-index: 150;
+        }
 
-.btn-ai-cam-slider::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
+        .btn-ai-cam-slider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
 
-.btn-ai-cam-slider:hover::before {
-    width: 300px;
-    height: 300px;
-}
+        .btn-ai-cam-slider:hover::before {
+            width: 300px;
+            height: 300px;
+        }
 
-.btn-ai-cam-slider:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 30px rgba(46, 125, 50, 0.5);
-    background: var(--green-dark);
-}
+        .btn-ai-cam-slider:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(46, 125, 50, 0.5);
+            background: var(--green-dark);
+        }
 
-.btn-ai-cam-slider .ai-cam-icon {
-    width: 20px;
-    height: 20px;
-    animation: aiPulse 2s infinite;
-    z-index: 1;
-}
+        .btn-ai-cam-slider .ai-cam-icon {
+            width: 20px;
+            height: 20px;
+            animation: aiPulse 2s infinite;
+            z-index: 1;
+        }
 
-@keyframes aiPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
+        @keyframes aiPulse {
 
-/* ============================================
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* ============================================
    SLIDER SECTION
 ============================================ */
-.slider-section {
-    position: relative;
-    width: 100%;
-    background-color: var(--white);
-    padding: 0;
-    margin: 0;
-}
+        .slider-section {
+            position: relative;
+            width: 100%;
+            background-color: var(--white);
+            padding: 0;
+            margin: 0;
+        }
 
-.slider-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background-color: var(--white);
-}
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--white);
+        }
 
-.slider-wrapper {
-    display: flex;
-    width: 300%;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
+        .slider-wrapper {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
 
-.slide {
-    position: relative;
-    width: 33.333%;
-    height: 100%;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: var(--white);
-}
+        .slide {
+            position: relative;
+            width: 33.333%;
+            height: 100%;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--white);
+        }
 
-.video-container {
-    position: relative;
-    width: 100%;
-    height: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background: transparent;
-}
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: transparent;
+        }
 
-.slide video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    z-index: 1;
-}
+        .slide video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: 1;
+        }
 
-.slide.active video {
-    opacity: 1;
-}
+        .slide.active video {
+            opacity: 1;
+        }
 
-.slide-title-container {
-    width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--white);
-    border-top: 2px solid var(--green-light);
-    position: relative;
-}
+        .slide-title-container {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--white);
+            border-top: 2px solid var(--green-light);
+            position: relative;
+        }
 
-.slide-title {
-    font-size: clamp(1.53rem, 3.4vw, 2.72rem);
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    color: var(--black);
-    text-transform: uppercase;
-}
+        .slide-title {
+            font-size: clamp(1.53rem, 3.4vw, 2.72rem);
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: var(--black);
+            text-transform: uppercase;
+        }
 
-.slide-number {
-    position: absolute;
-    left: 5%;
-    font-size: 1rem;
-    color: var(--green);
-    font-weight: 300;
-}
+        .slide-number {
+            position: absolute;
+            left: 5%;
+            font-size: 1rem;
+            color: var(--green);
+            font-weight: 300;
+        }
 
-.slider-dots {
-    position: absolute;
-    bottom: 12%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 15px;
-    z-index: 100;
-}
+        .slider-dots {
+            position: absolute;
+            bottom: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
 
-.dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: var(--green-mid);
-    border: 2px solid var(--green);
-    cursor: pointer;
-    transition: var(--transition-fast);
-}
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--green-mid);
+            border: 2px solid var(--green);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
 
-.dot.active {
-    background-color: var(--green);
-    transform: scale(1.4);
-    box-shadow: 0 0 15px rgba(46, 125, 50, 0.5);
-}
+        .dot.active {
+            background-color: var(--green);
+            transform: scale(1.4);
+            box-shadow: 0 0 15px rgba(46, 125, 50, 0.5);
+        }
 
-.dot:hover {
-    background-color: var(--green);
-}
+        .dot:hover {
+            background-color: var(--green);
+        }
 
-.slider-arrow {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-50%);
-    width: 55px;
-    height: 55px;
-    background: rgba(232, 245, 233, 0.85);
-    border: 1px solid var(--green);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 100;
-    transition: var(--transition-fast);
-    font-size: 28px;
-    color: var(--black);
-    font-weight: 300;
-    backdrop-filter: blur(5px);
-}
+        .slider-arrow {
+            position: absolute;
+            top: 45%;
+            transform: translateY(-50%);
+            width: 55px;
+            height: 55px;
+            background: rgba(232, 245, 233, 0.85);
+            border: 1px solid var(--green);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: var(--transition-fast);
+            font-size: 28px;
+            color: var(--black);
+            font-weight: 300;
+            backdrop-filter: blur(5px);
+        }
 
-.slider-arrow:hover {
-    background: var(--green);
-    color: var(--white);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
-    border-color: var(--green);
-}
+        .slider-arrow:hover {
+            background: var(--green);
+            color: var(--white);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
+            border-color: var(--green);
+        }
 
-.arrow-left { left: 30px; }
-.arrow-right { right: 30px; }
+        .arrow-left {
+            left: 30px;
+        }
 
-.progress-bar {
-    position: absolute;
-    bottom: 10%;
-    left: 0;
-    width: 0%;
-    height: 3px;
-    background: linear-gradient(90deg, var(--green) 0%, var(--green-mid) 100%);
-    z-index: 101;
-    transition: width 0.1s linear;
-}
+        .arrow-right {
+            right: 30px;
+        }
 
-/* ============================================
+        .progress-bar {
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--green) 0%, var(--green-mid) 100%);
+            z-index: 101;
+            transition: width 0.1s linear;
+        }
+
+        /* ============================================
    BUTTONS BELOW SLIDER
 ============================================ */
-.post-video-actions {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px 5%;
-    background: var(--white);
-    flex-wrap: wrap;
-}
+        .post-video-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 5%;
+            background: var(--white);
+            flex-wrap: wrap;
+        }
 
-.btn {
-    padding: 18px 45px;
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 50px;
-    transition: var(--transition-smooth);
-    cursor: pointer;
-    border: 2px solid transparent;
-    display: inline-block;
-}
+        .btn {
+            padding: 18px 45px;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: inline-block;
+        }
 
-.btn-primary {
-    background: var(--green);
-    color: var(--white);
-    border-color: var(--green);
-}
+        .btn-primary {
+            background: var(--green);
+            color: var(--white);
+            border-color: var(--green);
+        }
 
-.btn-primary:hover {
-    background: transparent;
-    color: var(--green);
-    border-color: var(--green);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.2);
-}
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--green);
+            border-color: var(--green);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.2);
+        }
 
-.btn-secondary {
-    background: transparent;
-    color: var(--black);
-    border-color: var(--black);
-}
+        .btn-secondary {
+            background: transparent;
+            color: var(--black);
+            border-color: var(--black);
+        }
 
-.btn-secondary:hover {
-    background: var(--green);
-    color: var(--white);
-    border-color: var(--green);
-    transform: translateY(-3px);
-}
+        .btn-secondary:hover {
+            background: var(--green);
+            color: var(--white);
+            border-color: var(--green);
+            transform: translateY(-3px);
+        }
 
-/* ============================================
+        /* ============================================
    BOTTOM TASKBAR
 ============================================ */
-.bottom-taskbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    background: var(--white);
-    border-top: 2px solid var(--green-light);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000;
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
-}
+        .bottom-taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--white);
+            border-top: 2px solid var(--green-light);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.08);
+        }
 
-.taskbar-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    text-decoration: none;
-    color: var(--text-muted);
-    flex: 1;
-    max-width: 120px;
-}
+        .taskbar-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-decoration: none;
+            color: var(--text-muted);
+            flex: 1;
+            max-width: 120px;
+        }
 
-.taskbar-btn:hover, .taskbar-btn.active {
-    color: var(--green);
-    background: var(--green-light);
-}
+        .taskbar-btn:hover,
+        .taskbar-btn.active {
+            color: var(--green);
+            background: var(--green-light);
+        }
 
-.taskbar-icon {
-    width: 28px;
-    height: 28px;
-    stroke: currentColor;
-    fill: none;
-    transition: var(--transition-fast);
-}
+        .taskbar-icon {
+            width: 28px;
+            height: 28px;
+            stroke: currentColor;
+            fill: none;
+            transition: var(--transition-fast);
+        }
 
-.taskbar-btn:hover .taskbar-icon {
-    transform: scale(1.15);
-}
+        .taskbar-btn:hover .taskbar-icon {
+            transform: scale(1.15);
+        }
 
-.taskbar-label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
+        .taskbar-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-/* ============================================
+        /* ============================================
    FEATURED CATEGORIES
 ============================================ */
-.categories-section {
-    padding: 100px 5%;
-    background: var(--green-light);
-}
+        .categories-section {
+            padding: 100px 5%;
+            background: var(--green-light);
+        }
 
-.section-header {
-    text-align: center;
-    margin-bottom: 60px;
-}
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
 
-.section-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    color: var(--black);
-    margin-bottom: 15px;
-    position: relative;
-    display: inline-block;
-}
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--black);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
 
-.section-subtitle {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    font-weight: 300;
-    letter-spacing: 0.05em;
-}
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
 
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 40px;
-    margin-top: 60px;
-}
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
 
-.category-card {
-    position: relative;
-    height: 450px;
-    background: var(--white);
-    border-radius: 15px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    box-shadow: var(--shadow-soft);
-    border: 1px solid var(--green-mid);
-}
+        .category-card {
+            position: relative;
+            height: 450px;
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--green-mid);
+        }
 
-.category-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-large);
-    border-color: var(--green);
-}
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-large);
+            border-color: var(--green);
+        }
 
-.category-image {
-    width: 100%;
-    height: 70%;
-    background: linear-gradient(135deg, var(--green-light), var(--green-mid));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 5rem;
-    transition: var(--transition-smooth);
-}
+        .category-image {
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(135deg, var(--green-light), var(--green-mid));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5rem;
+            transition: var(--transition-smooth);
+        }
 
-.category-image svg {
-    width: 80px;
-    height: 80px;
-    stroke: var(--green-dark);
-}
+        .category-image svg {
+            width: 80px;
+            height: 80px;
+            stroke: var(--green-dark);
+        }
 
-.category-card:hover .category-image {
-    transform: scale(1.05);
-}
+        .category-card:hover .category-image {
+            transform: scale(1.05);
+        }
 
-.category-info {
-    padding: 30px;
-    text-align: center;
-    background: var(--white);
-    height: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+        .category-info {
+            padding: 30px;
+            text-align: center;
+            background: var(--white);
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-.category-name {
-    font-size: 1.6rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--black);
-    margin-bottom: 8px;
-}
+        .category-name {
+            font-size: 1.6rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
 
-.category-count {
-    font-size: 0.95rem;
-    color: var(--green);
-    font-weight: 300;
-}
+        .category-count {
+            font-size: 0.95rem;
+            color: var(--green);
+            font-weight: 300;
+        }
 
-/* ============================================
+        /* ============================================
    FEATURES SECTION
 ============================================ */
-.features-section {
-    padding: 100px 5%;
-    background: var(--white);
-}
+        .features-section {
+            padding: 100px 5%;
+            background: var(--white);
+        }
 
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 50px;
-    margin-top: 60px;
-}
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+        }
 
-.feature-item {
-    text-align: center;
-    padding: 40px 30px;
-    background: var(--green-light);
-    border-radius: 15px;
-    transition: var(--transition-smooth);
-    border: 1px solid var(--green-mid);
-}
+        .feature-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: var(--green-light);
+            border-radius: 15px;
+            transition: var(--transition-smooth);
+            border: 1px solid var(--green-mid);
+        }
 
-.feature-item:hover {
-    background: var(--white);
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-medium);
-    border-color: var(--green);
-}
+        .feature-item:hover {
+            background: var(--white);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--green);
+        }
 
-.feature-icon {
-    font-size: 3.5rem;
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: center;
-    color: var(--green);
-}
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            color: var(--green);
+        }
 
-.feature-icon svg {
-    width: 60px;
-    height: 60px;
-}
+        .feature-icon svg {
+            width: 60px;
+            height: 60px;
+        }
 
-.feature-title {
-    font-size: 1.4rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    color: var(--black);
-    margin-bottom: 15px;
-}
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--black);
+            margin-bottom: 15px;
+        }
 
-.feature-description {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: var(--text-muted);
-}
+        .feature-description {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
 
-/* ============================================
+        /* ============================================
    FOOTER
 ============================================ */
-.footer {
-    background: var(--black);
-    color: #aaaaaa;
-    padding: 80px 5% 40px;
-    border-top: 3px solid var(--green);
-}
+        .footer {
+            background: var(--black);
+            color: #aaaaaa;
+            padding: 80px 5% 40px;
+            border-top: 3px solid var(--green);
+        }
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 50px;
-    margin-bottom: 60px;
-}
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 60px;
+        }
 
-.footer-column h3 {
-    font-size: 1.3rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    margin-bottom: 25px;
-    color: var(--white);
-}
+        .footer-column h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
 
-.footer-column ul {
-    list-style: none;
-}
+        .footer-column ul {
+            list-style: none;
+        }
 
-.footer-column ul li {
-    margin-bottom: 12px;
-}
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
 
-.footer-column ul li a {
-    color: #aaaaaa;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: var(--transition-fast);
-    display: inline-block;
-}
+        .footer-column ul li a {
+            color: #aaaaaa;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+            display: inline-block;
+        }
 
-.footer-column ul li a:hover {
-    color: var(--green-mid);
-    transform: translateX(5px);
-}
+        .footer-column ul li a:hover {
+            color: var(--green-mid);
+            transform: translateX(5px);
+        }
 
-.footer-about {
-    line-height: 1.8;
-    color: #aaaaaa;
-}
+        .footer-about {
+            line-height: 1.8;
+            color: #aaaaaa;
+        }
 
-.social-links {
-    display: flex;
-    gap: 15px;
-    margin-top: 20px;
-}
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
 
-.social-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #222222;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--white);
-    font-size: 1.2rem;
-    transition: var(--transition-fast);
-    text-decoration: none;
-}
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #222222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
 
-.social-icon:hover {
-    background: var(--green);
-    color: var(--white);
-    transform: translateY(-3px);
-}
+        .social-icon:hover {
+            background: var(--green);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
 
-.footer-bottom {
-    text-align: center;
-    padding-top: 40px;
-    border-top: 1px solid #222222;
-    color: #777777;
-    font-size: 0.9rem;
-}
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid #222222;
+            color: #777777;
+            font-size: 0.9rem;
+        }
 
-/* ============================================
+        /* ============================================
    ANIMATIONS
 ============================================ */
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-40px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
 
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(40px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
 
-/* ============================================
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ============================================
    RESPONSIVE
 ============================================ */
-@media (max-width: 1024px) {
-    .nav-links { display: none; }
-    .menu-toggle { display: flex; }
-    .categories-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-}
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
 
-@media (max-width: 768px) {
-    .navbar { padding: 0 4%; height: 70px; }
-    .hero-section { padding: 40px 4% 30px; margin-top: 70px; }
-    .slider-container { height: 70vh; }
-    .slider-arrow { width: 45px; height: 45px; font-size: 22px; }
-    .arrow-left { left: 15px; }
-    .arrow-right { right: 15px; }
-    .categories-section, .features-section { padding: 70px 4%; }
-    .footer { padding: 60px 4% 30px; }
-    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
-    .quality-badges { gap: 15px; }
-    .badge { padding: 12px 20px; }
-    .btn-ai-cam-slider { top: 15px; right: 15px; padding: 12px 20px; font-size: 0.8rem; gap: 8px; }
-    .btn-ai-cam-slider .ai-cam-icon { width: 18px; height: 18px; }
-}
+            .menu-toggle {
+                display: flex;
+            }
 
-@media (max-width: 480px) {
-    .slider-container { height: 60vh; }
-    .categories-grid { grid-template-columns: 1fr; }
-    .category-card { height: 400px; }
-    .btn, .btn-ai-cam { width: 100%; max-width: 300px; }
-    .taskbar-btn { padding: 8px 10px; }
-    .taskbar-icon { width: 24px; height: 24px; }
-    .taskbar-label { font-size: 0.65rem; }
-    .btn-ai-cam-slider { top: 10px; right: 10px; padding: 8px 14px; font-size: 0.7rem; gap: 6px; }
-    .btn-ai-cam-slider .ai-cam-icon { width: 16px; height: 16px; }
-    .btn-ai-cam-slider span { display: inline; white-space: nowrap; }
-}
-</style>
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 4%;
+                height: 70px;
+            }
+
+            .hero-section {
+                padding: 40px 4% 30px;
+                margin-top: 70px;
+            }
+
+            .slider-container {
+                height: 70vh;
+            }
+
+            .slider-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 22px;
+            }
+
+            .arrow-left {
+                left: 15px;
+            }
+
+            .arrow-right {
+                right: 15px;
+            }
+
+            .categories-section,
+            .features-section {
+                padding: 70px 4%;
+            }
+
+            .footer {
+                padding: 60px 4% 30px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .quality-badges {
+                gap: 15px;
+            }
+
+            .badge {
+                padding: 12px 20px;
+            }
+
+            .btn-ai-cam-slider {
+                top: 15px;
+                right: 15px;
+                padding: 12px 20px;
+                font-size: 0.8rem;
+                gap: 8px;
+            }
+
+            .btn-ai-cam-slider .ai-cam-icon {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider-container {
+                height: 60vh;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-card {
+                height: 400px;
+            }
+
+            .btn,
+            .btn-ai-cam {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .taskbar-btn {
+                padding: 8px 10px;
+            }
+
+            .taskbar-icon {
+                width: 24px;
+                height: 24px;
+            }
+
+            .taskbar-label {
+                font-size: 0.65rem;
+            }
+
+            .btn-ai-cam-slider {
+                top: 10px;
+                right: 10px;
+                padding: 8px 14px;
+                font-size: 0.7rem;
+                gap: 6px;
+            }
+
+            .btn-ai-cam-slider .ai-cam-icon {
+                width: 16px;
+                height: 16px;
+            }
+
+            .btn-ai-cam-slider span {
+                display: inline;
+                white-space: nowrap;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
         <div class="logo-container">
-    <!-- Logo Image - Add your image URL in the src attribute below -->
-    <a href="index.html">
-        <img src="walltone.png" alt="Walltone Studio Logo" class="logo-image-img">
-    </a>
-    <div class="logo-text-container">
-        <a href="index.html" class="logo">Walltone Decors</a>
-        <span class="logo-subtitle">Premium Metal Art</span>
-    </div>
-</div>
+            <!-- Logo Image - Add your image URL in the src attribute below -->
+            <a href="index.html">
+                <img src="walltone.png" alt="Walltone Decors Logo" class="logo-image-img">
+            </a>
+            <div class="logo-text-container">
+                <a href="index.html" class="logo">Walltone Decors</a>
+                <span class="logo-subtitle">Premium Metal Art</span>
+            </div>
+        </div>
 
 
         <!-- Desktop Navigation -->
-       <!-- Desktop Navigation -->
-<ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="products.html">Products</a></li>
-    <li><a href="myprofile.html">My Profile</a></li>
-    <!-- <li><a href="gallery.html">Gallery</a></li> -->
-    <li><a href="ai.html">AI Cam</a></li>
-    <!-- <li><a href="about.html">About</a></li> -->
-    <li><a href="contact.html">Contact</a></li>
-</ul>
+        <!-- Desktop Navigation -->
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="myprofile.html">My Profile</a></li>
+            <!-- <li><a href="gallery.html">Gallery</a></li> -->
+            <li><a href="ai.html">AI Cam</a></li>
+            <!-- <li><a href="about.html">About</a></li> -->
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
 
 
         <!-- Icons and Mobile Toggle -->
         <div class="nav-icons">
-    <a href="products.html" style="display: flex; align-items: center;">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-        </svg>
-    </a>
-    <a href="cart.html" style="position: relative; display: flex; align-items: center;">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
-        <span class="cart-count">0</span>
-    </a>
-    <div class="menu-toggle" id="menuToggle">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</div>
+            <a href="products.html" style="display: flex; align-items: center;">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </a>
+            <a href="cart.html" style="position: relative; display: flex; align-items: center;">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-count">0</span>
+            </a>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
 
     </nav>
 
     <!-- Mobile Menu -->
     <!-- Mobile Menu -->
-<div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="products.html">Products</a>
-    <a href="myprofile.html">My Profile</a>
-    <!-- <a href="gallery.html">Gallery</a> -->
-    <a href="ai.html">AI Cam</a>
-    <!-- <a href="about.html">About Us</a> -->
-    <a href="contact.html">Contact</a>
-    <a href="cart.html" style="display: flex; justify-content: space-between; align-items: center;">
-        My Cart
-        <span class="cart-count" style="position: static; transform: none;">0</span>
-    </a>
-</div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="myprofile.html">My Profile</a>
+        <!-- <a href="gallery.html">Gallery</a> -->
+        <a href="ai.html">AI Cam</a>
+        <!-- <a href="about.html">About Us</a> -->
+        <a href="contact.html">Contact</a>
+        <a href="cart.html" style="display: flex; justify-content: space-between; align-items: center;">
+            My Cart
+            <span class="cart-count" style="position: static; transform: none;">0</span>
+        </a>
+    </div>
 
 
     <!-- Hero Section -->
     <section class="hero-section" id="home">
         <!-- <h1 class="company-name">Walltone Studio</h1>
         <p class="tagline">Premium Metal Wall Art & Decor</p> -->
-        
-        
+
+
         <!-- Video Slider -->
 
         <!-- Action Buttons Above Video -->
@@ -1130,80 +1265,86 @@ h1, h2, h3, h4 {
 
 
             <!-- AI Cam Button - Top Right Corner -->
-    <a href="ai.html" class="btn-ai-cam-slider">
-        <svg class="ai-cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-            <circle cx="12" cy="13" r="4"></circle>
-            <path d="M12 9v8M8 13h8" stroke-dasharray="2 2"></path>
-        </svg>
-        <span>Try AI Cam</span>
-    </a>  
+            <a href="ai.html" class="btn-ai-cam-slider">
+                <svg class="ai-cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                    <path d="M12 9v8M8 13h8" stroke-dasharray="2 2"></path>
+                </svg>
+                <span>Try AI Cam</span>
+            </a>
 
 
-           <div class="slider-wrapper" id="sliderWrapper">
-    <!-- Slide 1: Metal Wall Art -->
-    <div class="slide active" data-slide="0">
-        <div class="video-container">
-            <!-- VIDEO (future): uncomment below and remove <img> when ready -->
-            <!-- <video autoplay muted playsinline preload="auto" id="video1">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <!-- Slide 1: Metal Wall Art -->
+                <div class="slide active" data-slide="0">
+                    <div class="video-container">
+                        <!-- VIDEO (future): uncomment below and remove <img> when ready -->
+                        <!-- <video autoplay muted playsinline preload="auto" id="video1">
                 <source src="YOUR_VIDEO_URL_1.mp4" type="video/mp4">
             </video> -->
 
-            <!-- IMAGE (current) -->
-            <img id="slide-img-1" src="art.jpg" alt="Metal Wall Art" 
-                style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-        </div>
-        <div class="slide-title-container">
-            <span class="slide-number">01</span>
-            <h3 class="slide-title">Metal Wall Art</h3>
-        </div>
-    </div>
+                        <!-- IMAGE (current) -->
+                        <img id="slide-img-1" src="art.jpg" alt="Metal Wall Art"
+                            style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                    </div>
+                    <div class="slide-title-container">
+                        <span class="slide-number">01</span>
+                        <h3 class="slide-title">Metal Wall Art</h3>
+                    </div>
+                </div>
 
-    <!-- Slide 2: Metal Wall Clock -->
-    <div class="slide" data-slide="1">
-        <div class="video-container">
-            <!-- VIDEO (future): uncomment below and remove <img> when ready -->
-            <!-- <video autoplay muted playsinline preload="auto" id="video2">
+                <!-- Slide 2: Metal Wall Clock -->
+                <div class="slide" data-slide="1">
+                    <div class="video-container">
+                        <!-- VIDEO (future): uncomment below and remove <img> when ready -->
+                        <!-- <video autoplay muted playsinline preload="auto" id="video2">
                 <source src="YOUR_VIDEO_URL_2.mp4" type="video/mp4">
             </video> -->
 
-            <!-- IMAGE (current) -->
-            <img id="slide-img-2" src="clock.jpg" alt="Metal Wall Clock"
-                style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-        </div>
-        <div class="slide-title-container">
-            <span class="slide-number">02</span>
-            <h3 class="slide-title">Metal Wall Clock</h3>
-        </div>
-    </div>
+                        <!-- IMAGE (current) -->
+                        <img id="slide-img-2" src="clock.jpg" alt="Metal Wall Clock"
+                            style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                    </div>
+                    <div class="slide-title-container">
+                        <span class="slide-number">02</span>
+                        <h3 class="slide-title">Metal Wall Clock</h3>
+                    </div>
+                </div>
 
-    <!-- Slide 3: Metal Wall Mirror -->
-    <div class="slide" data-slide="2">
-        <div class="video-container">
-            <!-- VIDEO (future): uncomment below and remove <img> when ready -->
-            <!-- <video autoplay muted playsinline preload="auto" id="video3">
+                <!-- Slide 3: Metal Wall Mirror -->
+                <div class="slide" data-slide="2">
+                    <div class="video-container">
+                        <!-- VIDEO (future): uncomment below and remove <img> when ready -->
+                        <!-- <video autoplay muted playsinline preload="auto" id="video3">
                 <source src="YOUR_VIDEO_URL_3.mp4" type="video/mp4">
             </video> -->
 
-            <!-- IMAGE (current) -->
-            <img id="slide-img-3" src="mirror.jpg" alt="Metal Wall Mirror"
-                style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-        </div>
-        <div class="slide-title-container">
-            <span class="slide-number">03</span>
-            <h3 class="slide-title">Metal Wall Mirror</h3>
-        </div>
-    </div>
-</div>
+                        <!-- IMAGE (current) -->
+                        <img id="slide-img-3" src="mirror.jpg" alt="Metal Wall Mirror"
+                            style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                    </div>
+                    <div class="slide-title-container">
+                        <span class="slide-number">03</span>
+                        <h3 class="slide-title">Metal Wall Mirror</h3>
+                    </div>
+                </div>
+            </div>
 
 
             <!-- Navigation -->
             <!-- Navigation -->
             <div class="slider-arrow arrow-left" id="prevBtn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
             </div>
             <div class="slider-arrow arrow-right" id="nextBtn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                </svg>
             </div>
             <div class="slider-dots">
                 <span class="dot active" data-slide="0"></span>
@@ -1215,7 +1356,7 @@ h1, h2, h3, h4 {
 
     <!-- Buttons Below Video Slider -->
     <div class="post-video-actions">
-       <a href="products.html" class="btn btn-primary">Buy Now</a>
+        <a href="products.html" class="btn btn-primary">Buy Now</a>
         <a href="products.html" class="btn btn-secondary">View Products</a>
     </div>
 
@@ -1223,19 +1364,43 @@ h1, h2, h3, h4 {
     <div class="quality-badges" style="margin-top: 0; padding-top: 0; padding-bottom: 40px;">
         <div class="badge">
             <span class="badge-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                    <path d="M4 22h16" />
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+                </svg>
             </span>
             <span class="badge-text">20+ Years Lifespan</span>
         </div>
         <div class="badge">
             <span class="badge-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 1"/><path d="m19 3-1 1"/><path d="m5 21 1-1"/><path d="m19 21-1-1"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                    <path d="m5 3 1 1" />
+                    <path d="m19 3-1 1" />
+                    <path d="m5 21 1-1" />
+                    <path d="m19 21-1-1" />
+                </svg>
             </span>
             <span class="badge-text">Handmade Quality</span>
         </div>
         <div class="badge">
             <span class="badge-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.71-.74 1.71-1.67 0-.43-.16-.83-.46-1.13-.29-.29-.48-.74-.48-1.2 0-.93.74-1.71 1.67-1.71H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="13.5" cy="6.5" r=".5" />
+                    <circle cx="17.5" cy="10.5" r=".5" />
+                    <circle cx="8.5" cy="7.5" r=".5" />
+                    <circle cx="6.5" cy="12.5" r=".5" />
+                    <path
+                        d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.71-.74 1.71-1.67 0-.43-.16-.83-.46-1.13-.29-.29-.48-.74-.48-1.2 0-.93.74-1.71 1.67-1.71H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z" />
+                </svg>
             </span>
             <span class="badge-text">300+ Unique Designs</span>
         </div>
@@ -1251,34 +1416,56 @@ h1, h2, h3, h4 {
         <div class="categories-grid">
             <div class="category-card" onclick="window.location.href='wallart.html'">
                 <div class="category-image">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.71-.74 1.71-1.67 0-.43-.16-.83-.46-1.13-.29-.29-.48-.74-.48-1.2 0-.93.74-1.71 1.67-1.71H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="13.5" cy="6.5" r=".5" />
+                        <circle cx="17.5" cy="10.5" r=".5" />
+                        <circle cx="8.5" cy="7.5" r=".5" />
+                        <circle cx="6.5" cy="12.5" r=".5" />
+                        <path
+                            d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.71-.74 1.71-1.67 0-.43-.16-.83-.46-1.13-.29-.29-.48-.74-.48-1.2 0-.93.74-1.71 1.67-1.71H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z" />
+                    </svg>
                 </div>
                 <div class="category-info">
                     <h3 class="category-name">Metal Wall Art</h3>
                     <p class="category-count">150+ Designs</p>
-                    <a href="wallart.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.8rem; margin-top: 15px;">Shop Wall Art</a>
+                    <a href="wallart.html" class="btn btn-secondary"
+                        style="padding: 10px 20px; font-size: 0.8rem; margin-top: 15px;">Shop Wall Art</a>
                 </div>
             </div>
 
             <div class="category-card" onclick="window.location.href='wallclock.html'">
                 <div class="category-image">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
                 </div>
                 <div class="category-info">
                     <h3 class="category-name">Metal Wall Clocks</h3>
                     <p class="category-count">100+ Designs</p>
-                    <a href="wallclock.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.8rem; margin-top: 15px;">Shop Clocks</a>
+                    <a href="wallclock.html" class="btn btn-secondary"
+                        style="padding: 10px 20px; font-size: 0.8rem; margin-top: 15px;">Shop Clocks</a>
                 </div>
             </div>
 
             <div class="category-card" onclick="window.location.href='wallmirror.html'">
                 <div class="category-image">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 18v2"/><path d="M12 4v2"/><path d="M18 12h2"/><path d="M4 12h2"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="8" />
+                        <path d="M12 18v2" />
+                        <path d="M12 4v2" />
+                        <path d="M18 12h2" />
+                        <path d="M4 12h2" />
+                    </svg>
                 </div>
                 <div class="category-info">
                     <h3 class="category-name">Metal Wall Mirrors</h3>
                     <p class="category-count">80+ Designs</p>
-                    <a href="wallmirror.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.8rem; margin-top: 15px;">Shop Mirrors</a>
+                    <a href="wallmirror.html" class="btn btn-secondary"
+                        style="padding: 10px 20px; font-size: 0.8rem; margin-top: 15px;">Shop Mirrors</a>
                 </div>
             </div>
         </div>
@@ -1287,38 +1474,71 @@ h1, h2, h3, h4 {
     <!-- Features Section -->
     <section class="features-section">
         <div class="section-header">
-            <h2 class="section-title">Why Choose Walltone Studio</h2>
+            <h2 class="section-title">Why Choose Walltone Decors</h2>
             <p class="section-subtitle">Excellence in every detail</p>
         </div>
 
         <div class="features-grid">
             <div class="feature-item">
                 <div class="feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 1"/><path d="m19 3-1 1"/><path d="m5 21 1-1"/><path d="m19 21-1-1"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                        <path d="m5 3 1 1" />
+                        <path d="m19 3-1 1" />
+                        <path d="m5 21 1-1" />
+                        <path d="m19 21-1-1" />
+                    </svg>
                 </div>
                 <h3 class="feature-title">Handcrafted Quality</h3>
-                <p class="feature-description">Each piece is meticulously handcrafted by skilled artisans with 20+ years lifespan guarantee</p>
+                <p class="feature-description">Each piece is meticulously handcrafted by skilled artisans with 20+ years
+                    lifespan guarantee</p>
             </div>
 
             <div class="feature-item">
                 <div class="feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.71-.74 1.71-1.67 0-.43-.16-.83-.46-1.13-.29-.29-.48-.74-.48-1.2 0-.93.74-1.71 1.67-1.71H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="13.5" cy="6.5" r=".5" />
+                        <circle cx="17.5" cy="10.5" r=".5" />
+                        <circle cx="8.5" cy="7.5" r=".5" />
+                        <circle cx="6.5" cy="12.5" r=".5" />
+                        <path
+                            d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.71-.74 1.71-1.67 0-.43-.16-.83-.46-1.13-.29-.29-.48-.74-.48-1.2 0-.93.74-1.71 1.67-1.71H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z" />
+                    </svg>
                 </div>
                 <h3 class="feature-title">300+ Unique Designs</h3>
-                <p class="feature-description">Extensive collection of exclusive metal art designs for every style and space</p>
+                <p class="feature-description">Extensive collection of exclusive metal art designs for every style and
+                    space</p>
             </div>
 
             <div class="feature-item">
                 <div class="feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="13" x="2" y="4" rx="2"/><path d="M18 8h3l3 3v6h-3"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="16" height="13" x="2" y="4" rx="2" />
+                        <path d="M18 8h3l3 3v6h-3" />
+                        <circle cx="7" cy="18" r="2" />
+                        <circle cx="18" cy="18" r="2" />
+                    </svg>
                 </div>
                 <h3 class="feature-title">Free Shipping</h3>
-                <p class="feature-description">Complimentary shipping on all orders across India with secure packaging</p>
+                <p class="feature-description">Complimentary shipping on all orders across India with secure packaging
+                </p>
             </div>
 
             <div class="feature-item">
                 <div class="feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                        <path d="M4 22h16" />
+                        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+                        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+                        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+                    </svg>
                 </div>
                 <h3 class="feature-title">Premium Materials</h3>
                 <p class="feature-description">Made with high-grade metal ensuring durability and timeless elegance</p>
@@ -1330,20 +1550,33 @@ h1, h2, h3, h4 {
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-column">
-                <h3>About Walltone Studio</h3>
+                <h3>About Walltone Decors</h3>
                 <p class="footer-about">
-                    We craft premium metal wall art, clocks, and mirrors with 20+ years lifespan. 
+                    We craft premium metal wall art, clocks, and mirrors with 20+ years lifespan.
                     Every piece is handmade with passion and features unique designs.
                 </p>
                 <div class="social-links">
                     <a href="#" class="social-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
                     </a>
                     <a href="#" class="social-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
                     </a>
                     <a href="#" class="social-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                            <rect width="4" height="12" x="2" y="9" />
+                            <circle cx="4" cy="4" r="2" />
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -1371,7 +1604,7 @@ h1, h2, h3, h4 {
             <div class="footer-column">
                 <h3>Contact Us</h3>
                 <ul>
-                    <li><a href="mailto:info@walltonestudio.com">info@walltonestudio.com</a></li>
+                    <li><a href="mailto:walltoneofficial@gmail.com">walltoneofficial@gmail.com</a></li>
                     <li><a href="tel:+919876543210">+91 98765 43210</a></li>
                     <li><a href="#">Nashik, Maharashtra</a></li>
                 </ul>
@@ -1379,57 +1612,57 @@ h1, h2, h3, h4 {
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2026 Walltone Studio. All rights reserved.</p>
+            <p>&copy; 2026 Walltone Decors. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- Bottom Taskbar (Sticky) -->
     <!-- Bottom Taskbar (Sticky) -->
-<nav class="bottom-taskbar">
-    <a href="index.html" class="taskbar-btn active">
-        <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-        </svg>
-        <span class="taskbar-label">Home</span>
-    </a>
-    
-    <a href="products.html" class="taskbar-btn">
-        <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
-            <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-        </svg>
-        <span class="taskbar-label">Products</span>
-    </a>
-
-    <a href="ai.html" class="taskbar-btn">
-        <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-            <circle cx="12" cy="13" r="4"></circle>
-        </svg>
-        <span class="taskbar-label">AI Cam</span>
-    </a>
-    
-    <a href="cart.html" class="taskbar-btn">
-        <div style="position: relative; display: flex;">
+    <nav class="bottom-taskbar">
+        <a href="index.html" class="taskbar-btn active">
             <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
-            <span class="cart-count">0</span>
-        </div>
-        <span class="taskbar-label">Cart</span>
-    </a>
-    
-    <a href="myprofile.html" class="taskbar-btn">
-        <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-        <span class="taskbar-label">Profile</span>
-    </a>
-</nav>
+            <span class="taskbar-label">Home</span>
+        </a>
+
+        <a href="products.html" class="taskbar-btn">
+            <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
+                <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            <span class="taskbar-label">Products</span>
+        </a>
+
+        <a href="ai.html" class="taskbar-btn">
+            <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span class="taskbar-label">AI Cam</span>
+        </a>
+
+        <a href="cart.html" class="taskbar-btn">
+            <div style="position: relative; display: flex;">
+                <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-count">0</span>
+            </div>
+            <span class="taskbar-label">Cart</span>
+        </a>
+
+        <a href="myprofile.html" class="taskbar-btn">
+            <svg class="taskbar-icon" viewBox="0 0 24 24" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span class="taskbar-label">Profile</span>
+        </a>
+    </nav>
 
     <script>
 
@@ -1438,404 +1671,405 @@ h1, h2, h3, h4 {
 
 
         // ============================================
-// VERSION CONTROL & CACHE BUSTING
-// ============================================
-const APP_VERSION = '1.0.0';
-const CACHE_PREFIX = 'walltone-studio-v';
+        // VERSION CONTROL & CACHE BUSTING
+        // ============================================
+        const APP_VERSION = '1.0.0';
+        const CACHE_PREFIX = 'walltone-studio-v';
 
-// Check for updates and clear old cache
-function checkForUpdates() {
-    const currentVersion = localStorage.getItem('app-version');
-    
-    if (currentVersion !== APP_VERSION) {
-        console.log('New version detected, clearing cache...');
-        
-        // Clear old service worker cache
-        if ('caches' in window) {
-            caches.keys().then(cacheNames => {
-                cacheNames.forEach(cacheName => {
-                    if (cacheName.startsWith(CACHE_PREFIX) && cacheName !== `${CACHE_PREFIX}${APP_VERSION}`) {
-                        caches.delete(cacheName);
-                    }
-                });
-            });
-        }
-        
-        // Update version in localStorage
-        localStorage.setItem('app-version', APP_VERSION);
-        
-        // Force reload to get fresh content (preserves user data in localStorage)
-        if (currentVersion) {
-            console.log('Reloading to apply updates...');
-            window.location.reload(true);
-        }
-    }
-}
+        // Check for updates and clear old cache
+        function checkForUpdates() {
+            const currentVersion = localStorage.getItem('app-version');
 
-// Check for updates on page load
-checkForUpdates();
+            if (currentVersion !== APP_VERSION) {
+                console.log('New version detected, clearing cache...');
 
-// ============================================
-// NAVBAR SCROLL EFFECT
-// ============================================
-const navbar = document.getElementById('navbar');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-    
-    lastScroll = currentScroll;
-});
-
-// ============================================
-// MOBILE MENU TOGGLE
-// ============================================
-const menuToggle = document.getElementById('menuToggle');
-const mobileMenu = document.getElementById('mobileMenu');
-
-menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
-});
-
-// Close mobile menu when clicking on a link
-const mobileLinks = mobileMenu.querySelectorAll('a');
-mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
-});
-
-// ============================================
-// VIDEO SLIDER FUNCTIONALITY
-// ============================================
-const sliderWrapper = document.getElementById('sliderWrapper');
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-const videos = [
-    document.getElementById('video1'),
-    document.getElementById('video2'),
-    document.getElementById('video3')
-].filter(v => v !== null); // Filter out null videos to avoid errors
-const progressBar = document.getElementById('progressBar');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const sliderContainer = document.querySelector('.slider-container');
-
-let currentSlide = 0;
-let isAutoPlaying = true;
-let progressInterval;
-let autoSlideTimeout;
-let videoDuration = 2000;
-let hasUserInteracted = false;
-function init() {
-    console.log('Initializing slider...');
-
-    if (videos && videos.length > 0) {
-        videos.forEach((video, index) => {
-            video.addEventListener('ended', () => {
-                if (index === currentSlide && isAutoPlaying) {
-                    nextSlide();
+                // Clear old service worker cache
+                if ('caches' in window) {
+                    caches.keys().then(cacheNames => {
+                        cacheNames.forEach(cacheName => {
+                            if (cacheName.startsWith(CACHE_PREFIX) && cacheName !== `${CACHE_PREFIX}${APP_VERSION}`) {
+                                caches.delete(cacheName);
+                            }
+                        });
+                    });
                 }
-            });
-            video.addEventListener('loadedmetadata', () => {
-                console.log(`Video ${index + 1} duration:`, video.duration);
+
+                // Update version in localStorage
+                localStorage.setItem('app-version', APP_VERSION);
+
+                // Force reload to get fresh content (preserves user data in localStorage)
+                if (currentVersion) {
+                    console.log('Reloading to apply updates...');
+                    window.location.reload(true);
+                }
+            }
+        }
+
+        // Check for updates on page load
+        checkForUpdates();
+
+        // ============================================
+        // NAVBAR SCROLL EFFECT
+        // ============================================
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // ============================================
+        // MOBILE MENU TOGGLE
+        // ============================================
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
             });
         });
-    }
 
-    // Explicitly set autoPlay for the initial load
-    isAutoPlaying = true;
-    updateSlider(); // This will call setupAutoSlide and startProgress
-    setupIntersectionObserver();
-}
+        // ============================================
+        // VIDEO SLIDER FUNCTIONALITY
+        // ============================================
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const videos = [
+            document.getElementById('video1'),
+            document.getElementById('video2'),
+            document.getElementById('video3')
+        ].filter(v => v !== null); // Filter out null videos to avoid errors
+        const progressBar = document.getElementById('progressBar');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const sliderContainer = document.querySelector('.slider-container');
 
-function playCurrentVideo() {
-    // Since slides use images (not videos), skip video logic
-    // Auto-slide is handled by setupAutoSlide() via setTimeout
-}
+        let currentSlide = 0;
+        let isAutoPlaying = true;
+        let progressInterval;
+        let autoSlideTimeout;
+        let videoDuration = 2000;
+        let hasUserInteracted = false;
+        function init() {
+            console.log('Initializing slider...');
 
-function updateSlider() {
-    console.log('Updating slider to slide:', currentSlide + 1);
-    
-    sliderWrapper.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+            if (videos && videos.length > 0) {
+                videos.forEach((video, index) => {
+                    video.addEventListener('ended', () => {
+                        if (index === currentSlide && isAutoPlaying) {
+                            nextSlide();
+                        }
+                    });
+                    video.addEventListener('loadedmetadata', () => {
+                        console.log(`Video ${index + 1} duration:`, video.duration);
+                    });
+                });
+            }
 
-    slides.forEach((slide, index) => {
-        slide.classList.toggle('active', index === currentSlide);
-    });
+            // Explicitly set autoPlay for the initial load
+            isAutoPlaying = true;
+            updateSlider(); // This will call setupAutoSlide and startProgress
+            setupIntersectionObserver();
+        }
 
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
-    });
+        function playCurrentVideo() {
+            // Since slides use images (not videos), skip video logic
+            // Auto-slide is handled by setupAutoSlide() via setTimeout
+        }
 
-    playCurrentVideo();
-    resetProgress();
-    setupAutoSlide();
-}
+        function updateSlider() {
+            console.log('Updating slider to slide:', currentSlide + 1);
 
-function startProgress() {
-    let progress = 0;
-    progressBar.style.width = '0%';
-    clearInterval(progressInterval);
-    
-    progressInterval = setInterval(() => {
-        progress += 0.5;
-        progressBar.style.width = progress + '%';
+            sliderWrapper.style.transform = `translateX(-${currentSlide * 33.333}%)`;
 
-        if (progress >= 100) {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+
+            playCurrentVideo();
+            resetProgress();
+            setupAutoSlide();
+        }
+
+        function startProgress() {
+            let progress = 0;
+            progressBar.style.width = '0%';
+            clearInterval(progressInterval);
+
+            progressInterval = setInterval(() => {
+                progress += 0.5;
+                progressBar.style.width = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                }
+            }, videoDuration / 200);
+        }
+
+        function resetProgress() {
+            clearInterval(progressInterval);
+            startProgress();
+        }
+
+        function setupAutoSlide() {
+            if (!isAutoPlaying) return;
+
+            console.log('Setting up auto-slide for', videoDuration / 1000, 'seconds');
+
+            clearTimeout(autoSlideTimeout);
+
+            autoSlideTimeout = setTimeout(() => {
+                console.log('Auto-slide timeout reached');
+                nextSlide();
+            }, videoDuration);
+        }
+
+        function pauseAutoSlide() {
+            console.log('Pausing auto-slide');
+            isAutoPlaying = false;
+            clearTimeout(autoSlideTimeout);
             clearInterval(progressInterval);
         }
-    }, videoDuration / 200);
-}
 
-function resetProgress() {
-    clearInterval(progressInterval);
-    startProgress();
-}
+        function resumeAutoSlide() {
+            console.log('Resuming auto-slide');
+            isAutoPlaying = true;
+            setupAutoSlide();
+            startProgress();
+        }
 
-function setupAutoSlide() {
-    if (!isAutoPlaying) return;
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            console.log('Next slide:', currentSlide + 1);
+            updateSlider();
+        }
 
-    console.log('Setting up auto-slide for', videoDuration / 1000, 'seconds');
-    
-    clearTimeout(autoSlideTimeout);
-    
-    autoSlideTimeout = setTimeout(() => {
-        console.log('Auto-slide timeout reached');
-        nextSlide();
-    }, videoDuration);
-}
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            console.log('Previous slide:', currentSlide + 1);
+            updateSlider();
+        }
 
-function pauseAutoSlide() {
-    console.log('Pausing auto-slide');
-    isAutoPlaying = false;
-    clearTimeout(autoSlideTimeout);
-    clearInterval(progressInterval);
-}
+        function goToSlide(index) {
+            currentSlide = index;
+            console.log('Go to slide:', currentSlide + 1);
+            updateSlider();
+        }
 
-function resumeAutoSlide() {
-    console.log('Resuming auto-slide');
-    isAutoPlaying = true;
-    setupAutoSlide();
-    startProgress();
-}
+        function setupIntersectionObserver() {
+            const sliderObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        console.log('Slider in view - resuming');
+                        if (!isAutoPlaying) {
+                            resumeAutoSlide();
+                        }
+                        videos[currentSlide].pause();
 
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    console.log('Next slide:', currentSlide + 1);
-    updateSlider();
-}
+                    } else {
+                        console.log('Slider out of view - pausing');
+                        pauseAutoSlide();
+                        videos[currentSlide].pause();
+                    }
+                });
+            }, { threshold: 0.5 });
 
-function prevSlide() {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    console.log('Previous slide:', currentSlide + 1);
-    updateSlider();
-}
+            sliderObserver.observe(sliderContainer);
+        }
 
-function goToSlide(index) {
-    currentSlide = index;
-    console.log('Go to slide:', currentSlide + 1);
-    updateSlider();
-}
+        // Event Listeners - Arrows
+        nextBtn.addEventListener('click', () => {
+            pauseAutoSlide();
+            nextSlide();
+            setTimeout(resumeAutoSlide, 3000);
+        });
 
-function setupIntersectionObserver() {
-    const sliderObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                console.log('Slider in view - resuming');
-                if (!isAutoPlaying) {
-                    resumeAutoSlide();
-                }
-              videos[currentSlide].pause();
+        prevBtn.addEventListener('click', () => {
+            pauseAutoSlide();
+            prevSlide();
+            setTimeout(resumeAutoSlide, 3000);
+        });
 
-            } else {
-                console.log('Slider out of view - pausing');
+        // Event Listeners - Dots
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
                 pauseAutoSlide();
-                videos[currentSlide].pause();
+                const slideIndex = parseInt(e.target.getAttribute('data-slide'));
+                goToSlide(slideIndex);
+                setTimeout(resumeAutoSlide, 3000);
+            });
+        });
+
+        // Touch/Swipe Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        sliderWrapper.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            pauseAutoSlide();
+        });
+
+        sliderWrapper.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            setTimeout(resumeAutoSlide, 3000);
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                pauseAutoSlide();
+                prevSlide();
+                setTimeout(resumeAutoSlide, 3000);
+            } else if (e.key === 'ArrowRight') {
+                pauseAutoSlide();
+                nextSlide();
+                setTimeout(resumeAutoSlide, 3000);
             }
         });
-    }, { threshold: 0.5 });
 
-    sliderObserver.observe(sliderContainer);
-}
+        // Visibility API - Pause when tab hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                console.log('Tab hidden - pausing');
+                pauseAutoSlide();
 
-// Event Listeners - Arrows
-nextBtn.addEventListener('click', () => {
-    pauseAutoSlide();
-    nextSlide();
-    setTimeout(resumeAutoSlide, 3000);
-});
+            } else {
+                console.log('Tab visible - resuming');
+                resumeAutoSlide();
 
-prevBtn.addEventListener('click', () => {
-    pauseAutoSlide();
-    prevSlide();
-    setTimeout(resumeAutoSlide, 3000);
-});
-
-// Event Listeners - Dots
-dots.forEach(dot => {
-    dot.addEventListener('click', (e) => {
-        pauseAutoSlide();
-        const slideIndex = parseInt(e.target.getAttribute('data-slide'));
-        goToSlide(slideIndex);
-        setTimeout(resumeAutoSlide, 3000);
-    });
-});
-
-// Touch/Swipe Support
-let touchStartX = 0;
-let touchEndX = 0;
-
-sliderWrapper.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-    pauseAutoSlide();
-});
-
-sliderWrapper.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-    setTimeout(resumeAutoSlide, 3000);
-});
-
-function handleSwipe() {
-    if (touchEndX < touchStartX - 50) nextSlide();
-    if (touchEndX > touchStartX + 50) prevSlide();
-}
-
-// Keyboard Navigation
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-        pauseAutoSlide();
-        prevSlide();
-        setTimeout(resumeAutoSlide, 3000);
-    } else if (e.key === 'ArrowRight') {
-        pauseAutoSlide();
-        nextSlide();
-        setTimeout(resumeAutoSlide, 3000);
-    }
-});
-
-// Visibility API - Pause when tab hidden
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        console.log('Tab hidden - pausing');
-        pauseAutoSlide();
-      
-    } else {
-        console.log('Tab visible - resuming');
-        resumeAutoSlide();
-       
-    }
-});
-
-// Initialize on page load
-window.addEventListener('load', init);
-
-
-// ============================================
-// BOTTOM TASKBAR ACTIVE STATE
-// ============================================
-// ============================================
-// BOTTOM TASKBAR ACTIVE STATE
-// ============================================
-const taskbarBtns = document.querySelectorAll('.taskbar-btn');
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-
-// Set active state based on current page
-taskbarBtns.forEach(btn => {
-    const btnHref = btn.getAttribute('href');
-    
-    // Check if button href matches current page
-    if (btnHref === currentPage || 
-        (currentPage === '' && btnHref === 'index.html') ||
-        (currentPage === 'index.html' && btnHref === 'index.html')) {
-        btn.classList.add('active');
-    } else {
-        btn.classList.remove('active');
-    }
-});
-
-
-// ============================================
-// SMOOTH SCROLLING FOR ANCHOR LINKS
-// ============================================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href !== '#' && href.length > 1) {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-                const offsetTop = target.offsetTop - 80;
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
             }
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', init);
+
+
+        // ============================================
+        // BOTTOM TASKBAR ACTIVE STATE
+        // ============================================
+        // ============================================
+        // BOTTOM TASKBAR ACTIVE STATE
+        // ============================================
+        const taskbarBtns = document.querySelectorAll('.taskbar-btn');
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+        // Set active state based on current page
+        taskbarBtns.forEach(btn => {
+            const btnHref = btn.getAttribute('href');
+
+            // Check if button href matches current page
+            if (btnHref === currentPage ||
+                (currentPage === '' && btnHref === 'index.html') ||
+                (currentPage === 'index.html' && btnHref === 'index.html')) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+
+        // ============================================
+        // SMOOTH SCROLLING FOR ANCHOR LINKS
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // ============================================
+        // CART FUNCTIONALITY (SYNCED)
+        // ============================================
+        function getCart() {
+            return JSON.parse(localStorage.getItem('walltone_cart') || '[]');
         }
-    });
-});
 
-// ============================================
-// CART FUNCTIONALITY (SYNCED)
-// ============================================
-function getCart() {
-    return JSON.parse(localStorage.getItem('walltone_cart') || '[]');
-}
+        function updateCartCount() {
+            const cart = getCart();
+            const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountElements = document.querySelectorAll('.cart-count');
+            cartCountElements.forEach(el => {
+                el.textContent = total;
+            });
+        }
 
-function updateCartCount() {
-    const cart = getCart();
-    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const cartCountElements = document.querySelectorAll('.cart-count');
-    cartCountElements.forEach(el => {
-        el.textContent = total;
-    });
-}
-
-// Initialize cart count
-updateCartCount();
-
-// Listen for storage changes from other tabs/pages
-window.addEventListener('storage', (e) => {
-    if (e.key === 'walltone_cart') {
+        // Initialize cart count
         updateCartCount();
-    }
-});
 
-// ============================================
-// INTERSECTION OBSERVER FOR ANIMATIONS
-// ============================================
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+        // Listen for storage changes from other tabs/pages
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'walltone_cart') {
+                updateCartCount();
+            }
+        });
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
+        // ============================================
+        // INTERSECTION OBSERVER FOR ANIMATIONS
+        // ============================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-// Observe elements for animation
-document.querySelectorAll('.category-card, .feature-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-});
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.category-card, .feature-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
 
     </script>
 </body>
+
 </html>
