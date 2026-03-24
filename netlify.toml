@@ -1,25 +1,8 @@
 [build]
+  functions = "netlify/functions"
   publish = "."
 
 [functions]
-  directory = "netlify/functions"
+  # This tells Netlify to use esbuild to bundle dependencies from package.json
   node_bundler = "esbuild"
-
-[[headers]]
-  for = "/sw.js"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Service-Worker-Allowed = "/"
-
-[[headers]]
-  for = "/manifest.json"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-    Content-Type = "application/manifest+json"
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+  external_node_modules = ["web-push"]
