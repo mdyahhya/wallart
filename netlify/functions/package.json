@@ -1,5 +1,14 @@
 {
+  "name": "walltone-main",
+  "version": "1.0.0",
+  "description": "Walltone Main Site",
+  "main": "index.html",
   "dependencies": {
     "web-push": "^3.6.7"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Walltone",
+  "license": "ISC"
 }
