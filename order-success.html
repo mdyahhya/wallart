@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed! | Walltone Decors</title>
+    <meta name="description" content="Your order request has been placed successfully. Our team will contact you within an hour.">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/walltone.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --green: #2E7D32;
+            --green-light: #E8F5E9;
+            --green-mid: #A5D6A7;
+            --green-dark: #1B5E20;
+            --white: #FFFFFF;
+            --black: #111111;
+            --text-muted: #555555;
+            --gold: #C9A961;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 20px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #fefefe 50%, #f0fdf4 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background dots */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, rgba(46, 125, 50, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(201, 169, 97, 0.05) 0%, transparent 50%);
+            animation: bgPulse 8s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes bgPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .success-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 60px 50px;
+            max-width: 560px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1), 0 0 0 1px rgba(46,125,50,0.08);
+            position: relative;
+            z-index: 1;
+            animation: cardIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes cardIn {
+            from { opacity: 0; transform: scale(0.8) translateY(30px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Success Icon */
+        .icon-wrap {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--green), #66BB6A);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.3);
+            animation: iconPop 0.6s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes iconPop {
+            from { opacity: 0; transform: scale(0); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .icon-wrap svg {
+            width: 55px;
+            height: 55px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Checkmark animation */
+        .check-path {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawCheck 0.6s 0.7s ease forwards;
+        }
+        @keyframes drawCheck {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .brand-tag {
+            display: inline-block;
+            background: var(--green-light);
+            color: var(--green-dark);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            animation: fadeUp 0.5s 0.5s both;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 15px;
+            line-height: 1.2;
+            animation: fadeUp 0.5s 0.6s both;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 35px;
+            animation: fadeUp 0.5s 0.7s both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Time badge */
+        .time-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #FFF8E1, #FFF3CD);
+            border: 1px solid #FFE082;
+            border-radius: 50px;
+            padding: 14px 24px;
+            margin-bottom: 35px;
+            animation: fadeUp 0.5s 0.8s both;
+        }
+
+        .time-badge svg {
+            width: 20px;
+            height: 20px;
+            stroke: #C9A961;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        .time-badge span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #7B5800;
+        }
+
+        /* Order items preview */
+        .order-preview {
+            background: #fafafa;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+            border: 1px solid #eee;
+            animation: fadeUp 0.5s 0.9s both;
+        }
+
+        .order-preview-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .order-item-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .order-item-row:last-child { border-bottom: none; }
+
+        .order-item-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #eee;
+            flex-shrink: 0;
+        }
+
+        .order-item-info { flex: 1; min-width: 0; }
+        .order-item-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--black);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .order-item-detail { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        .order-item-qty {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--green);
+            background: var(--green-light);
+            padding: 3px 10px;
+            border-radius: 50px;
+            flex-shrink: 0;
+        }
+
+        .order-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px dashed #eee;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+        .order-total-row .amount { color: var(--green); }
+
+        /* Order ID */
+        .order-id-wrap {
+            background: var(--green-light);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 30px;
+            animation: fadeUp 0.5s 1s both;
+        }
+        .order-id-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green-dark); font-weight: 600; }
+        .order-id-val { font-size: 1rem; font-weight: 700; color: var(--green-dark); margin-top: 5px; letter-spacing: 0.05em; }
+
+        /* Action buttons */
+        .btns { display: flex; gap: 12px; flex-direction: column; animation: fadeUp 0.5s 1.1s both; }
+
+        .btn-orders {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 18px 30px;
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.3);
+        }
+        .btn-orders:hover {
+            background: var(--green-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(46, 125, 50, 0.4);
+        }
+
+        .btn-home {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 15px 30px;
+            background: transparent;
+            color: var(--green-dark);
+            border: 2px solid var(--green-light);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-home:hover {
+            background: var(--green-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-orders svg, .btn-home svg {
+            width: 18px; height: 18px;
+            stroke: currentColor; fill: none; stroke-width: 2;
+        }
+
+        /* Confetti particles */
+        .confetti-container {
+            position: fixed;
+            top: 0; left: 0; right: 0; height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            animation: confettiFall linear forwards;
+            opacity: 0;
+        }
+        @keyframes confettiFall {
+            0%   { opacity: 1; transform: translateY(-20px) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+        }
+
+        @media (max-width: 480px) {
+            .success-card { padding: 40px 25px; }
+            h1 { font-size: 1.7rem; }
+            .icon-wrap { width: 90px; height: 90px; }
+            .icon-wrap svg { width: 40px; height: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Confetti -->
+    <div class="confetti-container" id="confetti"></div>
+
+    <div class="success-card">
+        <div class="icon-wrap">
+            <svg viewBox="0 0 24 24">
+                <path class="check-path" d="M5 13l4 4L19 7"/>
+            </svg>
+        </div>
+
+        <span class="brand-tag">✦ Walltone Decors</span>
+
+        <h1>Order Request Sent!</h1>
+
+        <p class="subtitle">
+            Thank you for choosing Walltone Decors. Your order request has been received and our team is reviewing it right now.
+        </p>
+
+        <div class="time-badge">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>We'll contact you within 1 hour to confirm</span>
+        </div>
+
+        <!-- Order items preview -->
+        <div class="order-preview" id="orderPreview">
+            <div class="order-preview-title">Your Order Summary</div>
+            <div id="orderItemsList"></div>
+            <div class="order-total-row">
+                <span>Estimated Total</span>
+                <span class="amount" id="orderTotal">₹0</span>
+            </div>
+        </div>
+
+        <!-- Order ID -->
+        <div class="order-id-wrap" id="orderIdWrap" style="display:none">
+            <div class="order-id-label">Order Reference ID</div>
+            <div class="order-id-val" id="orderIdVal">—</div>
+        </div>
+
+        <div class="btns">
+            <a href="my-orders.html" class="btn-orders">
+                <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1" ry="1"/><path d="M9 12h6M9 16h4"/></svg>
+                View My Orders
+            </a>
+            <a href="index.html" class="btn-home">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ─── Confetti ───
+        function spawnConfetti() {
+            const colors = ['#2E7D32','#66BB6A','#C9A961','#A5D6A7','#1B5E20','#FFD700'];
+            const container = document.getElementById('confetti');
+            for (let i = 0; i < 60; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    animation-duration: ${1.5 + Math.random() * 2}s;
+                    animation-delay: ${Math.random() * 1}s;
+                    width: ${6 + Math.random() * 8}px;
+                    height: ${6 + Math.random() * 8}px;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                `;
+                container.appendChild(piece);
+            }
+        }
+
+        // ─── Load order from sessionStorage ───
+        function loadOrderDetails() {
+            const orderData = sessionStorage.getItem('walltone_last_order');
+            if (!orderData) return;
+
+            try {
+                const order = JSON.parse(orderData);
+                const listEl = document.getElementById('orderItemsList');
+                const totalEl = document.getElementById('orderTotal');
+
+                if (order.items && order.items.length > 0) {
+                    listEl.innerHTML = order.items.map(item => `
+                        <div class="order-item-row">
+                            <img src="${item.image_url || 'https://via.placeholder.com/44'}" class="order-item-img" alt="${item.name}">
+                            <div class="order-item-info">
+                                <div class="order-item-name">${item.name}</div>
+                                <div class="order-item-detail">₹${Number(item.price || 0).toLocaleString('en-IN')} each</div>
+                            </div>
+                            <div class="order-item-qty">×${item.quantity || 1}</div>
+                        </div>
+                    `).join('');
+
+                    const subtotal = order.items.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0);
+                    const total = Math.round(subtotal * 1.18);
+                    totalEl.textContent = `₹${total.toLocaleString('en-IN')}`;
+                }
+
+                if (order.order_id) {
+                    document.getElementById('orderIdWrap').style.display = 'block';
+                    document.getElementById('orderIdVal').textContent = order.order_id;
+                }
+            } catch(e) {
+                console.log('Order data parse error', e);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            spawnConfetti();
+            loadOrderDetails();
+        });
+    </script>
+</body>
+</html>

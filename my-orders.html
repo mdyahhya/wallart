@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | Walltone Decors</title>
+    <meta name="description" content="View all your orders from Walltone Decors.">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/walltone.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --green: #2E7D32;
+            --green-light: #E8F5E9;
+            --green-mid: #A5D6A7;
+            --green-dark: #1B5E20;
+            --white: #FFFFFF;
+            --black: #111111;
+            --text-secondary: #333333;
+            --text-muted: #555555;
+            --gold: #C9A961;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #f8f9fa; color: var(--black); padding-bottom: 90px; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; height: 80px;
+            background: var(--white); border-bottom: 2px solid var(--green);
+            padding: 0 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        .logo-wrap { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--black); }
+        .logo-img { width: 42px; height: 42px; border-radius: 8px; border: 2px solid var(--green); object-fit: cover; }
+        .logo-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; text-transform: uppercase; line-height: 1.2; }
+        .logo-sub { font-size: 0.52rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; }
+
+        .back-btn {
+            display: flex; align-items: center; gap: 8px;
+            background: var(--green-light); color: var(--green-dark); border: none;
+            padding: 10px 20px; border-radius: 50px; font-size: 0.8rem; font-weight: 700;
+            cursor: pointer; text-decoration: none; transition: var(--transition);
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .back-btn:hover { background: var(--green-mid); transform: translateX(-3px); }
+        .back-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+        /* MAIN */
+        .container { max-width: 900px; margin: 110px auto 30px; padding: 0 5%; }
+
+        .page-header { margin-bottom: 35px; }
+        .page-header h1 { font-size: 2.2rem; margin-bottom: 8px; }
+        .page-header p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Loading */
+        .loading-wrap { text-align: center; padding: 80px 20px; }
+        .spinner { width: 44px; height: 44px; border: 4px solid var(--green-light); border-top-color: var(--green); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-wrap p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Empty */
+        .empty-wrap {
+            text-align: center; padding: 80px 20px;
+            background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+        }
+        .empty-icon { width: 90px; height: 90px; color: var(--green-mid); margin: 0 auto 20px; opacity: 0.5; }
+        .empty-wrap h3 { font-size: 1.6rem; margin-bottom: 10px; }
+        .empty-wrap p { color: var(--text-muted); margin-bottom: 30px; font-size: 0.95rem; }
+        .btn-shop {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 35px; background: var(--green); color: var(--white);
+            border-radius: 50px; font-weight: 600; text-decoration: none;
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; transition: var(--transition);
+        }
+        .btn-shop:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(46,125,50,0.3); }
+
+        /* AUTH REQUIRED */
+        .auth-required {
+            text-align: center; padding: 80px 20px;
+            background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+        }
+        .auth-required h3 { font-size: 1.5rem; margin-bottom: 12px; }
+        .auth-required p { color: var(--text-muted); margin-bottom: 25px; }
+        .btn-login {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 35px; background: var(--green); color: var(--white);
+            border-radius: 50px; font-weight: 600; text-decoration: none;
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em;
+        }
+
+        /* ORDER CARDS */
+        .orders-list { display: flex; flex-direction: column; gap: 20px; }
+
+        .order-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .order-card:hover { box-shadow: 0 10px 40px rgba(0,0,0,0.12); transform: translateY(-2px); }
+
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 25px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .order-ref { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 4px; }
+        .order-id { font-size: 1rem; font-weight: 700; color: var(--black); font-family: 'Playfair Display', serif; }
+        .order-date { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
+
+        .order-status {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 16px; border-radius: 50px;
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+        }
+        .status-pending { background: #FFF8E1; color: #E65100; }
+        .status-confirmed { background: #E8F5E9; color: #2E7D32; }
+        .status-processing { background: #E3F2FD; color: #1565C0; }
+        .status-delivered { background: #E8F5E9; color: #1B5E20; }
+        .status-cancelled { background: #FFEBEE; color: #C62828; }
+        .status-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: currentColor;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .order-items-preview {
+            padding: 18px 25px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .preview-img {
+            width: 56px; height: 56px; border-radius: 10px;
+            object-fit: cover; border: 1px solid #eee;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+        .order-card:hover .preview-img { transform: scale(1.06); }
+        .preview-more {
+            width: 56px; height: 56px; border-radius: 10px;
+            background: var(--green-light); display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; font-weight: 700; color: var(--green-dark); flex-shrink: 0;
+        }
+
+        .order-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 25px;
+            background: #fafafa;
+            border-top: 1px solid #f0f0f0;
+        }
+        .order-item-count { font-size: 0.8rem; color: var(--text-muted); }
+        .order-total-amount { font-size: 1.1rem; font-weight: 700; color: var(--green); }
+
+        .view-arrow {
+            width: 20px; height: 20px;
+            stroke: var(--green-mid); fill: none; stroke-width: 2;
+            transition: var(--transition);
+        }
+        .order-card:hover .view-arrow { stroke: var(--green); transform: translateX(4px); }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            z-index: 2000; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.open { display: flex; }
+
+        .modal {
+            background: var(--white);
+            border-radius: 22px;
+            width: 100%; max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+            animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 25px 30px;
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; background: var(--white); z-index: 10;
+        }
+        .modal-header h3 { font-size: 1.3rem; }
+        .modal-close {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: #f5f5f5; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.2s; font-size: 1.2rem; color: var(--text-muted);
+        }
+        .modal-close:hover { background: #eee; color: var(--black); }
+
+        .modal-body { padding: 25px 30px; }
+
+        .modal-section-title {
+            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--text-muted); font-weight: 700; margin-bottom: 15px;
+        }
+
+        .modal-order-id-box {
+            background: var(--green-light);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-order-id-box .label { font-size: 0.75rem; color: var(--green-dark); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+        .modal-order-id-box .val { font-size: 0.95rem; font-weight: 700; color: var(--green-dark); margin-top: 4px; }
+
+        .modal-item {
+            display: flex; gap: 15px;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f2f2f2;
+        }
+        .modal-item:last-child { border-bottom: none; }
+        .modal-item-img { width: 65px; height: 65px; border-radius: 10px; object-fit: cover; flex-shrink: 0; border: 1px solid #eee; }
+        .modal-item-info { flex: 1; }
+        .modal-item-name { font-size: 0.95rem; font-weight: 600; color: var(--black); margin-bottom: 4px; }
+        .modal-item-sku { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; }
+        .modal-item-price { font-size: 0.9rem; font-weight: 700; color: var(--green); }
+        .modal-item-qty { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-top: 3px; }
+
+        .modal-total-section {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-top: 20px;
+        }
+        .modal-total-row {
+            display: flex; justify-content: space-between;
+            font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;
+        }
+        .modal-total-row.grand {
+            font-size: 1.1rem; font-weight: 700; color: var(--black);
+            margin-top: 12px; padding-top: 12px; border-top: 2px dashed #ddd; margin-bottom: 0;
+        }
+        .modal-total-row.grand .val { color: var(--green); }
+
+        .modal-contact {
+            background: linear-gradient(135deg, #FFF8E1, #FFF3CD);
+            border: 1px solid #FFE082;
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .modal-contact svg { width: 22px; height: 22px; stroke: #C9A961; fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 2px; }
+        .modal-contact p { font-size: 0.82rem; color: #7B5800; line-height: 1.6; }
+        .modal-contact strong { font-weight: 700; }
+
+        .modal-address {
+            background: #fafafa; border-radius: 12px; padding: 16px 20px; margin-top: 15px;
+        }
+        .modal-address-label { font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .modal-address-val { font-size: 0.88rem; color: var(--black); line-height: 1.6; }
+        .modal-phone-val { font-size: 0.88rem; color: var(--black); margin-top: 5px; }
+
+        /* BOTTOM TASKBAR */
+        .bottom-taskbar {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 70px;
+            background: var(--white); border-top: 2px solid var(--green-light);
+            display: flex; justify-content: space-around; align-items: center; z-index: 1000;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
+        }
+        .taskbar-btn {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+            padding: 8px; text-decoration: none; color: var(--text-muted); flex: 1; transition: 0.2s;
+        }
+        .taskbar-btn.active, .taskbar-btn:hover { color: var(--green); background: var(--green-light); }
+        .taskbar-icon-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+        .taskbar-icon { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2; }
+        .taskbar-label { font-size: 0.65rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        @media (max-width: 600px) {
+            .order-card-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .container { margin-top: 95px; }
+            .modal-header { padding: 20px; }
+            .modal-body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="index.html" class="logo-wrap">
+            <img src="walltone.png" class="logo-img" alt="Logo">
+            <div>
+                <div class="logo-text">Walltone Decors</div>
+                <div class="logo-sub">Premium Metal Art</div>
+            </div>
+        </a>
+        <a href="cart.html" class="back-btn">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Back to Cart
+        </a>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container">
+        <div class="page-header">
+            <h1>My Orders</h1>
+            <p>Track all your orders and their status</p>
+        </div>
+
+        <div id="loadingWrap" class="loading-wrap">
+            <div class="spinner"></div>
+            <p>Loading your orders...</p>
+        </div>
+
+        <div id="authRequired" class="auth-required" style="display:none">
+            <svg style="width:70px;height:70px;stroke:#A5D6A7;fill:none;stroke-width:1;margin-bottom:20px;" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <h3>Sign In Required</h3>
+            <p>Please sign in to view your orders.</p>
+            <a href="myprofile.html" class="btn-login">Sign In</a>
+        </div>
+
+        <div id="emptyWrap" class="empty-wrap" style="display:none">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+                <rect x="9" y="3" width="6" height="4" rx="1" ry="1"/>
+                <path d="M9 12h6M9 16h4"/>
+            </svg>
+            <h3>No Orders Yet</h3>
+            <p>You haven't placed any orders. Explore our premium metal art collection!</p>
+            <a href="products.html" class="btn-shop">
+                Explore Products
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+
+        <div id="ordersList" class="orders-list"></div>
+    </main>
+
+    <!-- ORDER DETAIL MODAL -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal" id="modalContent">
+            <div class="modal-header">
+                <h3>Order Details</h3>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM TASKBAR -->
+    <nav class="bottom-taskbar">
+        <a href="index.html" class="taskbar-btn">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <span class="taskbar-label">Home</span>
+        </a>
+        <a href="products.html" class="taskbar-btn">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <span class="taskbar-label">Products</span>
+        </a>
+        <a href="ai.html" class="taskbar-btn">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <span class="taskbar-label">AI Cam</span>
+        </a>
+        <a href="cart.html" class="taskbar-btn">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            </div>
+            <span class="taskbar-label">Cart</span>
+        </a>
+        <a href="myprofile.html" class="taskbar-btn">
+            <div class="taskbar-icon-wrap">
+                <svg class="taskbar-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <span class="taskbar-label">Profile</span>
+        </a>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://sujqcavxkoxkoxwvlzci.supabase.co';
+        const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1anFjYXZ4a294a294d3ZsemNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MDY2MjgsImV4cCI6MjA4ODE4MjYyOH0.ZBMF7adIuR_QR4pOME2UPRHUdnjPbljkt629vK7mJgY';
+        const { createClient } = supabase;
+        const db = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+        let allOrders = [];
+
+        const statusConfig = {
+            pending:    { class: 'status-pending',    label: 'Pending' },
+            confirmed:  { class: 'status-confirmed',  label: 'Confirmed' },
+            processing: { class: 'status-processing', label: 'Processing' },
+            delivered:  { class: 'status-delivered',  label: 'Delivered' },
+            cancelled:  { class: 'status-cancelled',  label: 'Cancelled' },
+        };
+
+        function getStatusCfg(s) {
+            return statusConfig[s] || statusConfig['pending'];
+        }
+
+        function formatDate(isoStr) {
+            if (!isoStr) return '';
+            const d = new Date(isoStr);
+            return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function formatAmount(amt) {
+            return `₹${Number(amt || 0).toLocaleString('en-IN')}`;
+        }
+
+        function renderOrders(orders) {
+            const listEl = document.getElementById('ordersList');
+            listEl.innerHTML = orders.map((order, i) => {
+                const items = order.items || [];
+                const previewImgs = items.slice(0, 3);
+                const extraCount = items.length - 3;
+                const cfg = getStatusCfg(order.status);
+
+                const imgHTML = previewImgs.map(item =>
+                    `<img src="${item.image_url || 'https://via.placeholder.com/56'}" class="preview-img" alt="${item.name || ''}">`
+                ).join('');
+
+                const extraHTML = extraCount > 0 ? `<div class="preview-more">+${extraCount}</div>` : '';
+
+                return `
+                    <div class="order-card" onclick="openOrderModal('${order.id}')"
+                        style="animation: fadeUp 0.4s ${i * 0.08}s both;">
+                        <div class="order-card-header">
+                            <div>
+                                <div class="order-ref">Order Reference</div>
+                                <div class="order-id">#${order.id.slice(0,8).toUpperCase()}</div>
+                                <div class="order-date">${formatDate(order.created_at)}</div>
+                            </div>
+                            <span class="order-status ${cfg.class}">
+                                <span class="status-dot"></span>
+                                ${cfg.label}
+                            </span>
+                        </div>
+                        <div class="order-items-preview">
+                            ${imgHTML}${extraHTML}
+                        </div>
+                        <div class="order-card-footer">
+                            <span class="order-item-count">${items.length} Item${items.length !== 1 ? 's' : ''}</span>
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <span class="order-total-amount">${formatAmount(order.total_amount)}</span>
+                                <svg class="view-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openOrderModal(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const cfg = getStatusCfg(order.status);
+            const items = order.items || [];
+            const subtotal = items.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0);
+            const tax = Math.round(subtotal * 0.18);
+            const total = subtotal + tax;
+
+            document.getElementById('modalBody').innerHTML = `
+                <div class="modal-order-id-box">
+                    <div>
+                        <div class="label">Order Reference</div>
+                        <div class="val">#${order.id.slice(0,8).toUpperCase()}</div>
+                    </div>
+                    <span class="order-status ${cfg.class}">
+                        <span class="status-dot"></span>${cfg.label}
+                    </span>
+                </div>
+
+                <div class="modal-section-title">Items Ordered (${items.length})</div>
+                ${items.map(item => `
+                    <div class="modal-item">
+                        <img src="${item.image_url || 'https://via.placeholder.com/65'}" class="modal-item-img" alt="${item.name}">
+                        <div class="modal-item-info">
+                            <div class="modal-item-name">${item.name}</div>
+                            <div class="modal-item-sku">ID: ${item.product_no || 'N/A'}</div>
+                            <div class="modal-item-price">${formatAmount((item.price || 0) * (item.quantity || 1))}</div>
+                            <div class="modal-item-qty">Qty: ${item.quantity || 1} × ${formatAmount(item.price || 0)}</div>
+                        </div>
+                    </div>
+                `).join('')}
+
+                <div class="modal-total-section">
+                    <div class="modal-total-row"><span>Subtotal</span><span>${formatAmount(subtotal)}</span></div>
+                    <div class="modal-total-row"><span>GST (18%)</span><span>${formatAmount(tax)}</span></div>
+                    <div class="modal-total-row"><span>Shipping</span><span style="color:var(--green);font-weight:700">FREE</span></div>
+                    <div class="modal-total-row grand"><span>Total</span><span class="val">${formatAmount(total)}</span></div>
+                </div>
+
+                ${order.shipping_address ? `
+                <div class="modal-address" style="margin-top:20px;">
+                    <div class="modal-address-label">Delivery Address</div>
+                    <div class="modal-address-val">${order.shipping_address}</div>
+                    ${order.phone ? `<div class="modal-phone-val">📞 ${order.phone}</div>` : ''}
+                </div>
+                ` : ''}
+
+                <div class="modal-contact">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <p><strong>Awaiting Confirmation</strong><br>Our team will contact you on your registered phone number within 1 hour to confirm and process your order.</p>
+                </div>
+            `;
+
+            document.getElementById('orderModal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').classList.remove('open');
+        }
+
+        document.getElementById('orderModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        async function loadOrders() {
+            const { data: { session } } = await db.auth.getSession();
+
+            document.getElementById('loadingWrap').style.display = 'none';
+
+            if (!session) {
+                document.getElementById('authRequired').style.display = 'block';
+                return;
+            }
+
+            const { data: orders, error } = await db
+                .from('orders')
+                .select('*')
+                .eq('user_id', session.user.id)
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Error', error);
+                document.getElementById('emptyWrap').style.display = 'block';
+                return;
+            }
+
+            if (!orders || orders.length === 0) {
+                document.getElementById('emptyWrap').style.display = 'block';
+            } else {
+                allOrders = orders;
+                renderOrders(orders);
+            }
+        }
+
+        // Add fadeUp animation
+        const style = document.createElement('style');
+        style.textContent = `@keyframes fadeUp { from { opacity:0; transform:translateY(15px);} to {opacity:1; transform:translateY(0);} }`;
+        document.head.appendChild(style);
+
+        loadOrders();
+    </script>
+</body>
+</html>
