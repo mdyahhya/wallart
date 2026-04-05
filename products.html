@@ -250,6 +250,83 @@
   }
 }
 
+/* PRODUCT DETAILS MODAL */
+.product-modal-content {
+  background: var(--white);
+  border-radius: var(--radius);
+  max-width: 850px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  animation: slideUp 0.3s ease-out;
+}
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.pm-close {
+  position: absolute; top: 15px; right: 15px;
+  width: 36px; height: 36px;
+  background: var(--green-light); color: var(--green);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10; transition: var(--transition);
+}
+.pm-close:hover { background: var(--green); color: var(--white); }
+.product-modal-split {
+  display: flex; flex-direction: row; gap: 30px;
+  padding: 30px;
+}
+.pm-img-col {
+  flex: 1; background: var(--green-light); border-radius: var(--radius); overflow: hidden;
+  display: flex; align-items: center; justify-content: center; min-height: 300px; padding: 20px;
+}
+.pm-img {
+  width: 100%; height: auto; max-height: 50vh; object-fit: contain;
+}
+.pm-info-col {
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+}
+.pm-badge {
+  display: inline-block; background: var(--green-light); color: var(--green);
+  padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; width: fit-content; margin-bottom: 12px; border: 1px solid var(--green-mid);
+}
+.pm-title {
+  font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--black); line-height: 1.2; margin-bottom: 10px;
+}
+.pm-price {
+  font-size: 1.8rem; font-weight: 600; color: var(--green); margin-bottom: 20px;
+}
+.pm-price span {
+  font-size: 0.9rem; font-weight: 400; color: var(--text-muted);
+}
+.pm-meta {
+  display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid var(--green-light);
+}
+.pm-meta-item {
+  display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: var(--text-muted); font-weight: 500;
+}
+.pm-customization {
+  background: var(--green-light); border: 1px dashed var(--green-mid);
+  padding: 15px; border-radius: 8px; margin-bottom: 25px;
+}
+.pm-customization h4 {
+  font-family: 'Montserrat', sans-serif; font-size: 1rem; color: var(--green-dark); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+}
+.pm-customization p {
+  font-size: 0.85rem; color: var(--green-dark); line-height: 1.5; opacity: 0.9;
+}
+.pm-actions {
+  display: flex; gap: 15px; margin-top: auto;
+}
+.pm-actions .btn-buy, .pm-actions .btn-disabled { flex: 2; padding: 14px 0; font-size: 0.95rem; }
+.pm-actions .btn-cart { flex: 1; padding: 14px 0; }
+@media(max-width: 768px) {
+  .product-modal-split { flex-direction: column; padding: 20px; gap: 20px; }
+  .pm-title { font-size: 1.6rem; }
+  .pm-price { font-size: 1.4rem; }
+  .pm-img-col { min-height: 250px; padding: 15px; }
+  .pm-actions { flex-direction: column; }
+}
+
   </style>
 </head>
 <body>
@@ -341,7 +418,7 @@
   </section>
 </main>
 
-<!-- IMAGE MODAL -->
+<!-- IMAGE MODAL (Simple View) -->
 <div class="modal-overlay" id="imageModal" onclick="this.classList.remove('active')">
   <div class="modal-content" onclick="event.stopPropagation()">
     <div class="close-modal" onclick="document.getElementById('imageModal').classList.remove('active')">
@@ -349,6 +426,48 @@
     </div>
     <img src="" class="modal-img" id="modalImg">
     <div class="modal-caption" id="modalCaption"></div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAILS MODAL -->
+<div class="modal-overlay" id="productModal" onclick="this.classList.remove('active')">
+  <div class="product-modal-content" onclick="event.stopPropagation()">
+    <div class="pm-close" onclick="document.getElementById('productModal').classList.remove('active')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+    <div class="product-modal-split">
+      <div class="pm-img-col">
+        <img src="" class="pm-img" id="pmMainImg">
+      </div>
+      <div class="pm-info-col">
+        <span class="pm-badge" id="pmBadge">#N/A</span>
+        <h2 class="pm-title" id="pmTitle">Product Name</h2>
+        <div class="pm-price" id="pmPrice">₹0 <span>incl. taxes</span></div>
+        
+        <div class="pm-meta">
+          <div class="pm-meta-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <span>Free Delivery across India</span>
+          </div>
+          <div class="pm-meta-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Premium Handmade Metal Quality</span>
+          </div>
+        </div>
+
+        <div class="pm-customization">
+          <h4>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Customization & Options
+          </h4>
+          <p>You can customize this product in <strong>any color</strong> and <strong>any size/type</strong>! Once you place your order, just contact us on WhatsApp with your requirements and we will build it completely to your liking.</p>
+        </div>
+
+        <div class="pm-actions" id="pmActions">
+          <!-- Dynamically filled -->
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -447,22 +566,22 @@
   function buildCard(p) {
     const inStock = p.in_stock !== false;
     return `
-      <div class="product-card" id="card-${p.id}">
+      <div class="product-card" id="card-${p.id}" onclick="openProductModal('${p.id}')" style="cursor: pointer;">
         <div class="product-img-wrap">
           <img src="${p.image_url || 'https://via.placeholder.com/400x400?text=No+Image'}"
                alt="${p.name}" 
                loading="lazy"
                crossorigin="anonymous"
                onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
-          <span class="product-no-badge">${p.product_no || ''}</span>
-          ${!inStock ? '<div class="out-of-stock-overlay">Out of Stock</div>' : ''}
+          <span class="product-no-badge" onclick="event.stopPropagation()">${p.product_no || ''}</span>
+          ${!inStock ? '<div class="out-of-stock-overlay" onclick="event.stopPropagation()">Out of Stock</div>' : ''}
           
           <!-- IMAGE ACTIONS -->
           <div class="img-actions">
-            <button class="icon-btn" onclick="openPreview('${p.image_url}', '${p.product_no}', '${p.name}')" title="Expand View">
+            <button class="icon-btn" onclick="event.stopPropagation(); openPreview('${p.image_url}', '${p.product_no}', '${p.name}')" title="Expand View">
               <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
-            <button class="icon-btn" onclick="downloadImage('${p.image_url}', '${p.product_no}')" title="Download Pattern">
+            <button class="icon-btn" onclick="event.stopPropagation(); downloadImage('${p.image_url}', '${p.product_no}')" title="Download Pattern">
               <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             </button>
           </div>
@@ -474,11 +593,11 @@
           <div class="product-price">₹${Number(p.price).toLocaleString('en-IN')} <span>incl. taxes</span></div>
           <div class="product-actions">
             ${inStock
-              ? `<a href="cart.html" class="btn-buy" onclick="handleBuyNow(event,'${p.id}')">Buy Now</a>
-                 <button class="btn-cart" onclick="handleAddCart('${p.id}')" title="Add to Cart">
+              ? `<button class="btn-buy" onclick="event.stopPropagation(); handleBuyNow(event,'${p.id}')">Buy Now</button>
+                 <button class="btn-cart" onclick="event.stopPropagation(); handleAddCart('${p.id}')" title="Add to Cart">
                    <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                  </button>`
-              : `<span class="btn-disabled">Out of Stock</span>`
+              : `<span class="btn-disabled" onclick="event.stopPropagation()">Out of Stock</span>`
             }
           </div>
         </div>
@@ -554,18 +673,21 @@
       // Draw original image
       ctx.drawImage(img, 0, 0);
 
-      // Setup watermark style
-      const size = Math.floor(canvas.width * 0.04);
-      ctx.font = `600 ${size}px Montserrat, sans-serif`;
-      ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+      // Setup watermark style (BOLD)
+      const size = Math.floor(canvas.width * 0.045);
+      ctx.font = `800 ${size}px Montserrat, sans-serif`;
+      ctx.fillStyle = "rgba(255, 255, 255, 0.6)"; 
+      ctx.shadowColor = "rgba(0,0,0,0.5)";
+      ctx.shadowBlur = 12;
       ctx.textAlign = "right";
 
       // Draw Product No (Top Right)
       ctx.fillText(pNo, canvas.width - (size), size * 1.5);
       
       // Draw Website (Bottom Right)
-      ctx.font = `italic 500 ${size * 0.7}px Montserrat, sans-serif`;
+      ctx.font = `800 ${size * 0.7}px Montserrat, sans-serif`;
       ctx.fillText("walltone.in", canvas.width - (size), canvas.height - (size));
+
 
       // Trigger download
       const link = document.createElement("a");
@@ -594,12 +716,36 @@
   };
 
   window.handleBuyNow = function(e, productId) {
-    e.preventDefault();
+    if(e) e.preventDefault();
     const product = Object.values(allProducts).flat().find(p => p.id === productId);
     if (product) {
       addToCart(product);
-      setTimeout(() => window.location.href = 'cart.html', 600);
+      setTimeout(() => window.location.href = 'cart.html', 400);
     }
+  };
+
+  window.openProductModal = function(productId) {
+    const product = Object.values(allProducts).flat().find(p => p.id === productId);
+    if (!product) return;
+    
+    document.getElementById('pmMainImg').src = product.image_url || 'https://via.placeholder.com/400x400?text=No+Image';
+    document.getElementById('pmBadge').textContent = '#' + (product.product_no || '');
+    document.getElementById('pmTitle').textContent = product.name;
+    document.getElementById('pmPrice').innerHTML = `₹${Number(product.price).toLocaleString('en-IN')} <span>incl. taxes</span>`;
+    
+    const actionsEl = document.getElementById('pmActions');
+    if (product.in_stock !== false) {
+      actionsEl.innerHTML = `
+        <button class="btn-buy" onclick="handleBuyNow(null, '${product.id}')">Buy Now</button>
+        <button class="btn-cart" onclick="handleAddCart('${product.id}')" title="Add to Cart">
+          <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </button>
+      `;
+    } else {
+      actionsEl.innerHTML = `<span class="btn-disabled" style="width:100%;">Out of Stock</span>`;
+    }
+    
+    document.getElementById('productModal').classList.add('active');
   };
 
   // ══════════════════════════════════════════════
