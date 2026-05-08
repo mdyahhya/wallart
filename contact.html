@@ -392,6 +392,62 @@
             color: var(--green);
         }
 
+        /* Support Cards Custom Button Styles */
+        .action-buttons-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: var(--transition-fast);
+        }
+
+        .wa-btn {
+            background-color: #25D366;
+            color: var(--white);
+            border: 1px solid #25D366;
+        }
+
+        .wa-btn:hover {
+            background-color: transparent;
+            color: #25D366;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+        }
+
+        .call-btn {
+            background-color: var(--green);
+            color: var(--white);
+            border: 1px solid var(--green);
+        }
+
+        .call-btn:hover {
+            background-color: transparent;
+            color: var(--green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+        }
+
+        .action-btn-icon {
+            width: 16px;
+            height: 16px;
+        }
+
         /* Right Column: Contact Form */
         .contact-form-panel {
             background: var(--white);
@@ -805,29 +861,64 @@
     <main class="contact-wrapper">
         <!-- Left: Info Cards -->
         <section class="contact-info-panel">
-            <!-- Card 1: Phone -->
+            <!-- Card 1: Support Line 1 -->
             <div class="info-card">
-                <div class="info-card-icon-wrap">
-                    <svg class="info-card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                        </path>
+                <div class="info-card-icon-wrap" style="background-color: rgba(37, 211, 102, 0.1); color: #25D366;">
+                    <svg class="info-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
                 </div>
-                <div class="info-card-content">
-                    <h3>Call Us Directly</h3>
-                    <a href="tel:+918237174839">+91 82371 74839</a>
-                    <a href="tel:+918951525373">+91 89515 25373</a>
-                    <p style="font-size: 0.8rem; margin-top: 5px;">Call or WhatsApp for quick design consultation.</p>
+                <div class="info-card-content" style="width: 100%;">
+                    <h3>Design Consultant - Line 1</h3>
+                    <p style="font-weight: 600; font-size: 1.15rem; color: var(--black); margin-bottom: 12px; font-family: 'Montserrat', sans-serif;">+91 82371 74839</p>
+                    <div class="action-buttons-row">
+                        <a href="https://wa.me/918237174839" target="_blank" class="action-btn wa-btn">
+                            <svg class="action-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.437.002 9.851-4.411 9.854-9.856.002-2.637-1.018-5.114-2.873-6.972-1.854-1.857-4.327-2.877-6.966-2.878-5.441 0-9.858 4.415-9.86 9.86-.001 1.573.418 3.104 1.213 4.471l-.993 3.624 3.712-.974zm11.39-6.314c-.073-.122-.27-.195-.565-.343-.296-.148-1.748-.863-2.019-.961-.272-.098-.47-.148-.667.148-.197.296-.764.961-.937 1.159-.173.197-.346.222-.642.074-.296-.148-1.25-.46-2.382-1.469-.88-.785-1.474-1.756-1.647-2.052-.173-.296-.018-.456.13-.603.133-.132.296-.346.444-.519.148-.173.197-.296.296-.494.099-.197.049-.37-.025-.519-.074-.148-.667-1.605-.914-2.198-.24-.579-.48-.5-.667-.51-.173-.008-.371-.01-.568-.01-.197 0-.519.074-.79.37-.272.296-1.037 1.013-1.037 2.47 0 1.457 1.061 2.864 1.21 3.062.148.197 2.088 3.194 5.06 4.475.707.305 1.258.487 1.688.624.71.226 1.357.194 1.868.118.57-.085 1.748-.714 1.995-1.405.247-.69.247-1.283.173-1.405z"/>
+                            </svg>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="tel:+918237174839" class="action-btn call-btn">
+                            <svg class="action-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <span>Call</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Card 2: Email -->
+            <!-- Card 2: Support Line 2 -->
+            <div class="info-card">
+                <div class="info-card-icon-wrap" style="background-color: rgba(37, 211, 102, 0.1); color: #25D366;">
+                    <svg class="info-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </div>
+                <div class="info-card-content" style="width: 100%;">
+                    <h3>Design Consultant - Line 2</h3>
+                    <p style="font-weight: 600; font-size: 1.15rem; color: var(--black); margin-bottom: 12px; font-family: 'Montserrat', sans-serif;">+91 89515 25373</p>
+                    <div class="action-buttons-row">
+                        <a href="https://wa.me/918951525373" target="_blank" class="action-btn wa-btn">
+                            <svg class="action-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.437.002 9.851-4.411 9.854-9.856.002-2.637-1.018-5.114-2.873-6.972-1.854-1.857-4.327-2.877-6.966-2.878-5.441 0-9.858 4.415-9.86 9.86-.001 1.573.418 3.104 1.213 4.471l-.993 3.624 3.712-.974zm11.39-6.314c-.073-.122-.27-.195-.565-.343-.296-.148-1.748-.863-2.019-.961-.272-.098-.47-.148-.667.148-.197.296-.764.961-.937 1.159-.173.197-.346.222-.642.074-.296-.148-1.25-.46-2.382-1.469-.88-.785-1.474-1.756-1.647-2.052-.173-.296-.018-.456.13-.603.133-.132.296-.346.444-.519.148-.173.197-.296.296-.494.099-.197.049-.37-.025-.519-.074-.148-.667-1.605-.914-2.198-.24-.579-.48-.5-.667-.51-.173-.008-.371-.01-.568-.01-.197 0-.519.074-.79.37-.272.296-1.037 1.013-1.037 2.47 0 1.457 1.061 2.864 1.21 3.062.148.197 2.088 3.194 5.06 4.475.707.305 1.258.487 1.688.624.71.226 1.357.194 1.868.118.57-.085 1.748-.714 1.995-1.405.247-.69.247-1.283.173-1.405z"/>
+                            </svg>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="tel:+918951525373" class="action-btn call-btn">
+                            <svg class="action-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <span>Call</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Email -->
             <div class="info-card">
                 <div class="info-card-icon-wrap">
-                    <svg class="info-card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg class="info-card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                         <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
@@ -835,16 +926,14 @@
                 <div class="info-card-content">
                     <h3>Email Correspondence</h3>
                     <a href="mailto:walltoneofficial@gmail.com">walltoneofficial@gmail.com</a>
-                    <p style="font-size: 0.8rem; margin-top: 5px;">We respond to all written inquiries within 24 hours.
-                    </p>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">We respond to all written inquiries within 24 hours.</p>
                 </div>
             </div>
 
-            <!-- Card 3: Instagram -->
+            <!-- Card 4: Instagram -->
             <div class="info-card">
                 <div class="info-card-icon-wrap">
-                    <svg class="info-card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg class="info-card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -853,32 +942,29 @@
                 <div class="info-card-content">
                     <h3>Social Community</h3>
                     <a href="https://instagram.com/walltone.in" target="_blank">@walltone.in</a>
-                    <p style="font-size: 0.8rem; margin-top: 5px;">Follow us for new collections, drops, and video
-                        demos.</p>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">Follow us for new collections, drops, and video demos.</p>
                 </div>
             </div>
 
-            <!-- Card 4: Operating Hours -->
+            <!-- Card 5: Operating Hours -->
             <div class="info-card">
                 <div class="info-card-icon-wrap">
-                    <svg class="info-card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg class="info-card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
                 </div>
                 <div class="info-card-content">
                     <h3>Showroom Hours</h3>
-                    <p>Monday - Saturday: 9:00 AM - 8:00 PM IST</p>
-                    <p>Sunday: Closed</p>
+                    <p>24/7 Available</p>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">We are online and ready to assist you any time!</p>
                 </div>
             </div>
 
-            <!-- Card 5: Address -->
+            <!-- Card 6: Address -->
             <div class="info-card">
                 <div class="info-card-icon-wrap">
-                    <svg class="info-card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg class="info-card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
@@ -891,42 +977,35 @@
             </div>
         </section>
 
-        <!-- Right: Message Form -->
+        <!-- Right: Inquiry Form -->
         <section class="contact-form-panel">
-            <h2 class="form-title">Send Us a Message</h2>
-            <p class="form-desc">Fill out the form below and our design consultant will reach out to you shortly.</p>
+            <h2 class="form-title">Quick Lead Inquiry</h2>
+            <p class="form-desc">Fill out your details below to instantly connect with our lead designer on WhatsApp.</p>
 
             <form id="contactForm" onsubmit="handleFormSubmit(event)">
                 <div class="form-grid">
-                    <div class="form-group">
+                    <div class="form-group form-full-width">
                         <label class="form-label" for="formName">Full Name</label>
                         <input class="form-input" id="formName" type="text" placeholder="John Doe" required>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="formEmail">Email Address</label>
-                        <input class="form-input" id="formEmail" type="email" placeholder="john@example.com" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="formPhone">Phone Number</label>
+                    <div class="form-group form-full-width">
+                        <label class="form-label" for="formPhone">Mobile Number</label>
                         <input class="form-input" id="formPhone" type="tel" placeholder="+91 98765 43210" required>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="formSubject">Subject</label>
-                        <input class="form-input" id="formSubject" type="text" placeholder="Customization Inquiry"
-                            required>
-                    </div>
-
                     <div class="form-group form-full-width">
-                        <label class="form-label" for="formMessage">Message</label>
-                        <textarea class="form-input" id="formMessage"
-                            placeholder="Tell us more about your decor requirements..." required></textarea>
+                        <label class="form-label" for="formMessage">Message (Optional)</label>
+                        <textarea class="form-input" id="formMessage" placeholder="Tell us more about your decor requirements (e.g., custom metal art size, clock color finish, mirror frame preference)..."></textarea>
                     </div>
                 </div>
 
-                <button class="btn-submit" type="submit">Send Message</button>
+                <button class="btn-submit" type="submit" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.437.002 9.851-4.411 9.854-9.856.002-2.637-1.018-5.114-2.873-6.972-1.854-1.857-4.327-2.877-6.966-2.878-5.441 0-9.858 4.415-9.86 9.86-.001 1.573.418 3.104 1.213 4.471l-.993 3.624 3.712-.974zm11.39-6.314c-.073-.122-.27-.195-.565-.343-.296-.148-1.748-.863-2.019-.961-.272-.098-.47-.148-.667.148-.197.296-.764.961-.937 1.159-.173.197-.346.222-.642.074-.296-.148-1.25-.46-2.382-1.469-.88-.785-1.474-1.756-1.647-2.052-.173-.296-.018-.456.13-.603.133-.132.296-.346.444-.519.148-.173.197-.296.296-.494.099-.197.049-.37-.025-.519-.074-.148-.667-1.605-.914-2.198-.24-.579-.48-.5-.667-.51-.173-.008-.371-.01-.568-.01-.197 0-.519.074-.79.37-.272.296-1.037 1.013-1.037 2.47 0 1.457 1.061 2.864 1.21 3.062.148.197 2.088 3.194 5.06 4.475.707.305 1.258.487 1.688.624.71.226 1.357.194 1.868.118.57-.085 1.748-.714 1.995-1.405.247-.69.247-1.283.173-1.405z"></path>
+                    </svg>
+                    <span>Connect on WhatsApp</span>
+                </button>
             </form>
         </section>
     </main>
@@ -1149,18 +1228,26 @@
 
             // Get inputs
             const name = document.getElementById('formName').value;
-            const email = document.getElementById('formEmail').value;
             const phone = document.getElementById('formPhone').value;
-            const subject = document.getElementById('formSubject').value;
-            const message = document.getElementById('formMessage').value;
+            const message = document.getElementById('formMessage').value.trim();
 
-            console.log("Contact submission received:", { name, email, phone, subject, message });
+            let textMessage = "";
+            if (message) {
+                textMessage = `Hi Walltone Decors, my name is ${name} (Mobile: ${phone}). I have an inquiry: ${message}`;
+            } else {
+                textMessage = `Hi Walltone Decors, my name is ${name} (Mobile: ${phone}). I am interested in inquiring about your premium metal arts, clocks, and mirrors. Please share more details and catalogs with me!`;
+            }
 
-            // Show beautiful premium success toast
-            showToast("Thank you, " + name + "! Your message was sent successfully.");
+            const whatsappUrl = `https://wa.me/918237174839?text=${encodeURIComponent(textMessage)}`;
 
-            // Reset form
-            document.getElementById('contactForm').reset();
+            // Show beautiful success toast
+            showToast("Redirecting you to WhatsApp...");
+
+            // Open WhatsApp in a new tab
+            setTimeout(() => {
+                window.open(whatsappUrl, '_blank');
+                document.getElementById('contactForm').reset();
+            }, 800);
         }
 
         // ============================================
