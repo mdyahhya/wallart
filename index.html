@@ -1180,6 +1180,27 @@
                 white-space: nowrap;
             }
         }
+
+        /* ===== DESKTOP / PC EXCELLENCE ===== */
+        @media (min-width: 1025px) {
+            .slider-container {
+                height: 70vh;
+                max-height: 550px;
+                min-height: 450px;
+                max-width: 1100px;
+                margin: 0 auto;
+                border-radius: 16px;
+                box-shadow: var(--shadow-medium);
+            }
+
+            .hero-section {
+                padding: 40px 5% 20px;
+            }
+
+            .slide-title {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 
@@ -1430,7 +1451,7 @@
         <div class="categories-grid">
             <div class="category-card" onclick="window.location.href='wallart.html'">
                 <div class="category-image">
-                    <span style="font-size: 3rem;">🎨</span>
+                    <img src="art.jpg" alt="Metal Wall Art" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
 
                 <div class="category-info">
@@ -1443,7 +1464,7 @@
 
             <div class="category-card" onclick="window.location.href='wallclock.html'">
                 <div class="category-image">
-                    <span style="font-size: 3rem;">🕒</span>
+                    <img src="clock.jpg" alt="Metal Wall Clocks" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
 
                 <div class="category-info">
@@ -1456,7 +1477,7 @@
 
             <div class="category-card" onclick="window.location.href='wallmirror.html'">
                 <div class="category-image">
-                    <span style="font-size: 3rem;">🪞</span>
+                    <img src="mirror.jpg" alt="Metal Wall Mirrors" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
 
                 <div class="category-info">
