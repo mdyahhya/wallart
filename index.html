@@ -8,15 +8,15 @@
     <script>
         // Kill Switch: overwrite any old SW + clear all caches
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(regs) {
-                regs.forEach(function(sw) { sw.unregister(); });
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+                regs.forEach(function (sw) { sw.unregister(); });
             });
             // Force-register the new kill-switch to be sure it cleans up
-            navigator.serviceWorker.register('/sw.js').then(function(reg) {
+            navigator.serviceWorker.register('/sw.js').then(function (reg) {
                 console.log('SW Kill Switch Active');
             });
-            caches.keys().then(function(k) {
-                k.forEach(function(c) { caches.delete(c); });
+            caches.keys().then(function (k) {
+                k.forEach(function (c) { caches.delete(c); });
             });
         }
     </script>
@@ -1477,7 +1477,8 @@
 
             <div class="category-card" onclick="window.location.href='wallmirror.html'">
                 <div class="category-image">
-                    <img src="mirror.jpg" alt="Metal Wall Mirrors" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="mirror.jpg" alt="Metal Wall Mirrors"
+                        style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
 
                 <div class="category-info">
@@ -1625,7 +1626,7 @@
                 <ul>
                     <li><a href="mailto:walltoneofficial@gmail.com">walltoneofficial@gmail.com</a></li>
                     <li><a href="tel:+919876543210">+91 98765 43210</a></li>
-                    <li><a href="#">Nashik, Maharashtra</a></li>
+                    <li><a href="#">Solapur, Maharashtra</a></li>
                 </ul>
             </div>
         </div>
