@@ -2374,22 +2374,40 @@
             if (handle) handle.style.left = val + '%';
         }
 
+        let sliderIntervals = [];
+
         // Automatic scroll from no-wall to wall and back to half-scrolled
         const styleGuideObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     animateSliders();
-                    styleGuideObserver.unobserve(entry.target);
+                } else {
+                    resetSlidersToDefault();
                 }
             });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.15 });
 
         const styleGuideSec = document.getElementById('style-guide');
         if (styleGuideSec) {
             styleGuideObserver.observe(styleGuideSec);
         }
 
+        function resetSlidersToDefault() {
+            sliderIntervals.forEach(interval => clearInterval(interval));
+            sliderIntervals = [];
+
+            const rangeInputs = document.querySelectorAll('.slider-range-input');
+            rangeInputs.forEach((input, index) => {
+                const id = index + 1;
+                input.value = 100;
+                updateComparison(id, 100);
+            });
+        }
+
         function animateSliders() {
+            sliderIntervals.forEach(interval => clearInterval(interval));
+            sliderIntervals = [];
+
             const rangeInputs = document.querySelectorAll('.slider-range-input');
             rangeInputs.forEach((input, index) => {
                 const id = index + 1;
@@ -2397,31 +2415,31 @@
                 input.value = val;
                 updateComparison(id, val);
 
-                // Slide to 0% (Fully showing styled wall)
                 setTimeout(() => {
-                    let interval = setInterval(() => {
-                        val -= 2;
+                    const goInterval = setInterval(() => {
+                        val -= 1;
                         if (val <= 0) {
                             val = 0;
-                            clearInterval(interval);
+                            clearInterval(goInterval);
                             
-                            // Slide back to 50% (Half way)
                             setTimeout(() => {
-                                let backInterval = setInterval(() => {
-                                    val += 2;
+                                const backInterval = setInterval(() => {
+                                    val += 1;
                                     if (val >= 50) {
                                         val = 50;
                                         clearInterval(backInterval);
                                     }
                                     input.value = val;
                                     updateComparison(id, val);
-                                }, 15);
-                            }, 600);
+                                }, 25);
+                                sliderIntervals.push(backInterval);
+                            }, 800);
                         }
                         input.value = val;
                         updateComparison(id, val);
-                    }, 15);
-                }, index * 300 + 400);
+                    }, 25);
+                    sliderIntervals.push(goInterval);
+                }, index * 400 + 300);
             });
         }
 
