@@ -432,16 +432,10 @@
             const deliveryCharge = calculateDeliveryCharge(userPincode, cart);
             const total = subtotal + deliveryCharge;
 
-            btn.innerHTML = `<span>Preparing Cashfree Payment...</span>`;
-
-            // Generate unique Order ID
-            const orderId = 'WT' + Date.now();
-
-            // 4. Save order to Supabase
+            // 4. Save order to Supabase (Supabase auto-generates valid UUID primary key)
             const { data: orderData, error: orderError } = await db
                 .from('orders')
                 .insert({
-                    id: orderId,
                     user_id: session.user.id,
                     user_name: profile.full_name || session.user.user_metadata?.full_name || 'Customer',
                     user_email: userEmail,
@@ -464,6 +458,8 @@
                 alert('Failed to initialize order. Please try again. Error: ' + orderError.message);
                 return;
             }
+
+            const orderId = orderData.id;
 
             // Store order details locally for order confirmation page
             localStorage.setItem('walltone_last_order', JSON.stringify({
