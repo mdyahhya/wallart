@@ -427,19 +427,10 @@
             return DELIVERY_CHARGE;
         }
 
+        let currentCheckoutSession = null;
+
+        // 1. First step: Validate Auth and open editable Checkout Modal
         async function handleCheckout() {
-            const cart = getCart();
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-
-            const btn = document.getElementById('checkoutBtn');
-
-            let currentCheckoutSession = null;
-
-            // 1. First step: Validate Auth and open editable Checkout Modal
-            async function handleCheckout() {
                 const cart = getCart();
                 if (cart.length === 0) {
                     alert('Your cart is empty!');
@@ -593,7 +584,6 @@
                     payBtn.textContent = 'Proceed to Payment';
                 }
             }
-        }
         // ═══ PERSISTENT CART LOGIC ═══
         const STO_KEY = 'walltone_cart';
 
