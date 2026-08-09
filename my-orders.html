@@ -415,6 +415,7 @@
         let allOrders = [];
 
         const statusConfig = {
+            paid:       { class: 'status-delivered',  label: 'ORDER PLACED ✓' },
             pending:    { class: 'status-pending',    label: 'Pending' },
             confirmed:  { class: 'status-confirmed',  label: 'Confirmed' },
             processing: { class: 'status-processing', label: 'Processing' },
@@ -422,8 +423,21 @@
             cancelled:  { class: 'status-cancelled',  label: 'Cancelled' },
         };
 
-        function getStatusCfg(s) {
+        function getStatusCfg(s, isPlaced) {
+            if (s === 'paid' || isPlaced) return statusConfig['paid'];
             return statusConfig[s] || statusConfig['pending'];
+        }
+
+        function calculateDeliveryRange(orderDateStr) {
+            const date = orderDateStr ? new Date(orderDateStr) : new Date();
+            const start = new Date(date); start.setDate(start.getDate() + 6);
+            const end = new Date(date); end.setDate(end.getDate() + 7);
+
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            const startStr = start.toLocaleDateString('en-IN', options);
+            const endStr = end.toLocaleDateString('en-IN', options);
+
+            return `${startStr} – ${endStr} (6–7 business days)`;
         }
 
         function formatDate(isoStr) {
@@ -442,7 +456,8 @@
                 const items = order.items || [];
                 const previewImgs = items.slice(0, 3);
                 const extraCount = items.length - 3;
-                const cfg = getStatusCfg(order.status);
+                const cfg = getStatusCfg(order.status, order.is_placed);
+                const estDelivery = calculateDeliveryRange(order.created_at);
 
                 const imgHTML = previewImgs.map(item =>
                     `<img src="${item.image_url || 'https://via.placeholder.com/56'}" class="preview-img" alt="${item.name || ''}">`
@@ -467,6 +482,9 @@
                         <div class="order-items-preview">
                             ${imgHTML}${extraHTML}
                         </div>
+                        <div style="font-size:0.82rem; color:var(--green-dark); font-weight:600; padding:10px 0 0 0;">
+                            📦 Estimated Delivery: ${estDelivery}
+                        </div>
                         <div class="order-card-footer">
                             <span class="order-item-count">${items.length} Item${items.length !== 1 ? 's' : ''}</span>
                             <div style="display:flex;align-items:center;gap:12px;">
@@ -483,11 +501,12 @@
             const order = allOrders.find(o => o.id === orderId);
             if (!order) return;
 
-            const cfg = getStatusCfg(order.status);
+            const cfg = getStatusCfg(order.status, order.is_placed);
             const items = order.items || [];
-            const subtotal = items.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0);
-            const tax = Math.round(subtotal * 0.18);
-            const total = subtotal + tax;
+            const subtotal = Number(order.subtotal || items.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0));
+            const deliveryCharge = Number(order.delivery_charge || 0);
+            const total = Number(order.total_amount || (subtotal + deliveryCharge));
+            const estDelivery = calculateDeliveryRange(order.created_at);
 
             document.getElementById('modalBody').innerHTML = `
                 <div class="modal-order-id-box">
@@ -500,12 +519,16 @@
                     </span>
                 </div>
 
+                <div style="background:var(--green-light); border:1.5px solid var(--green); border-radius:12px; padding:15px; margin-bottom:20px; font-weight:600; color:var(--green-dark); font-size:0.92rem;">
+                    📦 <strong>Estimated Delivery:</strong> ${estDelivery}
+                </div>
+
                 <div class="modal-section-title">Items Ordered (${items.length})</div>
                 ${items.map(item => `
                     <div class="modal-item">
                         <img src="${item.image_url || 'https://via.placeholder.com/65'}" class="modal-item-img" alt="${item.name}">
                         <div class="modal-item-info">
-                            <div class="modal-item-name">${item.name}</div>
+                            <div class="modal-item-name">${item.name || 'Metal Decor Product'}</div>
                             <div class="modal-item-sku">ID: ${item.product_no || 'N/A'}</div>
                             <div class="modal-item-price">${formatAmount((item.price || 0) * (item.quantity || 1))}</div>
                             <div class="modal-item-qty">Qty: ${item.quantity || 1} × ${formatAmount(item.price || 0)}</div>
@@ -515,22 +538,22 @@
 
                 <div class="modal-total-section">
                     <div class="modal-total-row"><span>Subtotal</span><span>${formatAmount(subtotal)}</span></div>
-                    <div class="modal-total-row"><span>GST (18%)</span><span>${formatAmount(tax)}</span></div>
-                    <div class="modal-total-row"><span>Shipping</span><span style="color:var(--green);font-weight:700">FREE</span></div>
-                    <div class="modal-total-row grand"><span>Total</span><span class="val">${formatAmount(total)}</span></div>
+                    <div class="modal-total-row"><span>Delivery Charge</span><span>${deliveryCharge === 0 ? 'FREE' : formatAmount(deliveryCharge)}</span></div>
+                    <div class="modal-total-row grand"><span>Total Amount Paid</span><span class="val">${formatAmount(total)}</span></div>
                 </div>
 
                 ${order.shipping_address ? `
                 <div class="modal-address" style="margin-top:20px;">
-                    <div class="modal-address-label">Delivery Address</div>
-                    <div class="modal-address-val">${order.shipping_address}</div>
-                    ${order.phone ? `<div class="modal-phone-val">📞 ${order.phone}</div>` : ''}
+                    <div class="modal-address-label">Delivery Address & Contact</div>
+                    <div class="modal-address-val">${order.shipping_address} (PIN: ${order.pincode || 'N/A'})</div>
+                    ${order.phone ? `<div class="modal-phone-val" style="margin-top:6px;font-weight:600;">📞 Phone: ${order.phone}</div>` : ''}
+                    ${order.cashfree_payment_id ? `<div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Payment Ref: ${order.cashfree_payment_id}</div>` : ''}
                 </div>
                 ` : ''}
 
                 <div class="modal-contact">
                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    <p><strong>Awaiting Confirmation</strong><br>Our team will contact you on your registered phone number within 1 hour to confirm and process your order.</p>
+                    <p><strong>Order Confirmed</strong><br>Your order is being processed for dispatch. For any assistance, contact walltoneofficial@gmail.com or call +91 94205 42883.</p>
                 </div>
             `;
 

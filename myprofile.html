@@ -317,7 +317,7 @@
                     const estDelivery = calculateDeliveryRange(order.created_at);
                     const items = Array.isArray(order.items) ? order.items : [];
                     const isPaid = order.status === 'paid' || order.is_placed;
-                    const statusLabel = isPaid ? 'PAID ✓' : (order.status || 'PENDING').toUpperCase();
+                    const statusLabel = isPaid ? 'ORDER PLACED ✓' : (order.status || 'PENDING').toUpperCase();
                     const statusBg = isPaid ? '#E8F5E9' : '#FFF3E0';
                     const statusColor = isPaid ? '#2E7D32' : '#E65100';
 

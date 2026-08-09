@@ -562,7 +562,7 @@
                             const cashfree = window.Cashfree({ mode: envMode });
                             cashfree.checkout({
                                 paymentSessionId: cfResult.payment_session_id,
-                                redirectTarget: '_modal'
+                                redirectTarget: '_self'
                             });
                         } else {
                             const baseUrl = envMode === 'sandbox' 
