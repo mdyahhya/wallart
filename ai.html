@@ -1568,19 +1568,28 @@
     <!-- Instructions Modal -->
     <div class="instr-modal" id="instrModal">
         <div class="instr-content">
-            <div class="instr-header">
-                <div class="lang-toggle" onclick="toggleLanguage()">
-                    <div class="lang-btn active" id="btnEn">English</div>
-                    <div class="lang-btn" id="btnHi">हिन्दी</div>
+            <div class="instr-header" style="border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; padding: 16px 20px;">
+                <h3 style="font-family: inherit; font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin: 0;">How to Use</h3>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <div class="lang-toggle" onclick="toggleLanguage()">
+                        <div class="lang-btn active" id="btnEn">English</div>
+                        <div class="lang-btn" id="btnHi">हिन्दी</div>
+                    </div>
+                    <button class="close-instr" onclick="closeInstructions()" style="margin: 0;">&times;</button>
                 </div>
-                <button class="close-instr" onclick="closeInstructions()">&times;</button>
             </div>
             <div class="instr-body">
-                <div class="instr-video-wrap">
-                    <video id="guideVideo" width="100%" height="100%" controls poster="walltone.png">
-                        <source src="https://sujqcavxkoxkoxwvlzci.supabase.co/storage/v1/object/public/Demo%20Video/demovideo.mp4" type="video/mp4">
+                <div class="instr-video-wrap" style="position: relative; background: #000; border-radius: 12px; overflow: hidden; aspect-ratio: 16/9; margin-bottom: 20px;">
+                    <video id="guideVideo" width="100%" height="100%" controls playsinline style="display: block; object-fit: cover;">
+                        <source src="demo.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                    <div id="playOverlay" onclick="playWithSound()" style="display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.65); align-items: center; justify-content: center; flex-direction: column; cursor: pointer; color: white; z-index: 10;">
+                        <div style="width: 54px; height: 54px; border-radius: 50%; background: #4f46e5; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <span style="font-size: 13px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Tap to Play with Sound</span>
+                    </div>
                 </div>
 
                 <div id="instrSteps">
@@ -1651,6 +1660,10 @@
             initializeCanvas();
             loadProducts();
             setupDragAndDrop();
+
+            setTimeout(() => {
+                openInstructions();
+            }, 600);
         });
 
         function initializeCanvas() {
@@ -2453,12 +2466,39 @@
         function openInstructions() {
             renderInstructions();
             document.getElementById('instrModal').classList.add('active');
+
+            const video = document.getElementById('guideVideo');
+            if (video) {
+                video.currentTime = 0;
+                video.muted = false;
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("Guide video autoplay unmuted success.");
+                        document.getElementById('playOverlay').style.display = 'none';
+                    }).catch(error => {
+                        console.log("Autoplay unmuted blocked, showing sound overlay.");
+                        document.getElementById('playOverlay').style.display = 'flex';
+                    });
+                }
+            }
+        }
+
+        function playWithSound() {
+            const video = document.getElementById('guideVideo');
+            if (video) {
+                video.muted = false;
+                video.play();
+            }
+            document.getElementById('playOverlay').style.display = 'none';
         }
 
         function closeInstructions() {
             document.getElementById('instrModal').classList.remove('active');
             const video = document.getElementById('guideVideo');
-            video.pause();
+            if (video) {
+                video.pause();
+            }
         }
 
         function toggleLanguage() {
