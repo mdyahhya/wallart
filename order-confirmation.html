@@ -296,12 +296,35 @@
                 return;
             }
 
+            // Update order status to paid & send admin push notification
+            try {
+                await db.from('orders').update({ status: 'paid', is_placed: true }).eq('id', orderId);
+                order.status = 'paid';
+                order.is_placed = true;
+            } catch(e) {
+                console.log('Status update notice:', e);
+            }
+
+            try {
+                fetch('/.netlify/functions/notify-admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        orderId: orderId,
+                        userName: order.user_name || 'Customer',
+                        phone: order.phone || '',
+                        totalAmount: order.total_amount || 0,
+                        items: order.items || []
+                    })
+                });
+            } catch(e) {}
+
             // Render order details
             const createdDate = order.created_at || new Date();
             document.getElementById('deliveryRangeText').textContent = calculateDeliveryRange(createdDate);
 
             const isPaid = order.status === 'paid' || order.is_placed;
-            document.getElementById('orderIdDisplay').innerHTML = `Order ID: #${(order.id || orderId).slice(0, 12).toUpperCase()} <span style="margin-left:8px;font-size:0.8rem;">[${isPaid ? 'PAID ✓' : 'PENDING'}]</span>`;
+            document.getElementById('orderIdDisplay').innerHTML = `Order ID: #${(order.id || orderId).slice(0, 12).toUpperCase()} <span style="margin-left:8px;font-size:0.85rem;background:#E8F5E9;color:#2E7D32;padding:2px 10px;border-radius:20px;font-weight:700;">PAID ✓</span>`;
 
             document.getElementById('subtotalVal').textContent = `₹${Number(order.subtotal || 0).toLocaleString('en-IN')}`;
             document.getElementById('deliveryVal').textContent = order.delivery_charge === 0 ? 'FREE' : `₹${Number(order.delivery_charge || 200).toLocaleString('en-IN')}`;

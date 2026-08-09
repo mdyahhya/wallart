@@ -14,8 +14,9 @@ exports.handler = async (event, context) => {
         const VAPID_EMAIL   = 'mailto:walltoneofficial@gmail.com';
 
         // Supabase config to fetch all admin subscriptions
-        const SUPABASE_URL         = 'https://sujqcavxkoxkoxwvlzci.supabase.co';
-        const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+        const SUPABASE_URL  = 'https://sujqcavxkoxkoxwvlzci.supabase.co';
+        const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1anFjYXZ4a294a294d3ZsemNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MDY2MjgsImV4cCI6MjA4ODE4MjYyOH0.ZBMF7adIuR_QR4pOME2UPRHUdnjPbljkt629vK7mJgY';
+        const apiKey        = process.env.SUPABASE_SERVICE_KEY || SUPABASE_ANON;
 
         if (!VAPID_PUBLIC || !VAPID_PRIVATE) {
             console.log('VAPID keys missing — skipping notification');
@@ -29,17 +30,15 @@ exports.handler = async (event, context) => {
 
         // Fetch ALL admin push subscriptions from Supabase
         let subscriptions = [];
-        if (SUPABASE_SERVICE_KEY) {
-            const res = await fetch(`${SUPABASE_URL}/rest/v1/admin_push_subscriptions?select=id,subscription`, {
-                headers: {
-                    'apikey': SUPABASE_SERVICE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
-                }
-            });
-            const rows = await res.json();
-            if (Array.isArray(rows)) {
-                subscriptions = rows;
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/admin_push_subscriptions?select=id,subscription`, {
+            headers: {
+                'apikey': apiKey,
+                'Authorization': `Bearer ${apiKey}`
             }
+        });
+        const rows = await res.json();
+        if (Array.isArray(rows)) {
+            subscriptions = rows;
         }
 
         if (subscriptions.length === 0) {
