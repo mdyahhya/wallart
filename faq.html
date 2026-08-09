@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions | Walltone Decors</title>
+    <meta name="description" content="Frequently Asked Questions (FAQ) about Walltone Decors products, shipping, installation, and care.">
+    <link rel="icon" type="image/png" href="walltone.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --brand-green: #2E7D32;
+            --green-light: #E8F5E9;
+            --green-mid: #A5D6A7;
+            --green-dark: #1B5E20;
+            --white: #FFFFFF;
+            --black: #111111;
+            --text-secondary: #333333;
+            --text-muted: #555555;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.8;
+            padding-bottom: 80px;
+        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: var(--white);
+            border-bottom: 2px solid var(--brand-green);
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            z-index: 1000;
+            box-shadow: var(--shadow-soft);
+        }
+        .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-image-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 2px solid var(--brand-green); }
+        .logo-text-container { display: flex; flex-direction: column; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: var(--black); text-decoration: none; text-transform: uppercase; }
+        .logo-subtitle { font-size: 0.55rem; letter-spacing: 0.12em; color: var(--brand-green); text-transform: uppercase; }
+        
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links li a { text-decoration: none; color: var(--black); font-size: 0.95rem; text-transform: uppercase; padding: 5px 0; transition: 0.3s; }
+        .nav-links li a:hover { color: var(--brand-green); }
+
+        .page-container {
+            max-width: 900px;
+            margin: 120px auto 60px;
+            padding: 0 20px;
+        }
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--black);
+            border-bottom: 3px solid var(--brand-green);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .faq-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--green-light);
+            border: 1px solid var(--green-mid);
+            border-radius: 12px;
+        }
+        .faq-item h3 {
+            font-size: 1.2rem;
+            color: var(--brand-green);
+            margin-bottom: 10px;
+        }
+        .footer {
+            background: var(--black);
+            color: #aaaaaa;
+            padding: 50px 5% 30px;
+            text-align: center;
+            border-top: 3px solid var(--brand-green);
+        }
+        .footer a { color: var(--green-mid); text-decoration: none; }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="walltone.png" alt="Walltone Decors" class="logo-image-img">
+            <div class="logo-text-container">
+                <span class="logo">Walltone Decors</span>
+                <span class="logo-subtitle">Premium Metal Art</span>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="myprofile.html">My Profile</a></li>
+            <li><a href="ai.html">AI Cam</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="page-container">
+        <h1 class="page-title">Frequently Asked Questions</h1>
+        <p style="margin-bottom: 30px; color: var(--text-muted);">Everything you need to know about Walltone Decors.</p>
+
+        <div class="faq-item">
+            <h3>Q: What material is used in Walltone Decors products?</h3>
+            <p>All our products are crafted from premium high-grade mild steel / metal with anti-rust powder coating and hand-finished acrylic/gold detailing for long-lasting durability.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q: How do I install the wall art or clocks?</h3>
+            <p>Every piece features built-in hanging hooks on the reverse side. Wall mounting hardware (screws and anchors) is included in your delivery box for quick 2-minute hanging.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q: How long will delivery take?</h3>
+            <p>Standard delivery takes <strong>6–7 business days</strong> across India. You will receive tracking notifications as soon as your order is dispatched.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q: Can I preview how an art piece looks on my wall before buying?</h3>
+            <p>Yes! Use our interactive <a href="ai.html" style="color: var(--brand-green); font-weight: 600;">AI Cam</a> tool to visualize any wall art directly on your wall in real-time using your phone or laptop camera.</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Walltone Decors. All Rights Reserved. | <a href="privacy-policy.html">Privacy Policy</a> | <a href="shipping-policy.html">Shipping Policy</a> | <a href="return-policy.html">Return Policy</a></p>
+    </footer>
+</body>
+
+</html>

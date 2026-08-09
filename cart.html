@@ -272,8 +272,8 @@
                         <span id="tax">₹0</span>
                     </div>
                     <div class="summary-row">
-                        <span>Shipping Cost</span>
-                        <span style="color: var(--green); font-weight: 600;">FREE</span>
+                        <span>Delivery Charge</span>
+                        <span id="deliveryFeeVal" style="color: var(--brand-green); font-weight: 600;">₹200</span>
                     </div>
                     <div class="summary-row total">
                         <span>Order Total</span>
@@ -281,14 +281,16 @@
                     </div>
 
                     <button class="btn-checkout" id="checkoutBtn" onclick="handleCheckout()">
-                        Place Order
+                        Continue to Payment
                         <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                     <a href="my-orders.html" class="btn-orders-link">
                         <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1" ry="1"/><path d="M9 12h6M9 16h4"/></svg>
                         My Orders
                     </a>
-                    <div style="text-align: center; margin-top: 15px; font-size: 0.75rem; color: #999;">Secure Order — Pay on Delivery</div>
+                    <div style="text-align: center; margin-top: 15px; font-size: 0.78rem; color: #666;">
+                        💳 Secure Cashfree Checkout — You'll receive your payment receipt at your email address.
+                    </div>
                 </div>
             </div>
         </div>
@@ -321,8 +323,8 @@
             <div class="profile-modal-icon">
                 <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
-            <h3>Profile Incomplete</h3>
-            <p id="profileModalMsg">To place an order, please complete your profile with your phone number and delivery address first.</p>
+            <h3>Profile & Shipping Details Required</h3>
+            <p id="profileModalMsg">To place an order, please enter your Phone Number, PIN Code, and Delivery Address. You'll receive your payment receipt at your email address.</p>
             <div class="profile-modal-btns">
                 <a href="myprofile.html?redirect=checkout" class="btn-go-profile">Complete My Profile</a>
                 <button class="btn-cancel-modal" onclick="document.getElementById('profileModal').classList.remove('open')">Not Now</button>
@@ -373,7 +375,17 @@
         const { createClient } = supabase;
         const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-        // ═══ CHECKOUT FLOW ═══
+        // ═══ DELIVERY & CHECKOUT FLOW ═══
+        const DELIVERY_CHARGE = 200;
+
+        function calculateDeliveryCharge(pincode, cart = []) {
+            // If testing with the ₹1 test product, waive delivery fee so Cashfree order total is exactly ₹1
+            const isTestOnly = cart.length === 1 && cart[0].id === 'test-product-1inr';
+            if (isTestOnly) return 0;
+            if (!pincode) return DELIVERY_CHARGE;
+            return DELIVERY_CHARGE;
+        }
+
         async function handleCheckout() {
             const cart = getCart();
             if (cart.length === 0) {
@@ -390,48 +402,55 @@
                 return;
             }
 
-            // 2. Check profile completeness
             btn.disabled = true;
-            btn.innerHTML = `<span>Verifying...</span>`;
+            btn.innerHTML = `<span>Verifying Details...</span>`;
 
+            // 2. Fetch profile
             const { data: profile } = await db
                 .from('profiles')
-                .select('full_name, phone, address')
+                .select('full_name, phone, address, pincode, email')
                 .eq('id', session.user.id)
                 .single();
 
-            if (!profile || !profile.phone || !profile.address) {
+            const userPhone = profile?.phone || '';
+            const userAddress = profile?.address || '';
+            const userPincode = profile?.pincode || '';
+            const userEmail = profile?.email || session.user.email || '';
+
+            if (!userPhone || !userAddress || !userPincode) {
                 btn.disabled = false;
-                btn.innerHTML = `Place Order <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-                const msg = !profile || (!profile.phone && !profile.address)
-                    ? 'Please add your phone number and delivery address to place an order.'
-                    : !profile.phone
-                        ? 'Please add your phone number to place an order.'
-                        : 'Please add your delivery address to place an order.';
-                document.getElementById('profileModalMsg').textContent = msg;
+                btn.innerHTML = `Continue to Payment <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+                
+                // Show modal prompting for complete profile
+                document.getElementById('profileModalMsg').textContent = 'Please complete your Phone Number, PIN Code, and Delivery Address before proceeding to payment.';
                 document.getElementById('profileModal').classList.add('open');
                 return;
             }
 
-            // 3. Calculate totals
+            // 3. Calculate order totals
             const subtotal = cart.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0);
-            const tax = Math.round(subtotal * 0.18);
-            const total = subtotal + tax;
+            const deliveryCharge = calculateDeliveryCharge(userPincode, cart);
+            const total = subtotal + deliveryCharge;
 
-            btn.innerHTML = `<span>Placing Order...</span>`;
+            btn.innerHTML = `<span>Preparing Cashfree Payment...</span>`;
+
+            // Generate unique Order ID
+            const orderId = 'WT' + Date.now();
 
             // 4. Save order to Supabase
             const { data: orderData, error: orderError } = await db
                 .from('orders')
                 .insert({
+                    id: orderId,
                     user_id: session.user.id,
                     user_name: profile.full_name || session.user.user_metadata?.full_name || 'Customer',
-                    user_email: session.user.email,
-                    phone: profile.phone,
-                    shipping_address: profile.address,
+                    user_email: userEmail,
+                    phone: userPhone,
+                    shipping_address: userAddress,
+                    pincode: userPincode,
                     items: cart,
                     subtotal: subtotal,
-                    tax: tax,
+                    delivery_charge: deliveryCharge,
                     total_amount: total,
                     status: 'pending',
                     created_at: new Date().toISOString()
@@ -441,69 +460,72 @@
 
             if (orderError) {
                 btn.disabled = false;
-                btn.innerHTML = `Place Order <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-                alert('Failed to place order. Please try again. Error: ' + orderError.message);
+                btn.innerHTML = `Continue to Payment <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+                alert('Failed to initialize order. Please try again. Error: ' + orderError.message);
                 return;
             }
 
-            // 5. Send push notification to admin via Netlify function
+            // Store order details locally for order confirmation page
+            localStorage.setItem('walltone_last_order', JSON.stringify({
+                order_id: orderId,
+                items: cart,
+                subtotal: subtotal,
+                delivery_charge: deliveryCharge,
+                total_amount: total
+            }));
+
+            // 5. Send new order push notification to admin
             try {
-                // Use absolute URL — always hits the main Walltone Netlify site function
-                const notifyUrl = window.location.origin.includes('localhost')
-                    ? 'http://localhost:8888/.netlify/functions/notify-admin'
-                    : `${window.location.origin}/.netlify/functions/notify-admin`;
-
-                console.log('--- ADMIN NOTIFICATION START ---');
-                console.log('Targeting URL:', notifyUrl);
-
-                const resp = await fetch(notifyUrl, {
+                const notifyUrl = `${window.location.origin}/.netlify/functions/notify-admin`;
+                await fetch(notifyUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        orderId: orderData.id,
+                        orderId: orderId,
                         userName: profile.full_name || 'Customer',
-                        phone: profile.phone,
+                        phone: userPhone,
                         totalAmount: total,
-                        items: cart.map(i => ({
-                            name: i.name,
-                            quantity: i.quantity || 1,
-                            price: i.price,
-                            image_url: i.image_url,
-                            product_no: i.product_no
-                        }))
+                        items: cart
                     })
                 });
-                
-                const result = await resp.json();
-                if (resp.ok && result.success) {
-                    console.log('✅ NOTIFICATION SUCCESS:', result);
-                    // Use result.stats.success to see how many were sent
-                    const count = (result.stats && result.stats.success) || 0;
-                    console.log(`Alerted ${count} admin device(s).`);
-                } else {
-                    console.error('❌ NOTIFICATION FAILED:', result);
-                    console.error(`Status: ${resp.status}. Error: ${result.error || 'Unknown error'}`);
-                }
-                console.log('--- ADMIN NOTIFICATION END ---');
             } catch(e) {
-                console.error('⚠️ PUSH NOTIFICATION NETWORK ERROR:', e);
-                console.log('This means the function was not reached at all. Is it deployed?');
+                console.log('Push notification error:', e);
             }
 
-            // 6. Clear cart & store order details for success page
-            sessionStorage.setItem('walltone_last_order', JSON.stringify({
-                order_id: '#' + orderData.id.slice(0,8).toUpperCase(),
-                items: cart,
-                total: total
-            }));
+            // 6. Initiate Cashfree Payment API
+            try {
+                const cashfreeUrl = `${window.location.origin}/.netlify/functions/create-cashfree-order`;
+                const cfResp = await fetch(cashfreeUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        orderId: orderId,
+                        amount: total,
+                        customerId: session.user.id,
+                        customerName: profile.full_name || session.user.user_metadata?.full_name || 'Customer',
+                        customerPhone: userPhone,
+                        customerEmail: userEmail,
+                        returnUrl: `${window.location.origin}/order-confirmation.html?order_id=${orderId}`
+                    })
+                });
 
-            localStorage.removeItem('walltone_cart');
-
-            // 7. Pause briefly so we can see the DIAGNOSTIC logs above in console
-            console.log('Redirecting to success page in 1.5 seconds...');
-            setTimeout(() => {
-                window.location.href = 'order-success.html';
-            }, 1500);
+                const cfResult = await cfResp.json();
+                if (cfResp.ok && cfResult.success && cfResult.payment_session_id) {
+                    // Clear cart
+                    localStorage.removeItem('walltone_cart');
+                    // Redirect to Cashfree Hosted Payment Session
+                    window.location.href = `https://payments.cashfree.com/order/#${cfResult.payment_session_id}`;
+                } else {
+                    // Fallback to order confirmation page if Cashfree credentials not yet added in Netlify env
+                    alert('Cashfree API Note: Redirecting to order confirmation page. Ensure CASHFREE_APP_ID & CASHFREE_SECRET_KEY are set in Netlify.');
+                    localStorage.removeItem('walltone_cart');
+                    window.location.href = `order-confirmation.html?order_id=${orderId}`;
+                }
+            } catch(e) {
+                console.error('Cashfree error:', e);
+                localStorage.removeItem('walltone_cart');
+                window.location.href = `order-confirmation.html?order_id=${orderId}`;
+            }
         }
         // ═══ PERSISTENT CART LOGIC ═══
         const STO_KEY = 'walltone_cart';
@@ -574,11 +596,12 @@
 
         function calculateTotals(cart) {
             const subtotal = cart.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 1)), 0);
-            const tax = Math.round(subtotal * 0.18);
-            const total = subtotal + tax;
+            const isTestOnly = cart.length === 1 && cart[0].id === 'test-product-1inr';
+            const deliveryCharge = isTestOnly ? 0 : 200;
+            const total = subtotal > 0 ? (subtotal + deliveryCharge) : 0;
 
             if(document.getElementById('subtotal')) document.getElementById('subtotal').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
-            if(document.getElementById('tax')) document.getElementById('tax').textContent = `₹${tax.toLocaleString('en-IN')}`;
+            if(document.getElementById('deliveryFeeVal')) document.getElementById('deliveryFeeVal').textContent = isTestOnly ? 'FREE (Test)' : `₹${deliveryCharge.toLocaleString('en-IN')}`;
             if(document.getElementById('total')) document.getElementById('total').textContent = `₹${total.toLocaleString('en-IN')}`;
         }
 

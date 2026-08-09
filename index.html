@@ -58,6 +58,7 @@
         }
 
         :root {
+            --brand-green: #2E7D32;
             --green: #2E7D32;
             --green-light: #E8F5E9;
             --green-mid: #A5D6A7;
@@ -332,7 +333,7 @@
         .hero-section {
             margin-top: 80px;
             text-align: center;
-            padding: 60px 5% 30px;
+            padding: 15px 5% 30px;
             background: var(--white);
             position: relative;
             overflow: hidden;
@@ -1072,7 +1073,7 @@
             }
 
             .hero-section {
-                padding: 40px 4% 30px;
+                padding: 15px 4% 30px;
                 margin-top: 70px;
             }
 
@@ -1181,25 +1182,223 @@
             }
         }
 
+        /* Default Styles for Hero Layout Elements (Mobile-first: hidden/standard by default) */
+        .hero-wrapper {
+            display: block;
+        }
+
+        .hero-left-content {
+            display: none;
+        }
+
         /* ===== DESKTOP / PC EXCELLENCE ===== */
         @media (min-width: 1025px) {
-            .slider-container {
-                height: 70vh;
-                max-height: 550px;
-                min-height: 450px;
-                max-width: 1100px;
+            .hero-wrapper {
+                display: grid;
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 50px;
+                align-items: center;
+                max-width: 1200px;
                 margin: 0 auto;
+                text-align: left;
+            }
+
+            .hero-left-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+            .desktop-company-name {
+                font-family: 'Playfair Display', serif;
+                font-size: clamp(2.5rem, 4.5vw, 4.2rem);
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                color: var(--black);
+                text-transform: uppercase;
+                margin-bottom: 20px;
+                line-height: 1.1;
+            }
+
+            .desktop-tagline {
+                font-family: 'Montserrat', sans-serif;
+                font-size: clamp(1rem, 1.6vw, 1.3rem);
+                font-weight: 300;
+                letter-spacing: 0.08em;
+                color: var(--text-muted);
+                margin-bottom: 40px;
+                line-height: 1.6;
+                text-transform: uppercase;
+                border-left: 3px solid var(--green);
+                padding-left: 15px;
+            }
+
+            .desktop-hero-actions {
+                display: flex;
+                gap: 20px;
+            }
+
+            .slider-container {
+                width: 100%;
+                max-width: 500px;
+                height: auto;
+                aspect-ratio: 1 / 1;
+                margin: 0 0 0 auto;
                 border-radius: 16px;
                 box-shadow: var(--shadow-medium);
             }
 
             .hero-section {
-                padding: 40px 5% 20px;
+                padding: 15px 5% 50px;
             }
 
             .slide-title {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
+
+            .post-video-actions {
+                display: none;
+            }
+        }
+
+        /* Video Showcase Section */
+        .video-showcase-section {
+            padding: 80px 5%;
+            background: var(--white);
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 40px auto 0;
+        }
+        .video-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--green-mid);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--brand-green);
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: var(--black);
+            overflow: hidden;
+        }
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .unmute-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.75);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: var(--transition-fast);
+        }
+        .unmute-btn:hover {
+            background: var(--brand-green);
+        }
+        .video-info {
+            padding: 20px;
+        }
+        .video-info h3 {
+            font-size: 1.25rem;
+            color: var(--black);
+            margin-bottom: 6px;
+        }
+        .video-info p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Style Guide (Empty Wall vs Styled Wall) */
+        .style-guide-section {
+            padding: 80px 5%;
+            background: var(--green-light);
+        }
+        .style-guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 40px auto 0;
+        }
+        .comparison-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--green-mid);
+        }
+        .comparison-slider-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            user-select: none;
+        }
+        .comparison-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .img-overlay-box {
+            position: absolute;
+            top: 0; left: 0; width: 50%; height: 100%;
+            overflow: hidden;
+            border-right: 3px solid var(--brand-green);
+        }
+        .img-overlay-box img {
+            position: absolute;
+            top: 0; left: 0; height: 100%; width: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(80%);
+        }
+        .slider-handle {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px; height: 40px;
+            background: var(--brand-green);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+        .slider-range-input {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; cursor: ew-resize; z-index: 10;
+        }
+        .comparison-info {
+            padding: 20px;
+            text-align: center;
+        }
+        .comparison-title {
+            font-size: 1.2rem; font-weight: 600; color: var(--black); margin-bottom: 5px;
+        }
+        .comparison-desc {
+            font-size: 0.88rem; color: var(--text-muted);
         }
     </style>
 </head>
@@ -1224,10 +1423,10 @@
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Products</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="#style-guide">Style Guide</a></li>
             <li><a href="myprofile.html">My Profile</a></li>
-            <!-- <li><a href="gallery.html">Gallery</a></li> -->
             <li><a href="ai.html">AI Cam</a></li>
-            <!-- <li><a href="about.html">About</a></li> -->
             <li><a href="contact.html">Contact</a></li>
         </ul>
 
@@ -1276,115 +1475,109 @@
 
     <!-- Hero Section -->
     <section class="hero-section" id="home">
-        <!-- <h1 class="company-name">Walltone Studio</h1>
-        <p class="tagline">Premium Metal Wall Art & Decor</p> -->
-
-
-        <!-- Video Slider -->
-
-        <!-- Action Buttons Above Video -->
-        <!-- <div class="hero-actions">
-            <a href="ai.html" class="btn-ai-cam">
-                <svg class="ai-cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="4"></circle>
-                    <path d="M12 9v8M8 13h8" stroke-dasharray="2 2"></path>
-                </svg>
-                <span>Try AI Cam</span>
-            </a>
-        </div> -->
-
-        <!-- Video Slider -->
-        <div class="slider-container">
-            <div class="progress-bar" id="progressBar"></div>
-
-
-            <!-- AI Cam Button - Top Right Corner -->
-            <a href="ai.html" class="btn-ai-cam-slider">
-                <svg class="ai-cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="4"></circle>
-                    <path d="M12 9v8M8 13h8" stroke-dasharray="2 2"></path>
-                </svg>
-                <span>Try AI Cam</span>
-            </a>
-
-
-            <div class="slider-wrapper" id="sliderWrapper">
-                <!-- Slide 1: Metal Wall Art -->
-                <div class="slide active" data-slide="0">
-                    <div class="video-container">
-                        <!-- VIDEO (future): uncomment below and remove <img> when ready -->
-                        <!-- <video autoplay muted playsinline preload="auto" id="video1">
-                <source src="YOUR_VIDEO_URL_1.mp4" type="video/mp4">
-            </video> -->
-
-                        <!-- IMAGE (current) -->
-                        <img id="slide-img-1" src="art.jpg" alt="Metal Wall Art"
-                            style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-                    </div>
-                    <div class="slide-title-container">
-                        <span class="slide-number">01</span>
-                        <h3 class="slide-title">Metal Wall Art</h3>
-                    </div>
-                </div>
-
-                <!-- Slide 2: Metal Wall Clock -->
-                <div class="slide" data-slide="1">
-                    <div class="video-container">
-                        <!-- VIDEO (future): uncomment below and remove <img> when ready -->
-                        <!-- <video autoplay muted playsinline preload="auto" id="video2">
-                <source src="YOUR_VIDEO_URL_2.mp4" type="video/mp4">
-            </video> -->
-
-                        <!-- IMAGE (current) -->
-                        <img id="slide-img-2" src="clock.jpg" alt="Metal Wall Clock"
-                            style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-                    </div>
-                    <div class="slide-title-container">
-                        <span class="slide-number">02</span>
-                        <h3 class="slide-title">Metal Wall Clock</h3>
-                    </div>
-                </div>
-
-                <!-- Slide 3: Metal Wall Mirror -->
-                <div class="slide" data-slide="2">
-                    <div class="video-container">
-                        <!-- VIDEO (future): uncomment below and remove <img> when ready -->
-                        <!-- <video autoplay muted playsinline preload="auto" id="video3">
-                <source src="YOUR_VIDEO_URL_3.mp4" type="video/mp4">
-            </video> -->
-
-                        <!-- IMAGE (current) -->
-                        <img id="slide-img-3" src="mirror.jpg" alt="Metal Wall Mirror"
-                            style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-                    </div>
-                    <div class="slide-title-container">
-                        <span class="slide-number">03</span>
-                        <h3 class="slide-title">Metal Wall Mirror</h3>
-                    </div>
+        <div class="hero-wrapper">
+            <!-- Left Content (Desktop Only) -->
+            <div class="hero-left-content">
+                <h1 class="desktop-company-name">Walltone</h1>
+                <p class="desktop-tagline">Premium Metal Wall Arts<br>Wall Mirrors<br>Wall Clocks</p>
+                <div class="desktop-hero-actions">
+                    <a href="products.html" class="btn btn-primary">Buy Now</a>
+                    <a href="products.html" class="btn btn-secondary">View Products</a>
                 </div>
             </div>
 
+            <!-- Video Slider -->
+            <div class="slider-container">
+                <div class="progress-bar" id="progressBar"></div>
 
-            <!-- Navigation -->
-            <!-- Navigation -->
-            <div class="slider-arrow arrow-left" id="prevBtn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6" />
-                </svg>
-            </div>
-            <div class="slider-arrow arrow-right" id="nextBtn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                </svg>
-            </div>
-            <div class="slider-dots">
-                <span class="dot active" data-slide="0"></span>
-                <span class="dot" data-slide="1"></span>
-                <span class="dot" data-slide="2"></span>
+
+                <!-- AI Cam Button - Top Right Corner -->
+                <a href="ai.html" class="btn-ai-cam-slider">
+                    <svg class="ai-cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                        <path d="M12 9v8M8 13h8" stroke-dasharray="2 2"></path>
+                    </svg>
+                    <span>Try AI Cam</span>
+                </a>
+
+
+                <div class="slider-wrapper" id="sliderWrapper">
+                    <!-- Slide 1: Metal Wall Art -->
+                    <div class="slide active" data-slide="0">
+                        <div class="video-container">
+                            <!-- VIDEO (future): uncomment below and remove <img> when ready -->
+                            <!-- <video autoplay muted playsinline preload="auto" id="video1">
+                    <source src="YOUR_VIDEO_URL_1.mp4" type="video/mp4">
+                </video> -->
+
+                            <!-- IMAGE (current) -->
+                            <img id="slide-img-1" src="art.jpg" alt="Metal Wall Art"
+                                style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                        </div>
+                        <div class="slide-title-container">
+                            <span class="slide-number">01</span>
+                            <h3 class="slide-title">Metal Wall Art</h3>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Metal Wall Clock -->
+                    <div class="slide" data-slide="1">
+                        <div class="video-container">
+                            <!-- VIDEO (future): uncomment below and remove <img> when ready -->
+                            <!-- <video autoplay muted playsinline preload="auto" id="video2">
+                    <source src="YOUR_VIDEO_URL_2.mp4" type="video/mp4">
+                </video> -->
+
+                            <!-- IMAGE (current) -->
+                            <img id="slide-img-2" src="clock.jpg" alt="Metal Wall Clock"
+                                style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                        </div>
+                        <div class="slide-title-container">
+                            <span class="slide-number">02</span>
+                            <h3 class="slide-title">Metal Wall Clock</h3>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Metal Wall Mirror -->
+                    <div class="slide" data-slide="2">
+                        <div class="video-container">
+                            <!-- VIDEO (future): uncomment below and remove <img> when ready -->
+                            <!-- <video autoplay muted playsinline preload="auto" id="video3">
+                    <source src="YOUR_VIDEO_URL_3.mp4" type="video/mp4">
+                </video> -->
+
+                            <!-- IMAGE (current) -->
+                            <img id="slide-img-3" src="mirror.jpg" alt="Metal Wall Mirror"
+                                style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                        </div>
+                        <div class="slide-title-container">
+                            <span class="slide-number">03</span>
+                            <h3 class="slide-title">Metal Wall Mirror</h3>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Navigation -->
+                <!-- Navigation -->
+                <div class="slider-arrow arrow-left" id="prevBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                </div>
+                <div class="slider-arrow arrow-right" id="nextBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                </div>
+                <div class="slider-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                </div>
             </div>
         </div>
     </section>
@@ -1440,6 +1633,102 @@
             <span class="badge-text">300+ Unique Designs</span>
         </div>
     </div>
+
+    <!-- Video Showcase Section -->
+    <section class="video-showcase-section" id="videos">
+        <div class="section-header">
+            <h2 class="section-title">Walltone in Real Homes</h2>
+            <p class="section-subtitle">Influencer reviews & styled living spaces</p>
+        </div>
+
+        <div class="video-grid">
+            <!-- Video 1: Influencer Promo -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <video id="influencerVideo" muted loop playsinline poster="art.jpg" preload="metadata">
+                        <source src="influencer-promo.mp4" type="video/mp4">
+                    </video>
+                    <button class="unmute-btn" onclick="toggleMuteVideo('influencerVideo', this)">🔇 Tap to Unmute</button>
+                </div>
+                <div class="video-info">
+                    <h3>Influencer Showcase</h3>
+                    <p>See why home decor enthusiasts love Walltone metal art</p>
+                </div>
+            </div>
+
+            <!-- Video 2: Styled Wall -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <video id="aestheticVideo" muted loop playsinline poster="clock.jpg" preload="metadata">
+                        <source src="home-aesthetic.mp4" type="video/mp4">
+                    </video>
+                    <button class="unmute-btn" onclick="toggleMuteVideo('aestheticVideo', this)">🔇 Tap to Unmute</button>
+                </div>
+                <div class="video-info">
+                    <h3>Styled Living Space</h3>
+                    <p>Transforming ordinary walls into extraordinary focal points</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Style Guide Section: Empty Wall vs Styled Wall -->
+    <section class="style-guide-section" id="style-guide">
+        <div class="section-header">
+            <h2 class="section-title">Style Guide</h2>
+            <p class="section-subtitle">Drag slider: Empty Wall vs Styled Wall</p>
+        </div>
+
+        <div class="style-guide-grid">
+            <!-- Set 1: Metal Wall Art -->
+            <div class="comparison-card">
+                <div class="comparison-slider-box" id="compBox1">
+                    <img src="art.jpg" class="comparison-img" alt="Styled Wall Art">
+                    <div class="img-overlay-box" id="overlayBox1" style="width: 50%;">
+                        <img src="art.jpg" alt="Empty Wall">
+                    </div>
+                    <div class="slider-handle" id="handle1" style="left: 50%;">↔</div>
+                    <input type="range" min="0" max="100" value="50" class="slider-range-input" oninput="updateComparison(1, this.value)">
+                </div>
+                <div class="comparison-info">
+                    <h3 class="comparison-title">Grand Living Room</h3>
+                    <p class="comparison-desc">Plain Wall → Premium Metal Wall Art</p>
+                </div>
+            </div>
+
+            <!-- Set 2: Designer Clock -->
+            <div class="comparison-card">
+                <div class="comparison-slider-box" id="compBox2">
+                    <img src="clock.jpg" class="comparison-img" alt="Styled Wall Clock">
+                    <div class="img-overlay-box" id="overlayBox2" style="width: 50%;">
+                        <img src="clock.jpg" alt="Empty Wall">
+                    </div>
+                    <div class="slider-handle" id="handle2" style="left: 50%;">↔</div>
+                    <input type="range" min="0" max="100" value="50" class="slider-range-input" oninput="updateComparison(2, this.value)">
+                </div>
+                <div class="comparison-info">
+                    <h3 class="comparison-title">Dining Room Focus</h3>
+                    <p class="comparison-desc">Empty Wall → Designer Metal Clock</p>
+                </div>
+            </div>
+
+            <!-- Set 3: Metal Wall Mirror -->
+            <div class="comparison-card">
+                <div class="comparison-slider-box" id="compBox3">
+                    <img src="mirror.jpg" class="comparison-img" alt="Styled Wall Mirror">
+                    <div class="img-overlay-box" id="overlayBox3" style="width: 50%;">
+                        <img src="mirror.jpg" alt="Empty Wall">
+                    </div>
+                    <div class="slider-handle" id="handle3" style="left: 50%;">↔</div>
+                    <input type="range" min="0" max="100" value="50" class="slider-range-input" oninput="updateComparison(3, this.value)">
+                </div>
+                <div class="comparison-info">
+                    <h3 class="comparison-title">Foyer Accent</h3>
+                    <p class="comparison-desc">Blank Foyer → Luxurious Metal Mirror</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Featured Categories -->
     <section class="categories-section" id="shop">
@@ -1605,19 +1894,19 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#shop">All Products</a></li>
-                    <li><a href="#collections">Collections</a></li>
+                    <li><a href="gallery.html">Photo Gallery</a></li>
+                    <li><a href="#style-guide">Style Guide</a></li>
                     <li><a href="ai.html">AI Camera</a></li>
-                    <li><a href="#about">About Us</a></li>
                 </ul>
             </div>
 
             <div class="footer-column">
                 <h3>Customer Service</h3>
                 <ul>
-                    <li><a href="#">Shipping Policy</a></li>
-                    <li><a href="#">Return Policy</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">FAQ</a></li>
+                    <li><a href="shipping-policy.html">Shipping Policy</a></li>
+                    <li><a href="return-policy.html">Return Policy</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
                 </ul>
             </div>
 
@@ -2088,7 +2377,43 @@
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
         });
+        // Video Mute/Unmute Toggle Handler
+        function toggleMuteVideo(videoId, btnEl) {
+            const v = document.getElementById(videoId);
+            if (!v) return;
+            if (v.muted) {
+                v.muted = false;
+                v.play().catch(e => console.log(e));
+                btnEl.textContent = '🔊 Tap to Mute';
+                btnEl.style.background = 'var(--brand-green)';
+            } else {
+                v.muted = true;
+                btnEl.textContent = '🔇 Tap to Unmute';
+                btnEl.style.background = 'rgba(0,0,0,0.75)';
+            }
+        }
 
+        // Style Guide Before/After Comparison Slider Handler
+        function updateComparison(index, val) {
+            const overlay = document.getElementById(`overlayBox${index}`);
+            const handle = document.getElementById(`handle${index}`);
+            if (overlay) overlay.style.width = val + '%';
+            if (handle) handle.style.left = val + '%';
+        }
+
+        // Lazy load & autoplay videos on scroll
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+                    video.play().catch(e => console.log('Autoplay deferred:', e));
+                } else {
+                    entry.target.pause();
+                }
+            });
+        }, { threshold: 0.25 });
+
+        document.querySelectorAll('.video-wrapper video').forEach(v => videoObserver.observe(v));
     </script>
 </body>
 

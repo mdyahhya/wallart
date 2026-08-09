@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery | Walltone Decors</title>
+    <meta name="description" content="Explore real customer home setups, styled living rooms, and close-up textures of Walltone Decors premium metal wall arts, mirrors, and clocks.">
+    <link rel="icon" type="image/png" href="walltone.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --brand-green: #2E7D32;
+            --green-light: #E8F5E9;
+            --green-mid: #A5D6A7;
+            --green-dark: #1B5E20;
+            --white: #FFFFFF;
+            --black: #111111;
+            --text-secondary: #333333;
+            --text-muted: #555555;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.8;
+            padding-bottom: 80px;
+        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: var(--white);
+            border-bottom: 2px solid var(--brand-green);
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            z-index: 1000;
+            box-shadow: var(--shadow-soft);
+        }
+        .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-image-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 2px solid var(--brand-green); }
+        .logo-text-container { display: flex; flex-direction: column; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: var(--black); text-decoration: none; text-transform: uppercase; }
+        .logo-subtitle { font-size: 0.55rem; letter-spacing: 0.12em; color: var(--brand-green); text-transform: uppercase; }
+        
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links li a { text-decoration: none; color: var(--black); font-size: 0.95rem; text-transform: uppercase; padding: 5px 0; transition: 0.3s; }
+        .nav-links li a:hover, .nav-links li a.active { color: var(--brand-green); }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 120px auto 60px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .page-title {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--green-mid);
+            transition: all 0.4s ease;
+            aspect-ratio: 4 / 3;
+            background: var(--green-light);
+        }
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--brand-green);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.06);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: var(--white);
+            padding: 20px 15px 12px;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .footer {
+            background: var(--black);
+            color: #aaaaaa;
+            padding: 50px 5% 30px;
+            text-align: center;
+            border-top: 3px solid var(--brand-green);
+        }
+        .footer a { color: var(--green-mid); text-decoration: none; }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="walltone.png" alt="Walltone Decors" class="logo-image-img">
+            <div class="logo-text-container">
+                <span class="logo">Walltone Decors</span>
+                <span class="logo-subtitle">Premium Metal Art</span>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="gallery.html" class="active">Gallery</a></li>
+            <li><a href="myprofile.html">My Profile</a></li>
+            <li><a href="ai.html">AI Cam</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="page-container">
+        <h1 class="page-title">In-Context Photo Gallery</h1>
+        <p class="page-subtitle">See how Walltone metal decors transform real homes across India</p>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="art.jpg" alt="Metal Wall Art Styled Living Room" loading="lazy">
+                <div class="gallery-caption">Living Room Wall Setup</div>
+            </div>
+            <div class="gallery-item">
+                <img src="clock.jpg" alt="Designer Wall Clock Setup" loading="lazy">
+                <div class="gallery-caption">Luxury Designer Wall Clock</div>
+            </div>
+            <div class="gallery-item">
+                <img src="mirror.jpg" alt="Handcrafted Wall Mirror" loading="lazy">
+                <div class="gallery-caption">Premium Metal Wall Mirror</div>
+            </div>
+            <div class="gallery-item">
+                <img src="art.jpg" alt="Contemporary Bedroom Decor" loading="lazy">
+                <div class="gallery-caption">Master Bedroom Decor</div>
+            </div>
+            <div class="gallery-item">
+                <img src="clock.jpg" alt="Golden Accent Wall Clock" loading="lazy">
+                <div class="gallery-caption">Golden Accent Wall Detail</div>
+            </div>
+            <div class="gallery-item">
+                <img src="mirror.jpg" alt="Dining Room Wall Mirror Setup" loading="lazy">
+                <div class="gallery-caption">Dining Foyer Wall Mirror</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Walltone Decors. All Rights Reserved. | <a href="privacy-policy.html">Privacy Policy</a> | <a href="shipping-policy.html">Shipping Policy</a> | <a href="return-policy.html">Return Policy</a> | <a href="faq.html">FAQ</a></p>
+    </footer>
+</body>
+
+</html>

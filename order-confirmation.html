@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation | Walltone Decors</title>
+    <link rel="icon" type="image/png" href="walltone.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --brand-green: #2E7D32;
+            --green-light: #E8F5E9;
+            --green-mid: #A5D6A7;
+            --green-dark: #1B5E20;
+            --white: #FFFFFF;
+            --black: #111111;
+            --text-secondary: #333333;
+            --text-muted: #555555;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.8;
+            padding-bottom: 80px;
+        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: var(--white);
+            border-bottom: 2px solid var(--brand-green);
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            z-index: 1000;
+            box-shadow: var(--shadow-soft);
+        }
+        .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-image-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 2px solid var(--brand-green); }
+        .logo-text-container { display: flex; flex-direction: column; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: var(--black); text-decoration: none; text-transform: uppercase; }
+        .logo-subtitle { font-size: 0.55rem; letter-spacing: 0.12em; color: var(--brand-green); text-transform: uppercase; }
+
+        .confirmation-card {
+            max-width: 750px;
+            margin: 130px auto 60px;
+            background: var(--white);
+            border: 2px solid var(--green-mid);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: var(--shadow-medium);
+            text-align: center;
+        }
+        .success-badge {
+            width: 70px;
+            height: 70px;
+            background: var(--brand-green);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
+        }
+        .thanks-title {
+            font-size: 2.4rem;
+            color: var(--black);
+            margin-bottom: 10px;
+        }
+        .order-id-badge {
+            display: inline-block;
+            background: var(--green-light);
+            color: var(--brand-green);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            border: 1px solid var(--green-mid);
+        }
+        .delivery-estimate {
+            background: var(--green-light);
+            border: 1px solid var(--brand-green);
+            padding: 18px;
+            border-radius: 12px;
+            color: var(--brand-dark);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        .order-summary-box {
+            text-align: left;
+            margin-bottom: 30px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 20px 0;
+        }
+        .order-summary-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        .contact-support-box {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .contact-support-box strong {
+            color: var(--black);
+        }
+        .btn-home {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 35px;
+            background: var(--brand-green);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+        .btn-home:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+        }
+        .footer {
+            background: var(--black);
+            color: #aaaaaa;
+            padding: 40px 5% 25px;
+            text-align: center;
+            border-top: 3px solid var(--brand-green);
+        }
+        .footer a { color: var(--green-mid); text-decoration: none; }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="walltone.png" alt="Walltone Decors" class="logo-image-img">
+            <div class="logo-text-container">
+                <span class="logo">Walltone Decors</span>
+                <span class="logo-subtitle">Premium Metal Art</span>
+            </div>
+        </a>
+    </nav>
+
+    <main>
+        <div class="confirmation-card">
+            <div class="success-badge">✓</div>
+            <h1 class="thanks-title">Thank You for Your Order!</h1>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">Your payment was successful and your order has been received.</p>
+            <div class="order-id-badge" id="orderIdDisplay">Order ID: #WT-FETCHING</div>
+
+            <div class="delivery-estimate">
+                📦 Your delivery is estimated in <strong>6–7 business days</strong>.
+            </div>
+
+            <div class="order-summary-box" id="summaryBox">
+                <h3>Order Summary</h3>
+                <div id="itemsList">Loading items...</div>
+                <div style="border-top: 1px dashed #ccc; margin-top: 15px; padding-top: 15px;">
+                    <div class="summary-row"><span>Subtotal:</span><span id="subtotalVal">₹0</span></div>
+                    <div class="summary-row"><span>Delivery Charge:</span><span id="deliveryVal">₹200</span></div>
+                    <div class="summary-row" style="font-weight: 700; font-size: 1.1rem; color: var(--brand-green);"><span>Total Paid:</span><span id="totalVal">₹0</span></div>
+                </div>
+            </div>
+
+            <div class="contact-support-box">
+                <p>For any query, call us at <strong>+91 94205 42883</strong> or email <strong>walltoneofficial@gmail.com</strong>.</p>
+            </div>
+
+            <a href="index.html" class="btn-home">Return to Home</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Walltone Decors. All Rights Reserved. | <a href="privacy-policy.html">Privacy Policy</a> | <a href="shipping-policy.html">Shipping Policy</a> | <a href="return-policy.html">Return Policy</a></p>
+    </footer>
+
+    <script>
+        // Parse order details from URL params or localStorage
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const orderId = params.get('order_id') || 'WT-' + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('orderIdDisplay').textContent = `Order ID: #${orderId}`;
+
+            const lastOrderRaw = localStorage.getItem('walltone_last_order');
+            if (lastOrderRaw) {
+                try {
+                    const order = JSON.parse(lastOrderRaw);
+                    document.getElementById('subtotalVal').textContent = `₹${Number(order.subtotal || 0).toLocaleString('en-IN')}`;
+                    document.getElementById('deliveryVal').textContent = `₹${Number(order.delivery_charge || 200).toLocaleString('en-IN')}`;
+                    document.getElementById('totalVal').textContent = `₹${Number(order.total_amount || 0).toLocaleString('en-IN')}`;
+
+                    if (order.items && Array.isArray(order.items)) {
+                        const html = order.items.map(item => `
+                            <div class="summary-row">
+                                <span>${item.name} (x${item.quantity || 1})</span>
+                                <span>₹${Number(item.price * (item.quantity || 1)).toLocaleString('en-IN')}</span>
+                            </div>
+                        `).join('');
+                        document.getElementById('itemsList').innerHTML = html;
+                    }
+                } catch(e) {
+                    console.error(e);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
