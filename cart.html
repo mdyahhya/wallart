@@ -334,6 +334,45 @@
         </div>
     </div>
 
+    <!-- Editable Checkout Details & Confirmation Modal -->
+    <div class="profile-modal-overlay" id="checkoutDetailsModal">
+        <div class="profile-modal" style="max-width: 520px; text-align: left; padding: 30px;">
+            <h3 style="margin-bottom: 4px; font-size: 1.35rem; color: var(--black);">Confirm Shipping Details</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Review or edit your details before proceeding to payment:</p>
+            
+            <div style="margin-bottom: 14px;">
+                <label style="font-size: 0.78rem; font-weight: 700; color: var(--black); text-transform: uppercase; letter-spacing:0.04em;">Full Name</label>
+                <input type="text" id="coName" placeholder="Full Name" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--green-mid); border-radius: 8px; margin-top: 4px; font-family: inherit; font-size: 0.95rem;">
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                <div>
+                    <label style="font-size: 0.78rem; font-weight: 700; color: var(--black); text-transform: uppercase; letter-spacing:0.04em;">Phone Number</label>
+                    <input type="tel" id="coPhone" placeholder="+91 9XXXX XXXXX" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--green-mid); border-radius: 8px; margin-top: 4px; font-family: inherit; font-size: 0.95rem;">
+                </div>
+                <div>
+                    <label style="font-size: 0.78rem; font-weight: 700; color: var(--black); text-transform: uppercase; letter-spacing:0.04em;">PIN Code</label>
+                    <input type="text" id="coPincode" maxlength="6" placeholder="6-digit PIN" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--green-mid); border-radius: 8px; margin-top: 4px; font-family: inherit; font-size: 0.95rem;">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="font-size: 0.78rem; font-weight: 700; color: var(--black); text-transform: uppercase; letter-spacing:0.04em;">Email Address (for receipt)</label>
+                <input type="email" id="coEmail" placeholder="your@email.com" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--green-mid); border-radius: 8px; margin-top: 4px; font-family: inherit; font-size: 0.95rem;">
+            </div>
+
+            <div style="margin-bottom: 22px;">
+                <label style="font-size: 0.78rem; font-weight: 700; color: var(--black); text-transform: uppercase; letter-spacing:0.04em;">Detailed Delivery Address</label>
+                <textarea id="coAddress" rows="2" placeholder="House No, Building, Street, City..." style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--green-mid); border-radius: 8px; margin-top: 4px; font-family: inherit; font-size: 0.95rem; resize: vertical;"></textarea>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+                <button class="btn-go-profile" id="payProceedBtn" onclick="processFinalOrderAndPay()" style="flex: 2; margin: 0; background: var(--brand-green);">Proceed to Payment</button>
+                <button class="btn-cancel-modal" onclick="document.getElementById('checkoutDetailsModal').classList.remove('open')" style="flex: 1;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 
 
     <!-- BOTTOM TASKBAR -->
@@ -397,144 +436,162 @@
 
             const btn = document.getElementById('checkoutBtn');
 
-            // 1. Check auth
-            const { data: { session } } = await db.auth.getSession();
-            if (!session) {
-                window.location.href = 'myprofile.html?redirect=checkout';
-                return;
+            let currentCheckoutSession = null;
+
+            // 1. First step: Validate Auth and open editable Checkout Modal
+            async function handleCheckout() {
+                const cart = getCart();
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+
+                const { data: { session } } = await db.auth.getSession();
+                if (!session) {
+                    window.location.href = 'myprofile.html?redirect=checkout';
+                    return;
+                }
+
+                currentCheckoutSession = session;
+
+                // Fetch profile to prefill
+                const { data: profile } = await db
+                    .from('profiles')
+                    .select('full_name, phone, address, pincode, email')
+                    .eq('id', session.user.id)
+                    .single();
+
+                document.getElementById('coName').value = profile?.full_name || session.user.user_metadata?.full_name || '';
+                document.getElementById('coPhone').value = profile?.phone || '';
+                document.getElementById('coPincode').value = profile?.pincode || '';
+                document.getElementById('coEmail').value = profile?.email || session.user.email || '';
+                document.getElementById('coAddress').value = profile?.address || '';
+
+                document.getElementById('checkoutDetailsModal').classList.add('open');
             }
 
-            btn.disabled = true;
-            btn.innerHTML = `<span>Verifying Details...</span>`;
+            // 2. Second step: Process order & open Cashfree payment
+            async function processFinalOrderAndPay() {
+                const name = document.getElementById('coName').value.trim();
+                const phone = document.getElementById('coPhone').value.trim();
+                const pincode = document.getElementById('coPincode').value.trim();
+                const email = document.getElementById('coEmail').value.trim();
+                const address = document.getElementById('coAddress').value.trim();
 
-            // 2. Fetch profile
-            const { data: profile } = await db
-                .from('profiles')
-                .select('full_name, phone, address, pincode, email')
-                .eq('id', session.user.id)
-                .single();
+                if (!name || !phone || !pincode || !address) {
+                    alert('Please fill in your Name, Phone Number, PIN Code, and Delivery Address.');
+                    return;
+                }
 
-            const userPhone = profile?.phone || '';
-            const userAddress = profile?.address || '';
-            const userPincode = profile?.pincode || '';
-            const userEmail = profile?.email || session.user.email || '';
+                const payBtn = document.getElementById('payProceedBtn');
+                payBtn.disabled = true;
+                payBtn.textContent = 'Preparing Payment...';
 
-            if (!userPhone || !userAddress || !userPincode) {
-                btn.disabled = false;
-                btn.innerHTML = `Continue to Payment <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-                
-                // Show modal prompting for complete profile
-                document.getElementById('profileModalMsg').textContent = 'Please complete your Phone Number, PIN Code, and Delivery Address before proceeding to payment.';
-                document.getElementById('profileModal').classList.add('open');
-                return;
-            }
+                // Save/update profile in Supabase
+                try {
+                    await db.from('profiles').upsert({
+                        id: currentCheckoutSession.user.id,
+                        full_name: name,
+                        phone: phone,
+                        pincode: pincode,
+                        address: address,
+                        email: email,
+                        updated_at: new Date()
+                    });
+                } catch(e) {
+                    console.log('Profile update notice:', e);
+                }
 
-            // 3. Calculate order totals
-            const subtotal = cart.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0);
-            const deliveryCharge = calculateDeliveryCharge(userPincode, cart);
-            const total = subtotal + deliveryCharge;
+                const cart = getCart();
+                const subtotal = cart.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0);
+                const deliveryCharge = calculateDeliveryCharge(pincode, cart);
+                const total = subtotal + deliveryCharge;
 
-            // 4. Save order to Supabase (Supabase auto-generates valid UUID primary key)
-            const { data: orderData, error: orderError } = await db
-                .from('orders')
-                .insert({
-                    user_id: session.user.id,
-                    user_name: profile.full_name || session.user.user_metadata?.full_name || 'Customer',
-                    user_email: userEmail,
-                    phone: userPhone,
-                    shipping_address: userAddress,
-                    pincode: userPincode,
+                // Create Order row in Supabase (NO premature push notification)
+                const { data: orderData, error: orderError } = await db
+                    .from('orders')
+                    .insert({
+                        user_id: currentCheckoutSession.user.id,
+                        user_name: name,
+                        user_email: email,
+                        phone: phone,
+                        shipping_address: address,
+                        pincode: pincode,
+                        items: cart,
+                        subtotal: subtotal,
+                        delivery_charge: deliveryCharge,
+                        total_amount: total,
+                        status: 'pending',
+                        created_at: new Date().toISOString()
+                    })
+                    .select()
+                    .single();
+
+                if (orderError) {
+                    payBtn.disabled = false;
+                    payBtn.textContent = 'Proceed to Payment';
+                    alert('Order initialization failed: ' + orderError.message);
+                    return;
+                }
+
+                const orderId = orderData.id;
+
+                localStorage.setItem('walltone_last_order', JSON.stringify({
+                    order_id: orderId,
                     items: cart,
                     subtotal: subtotal,
                     delivery_charge: deliveryCharge,
-                    total_amount: total,
-                    status: 'pending',
-                    created_at: new Date().toISOString()
-                })
-                .select()
-                .single();
+                    total_amount: total
+                }));
 
-            if (orderError) {
-                btn.disabled = false;
-                btn.innerHTML = `Continue to Payment <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-                alert('Failed to initialize order. Please try again. Error: ' + orderError.message);
-                return;
-            }
+                // Initiate Cashfree Payment
+                try {
+                    const cashfreeUrl = `${window.location.origin}/.netlify/functions/create-cashfree-order`;
+                    const cfResp = await fetch(cashfreeUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            orderId: orderId,
+                            amount: total,
+                            customerId: currentCheckoutSession.user.id,
+                            customerName: name,
+                            customerPhone: phone,
+                            customerEmail: email,
+                            returnUrl: `${window.location.origin}/order-confirmation.html?order_id=${orderId}`
+                        })
+                    });
 
-            const orderId = orderData.id;
+                    const cfResult = await cfResp.json();
+                    document.getElementById('checkoutDetailsModal').classList.remove('open');
 
-            // Store order details locally for order confirmation page
-            localStorage.setItem('walltone_last_order', JSON.stringify({
-                order_id: orderId,
-                items: cart,
-                subtotal: subtotal,
-                delivery_charge: deliveryCharge,
-                total_amount: total
-            }));
-
-            // 5. Send new order push notification to admin
-            try {
-                const notifyUrl = `${window.location.origin}/.netlify/functions/notify-admin`;
-                await fetch(notifyUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        orderId: orderId,
-                        userName: profile.full_name || 'Customer',
-                        phone: userPhone,
-                        totalAmount: total,
-                        items: cart
-                    })
-                });
-            } catch(e) {
-                console.log('Push notification error:', e);
-            }
-
-            // 6. Initiate Cashfree Payment API
-            try {
-                const cashfreeUrl = `${window.location.origin}/.netlify/functions/create-cashfree-order`;
-                const cfResp = await fetch(cashfreeUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        orderId: orderId,
-                        amount: total,
-                        customerId: session.user.id,
-                        customerName: profile.full_name || session.user.user_metadata?.full_name || 'Customer',
-                        customerPhone: userPhone,
-                        customerEmail: userEmail,
-                        returnUrl: `${window.location.origin}/order-confirmation.html?order_id=${orderId}`
-                    })
-                });
-
-                const cfResult = await cfResp.json();
-                if (cfResp.ok && cfResult.success && cfResult.payment_session_id) {
-                    // Clear cart
-                    localStorage.removeItem('walltone_cart');
-
-                    const envMode = cfResult.environment === 'sandbox' ? 'sandbox' : 'production';
-                    if (window.Cashfree) {
-                        const cashfree = window.Cashfree({ mode: envMode });
-                        cashfree.checkout({
-                            paymentSessionId: cfResult.payment_session_id,
-                            redirectTarget: '_modal'
-                        });
+                    if (cfResp.ok && cfResult.success && cfResult.payment_session_id) {
+                        localStorage.removeItem('walltone_cart');
+                        const envMode = cfResult.environment === 'sandbox' ? 'sandbox' : 'production';
+                        if (window.Cashfree) {
+                            const cashfree = window.Cashfree({ mode: envMode });
+                            cashfree.checkout({
+                                paymentSessionId: cfResult.payment_session_id,
+                                redirectTarget: '_modal'
+                            });
+                        } else {
+                            const baseUrl = envMode === 'sandbox' 
+                                ? 'https://sandbox.cashfree.com/pg/orders' 
+                                : 'https://payments.cashfree.com/order';
+                            window.location.href = `${baseUrl}/#${cfResult.payment_session_id}`;
+                        }
                     } else {
-                        const baseUrl = envMode === 'sandbox' 
-                            ? 'https://sandbox.cashfree.com/pg/orders' 
-                            : 'https://payments.cashfree.com/order';
-                        window.location.href = `${baseUrl}/#${cfResult.payment_session_id}`;
+                        alert('Cashfree note: Redirecting to order confirmation page.');
+                        localStorage.removeItem('walltone_cart');
+                        window.location.href = `order-confirmation.html?order_id=${orderId}`;
                     }
-                } else {
-                    // Fallback to order confirmation page if Cashfree credentials not yet added in Netlify env
-                    alert('Cashfree API Note: Redirecting to order confirmation page. Ensure CASHFREE_APP_ID & CASHFREE_SECRET_KEY are set in Netlify.');
+                } catch(e) {
+                    console.error('Cashfree exception:', e);
                     localStorage.removeItem('walltone_cart');
                     window.location.href = `order-confirmation.html?order_id=${orderId}`;
+                } finally {
+                    payBtn.disabled = false;
+                    payBtn.textContent = 'Proceed to Payment';
                 }
-            } catch(e) {
-                console.error('Cashfree error:', e);
-                localStorage.removeItem('walltone_cart');
-                window.location.href = `order-confirmation.html?order_id=${orderId}`;
             }
         }
         // ═══ PERSISTENT CART LOGIC ═══
