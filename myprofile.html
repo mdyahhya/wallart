@@ -170,6 +170,14 @@
                 <button class="btn-save" id="saveBtn" onclick="saveProfile()">Save Profile Details</button>
             </div>
 
+            <div class="form-section" style="margin-top: 30px;">
+                <h3 class="form-title">My Orders History</h3>
+                <div id="ordersListContainer">
+                    <div class="spinner" style="width: 30px; height: 30px;"></div>
+                    <p style="text-align:center; color:var(--text-muted); font-size: 0.9rem;">Loading your orders...</p>
+                </div>
+            </div>
+
             <button class="btn-logout" onclick="signOut()">Sign Out of Walltone</button>
         </div>
     </div>
@@ -265,6 +273,77 @@
                 document.getElementById('inputAddress').value = data.address || '';
                 if (document.getElementById('inputPincode')) document.getElementById('inputPincode').value = data.pincode || '';
                 if(data.full_name) document.getElementById('inputName').value = data.full_name;
+            }
+
+            loadUserOrders();
+        }
+
+        function calculateDeliveryRange(orderDateStr) {
+            const date = orderDateStr ? new Date(orderDateStr) : new Date();
+            const start = new Date(date); start.setDate(start.getDate() + 6);
+            const end = new Date(date); end.setDate(end.getDate() + 7);
+
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            const startStr = start.toLocaleDateString('en-IN', options);
+            const endStr = end.toLocaleDateString('en-IN', options);
+
+            return `${startStr} – ${endStr} (6–7 business days)`;
+        }
+
+        async function loadUserOrders() {
+            const container = document.getElementById('ordersListContainer');
+            if (!container || !currentUser) return;
+
+            try {
+                const { data: orders, error } = await db
+                    .from('orders')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!orders || orders.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align:center; padding:30px 10px; color:var(--text-muted);">
+                            <p style="font-size:1rem; font-weight:600; color:var(--black); margin-bottom:5px;">No orders found yet</p>
+                            <p style="font-size:0.85rem;">When you place an order, it will appear here!</p>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = orders.map(order => {
+                    const dateStr = new Date(order.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+                    const estDelivery = calculateDeliveryRange(order.created_at);
+                    const items = Array.isArray(order.items) ? order.items : [];
+                    const isPaid = order.status === 'paid' || order.is_placed;
+                    const statusLabel = isPaid ? 'PAID ✓' : (order.status || 'PENDING').toUpperCase();
+                    const statusBg = isPaid ? '#E8F5E9' : '#FFF3E0';
+                    const statusColor = isPaid ? '#2E7D32' : '#E65100';
+
+                    const itemsSummary = items.map(i => `${i.name || 'Product'} (x${i.quantity || 1})`).join(', ');
+
+                    return `
+                        <div class="order-card-row" onclick="window.location.href='order-confirmation.html?order_id=${order.id}'" style="border: 1.5px solid var(--green-mid); border-radius: 14px; padding: 18px; margin-bottom: 15px; cursor: pointer; background: var(--white); transition: all 0.2s;" onmouseover="this.style.borderColor='var(--green)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--green-mid)'; this.style.transform='none';">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                                <div>
+                                    <strong style="font-size: 0.95rem; color: var(--black);">Order #${order.id.slice(0, 10).toUpperCase()}</strong>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 10px;">${dateStr}</span>
+                                </div>
+                                <span style="background: ${statusBg}; color: ${statusColor}; font-size: 0.78rem; font-weight: 700; padding: 4px 14px; border-radius: 20px;">${statusLabel}</span>
+                            </div>
+                            <div style="font-size: 0.9rem; color: var(--black); font-weight: 500; margin-bottom: 8px;">${itemsSummary || 'Metal Decor Product'}</div>
+                            <div style="font-size: 0.82rem; color: var(--green-dark); font-weight: 600;">📦 Estimated Delivery: ${estDelivery}</div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px dashed #eee;">
+                                <span style="font-size: 0.85rem; color: var(--text-muted);">Total Amount</span>
+                                <strong style="font-size: 1.05rem; color: var(--green-dark);">₹${Number(order.total_amount || 0).toLocaleString('en-IN')}</strong>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch(err) {
+                console.error('Error loading orders:', err);
+                container.innerHTML = `<p style="color:red; text-align:center; padding:15px;">Failed to load orders history.</p>`;
             }
         }
 

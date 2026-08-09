@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart | Walltone Decors</title>
+    <!-- Cashfree JS SDK v3 -->
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
     <!-- Kill Switch: register cleanup service worker to force-clear cache (Main Site) -->
     <script>
         if ('serviceWorker' in navigator) {
@@ -509,8 +511,20 @@
                 if (cfResp.ok && cfResult.success && cfResult.payment_session_id) {
                     // Clear cart
                     localStorage.removeItem('walltone_cart');
-                    // Redirect to Cashfree Hosted Payment Session
-                    window.location.href = `https://payments.cashfree.com/order/#${cfResult.payment_session_id}`;
+
+                    const envMode = cfResult.environment === 'sandbox' ? 'sandbox' : 'production';
+                    if (window.Cashfree) {
+                        const cashfree = window.Cashfree({ mode: envMode });
+                        cashfree.checkout({
+                            paymentSessionId: cfResult.payment_session_id,
+                            redirectTarget: '_modal'
+                        });
+                    } else {
+                        const baseUrl = envMode === 'sandbox' 
+                            ? 'https://sandbox.cashfree.com/pg/orders' 
+                            : 'https://payments.cashfree.com/order';
+                        window.location.href = `${baseUrl}/#${cfResult.payment_session_id}`;
+                    }
                 } else {
                     // Fallback to order confirmation page if Cashfree credentials not yet added in Netlify env
                     alert('Cashfree API Note: Redirecting to order confirmation page. Ensure CASHFREE_APP_ID & CASHFREE_SECRET_KEY are set in Netlify.');

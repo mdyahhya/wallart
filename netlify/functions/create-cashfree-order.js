@@ -66,7 +66,8 @@ exports.handler = async (event, context) => {
             body: JSON.stringify({
                 success: true,
                 payment_session_id: data.payment_session_id,
-                order_id: data.order_id
+                order_id: data.order_id,
+                environment: isSandbox ? 'sandbox' : 'production'
             })
         };
 
