@@ -1347,7 +1347,6 @@
             position: absolute;
             top: 0; left: 0; height: 100%; width: 100%;
             object-fit: cover;
-            filter: grayscale(100%) contrast(80%);
         }
         .slider-handle {
             position: absolute;
@@ -1659,7 +1658,7 @@
                 <div class="comparison-slider-box" id="compBox1">
                     <img src="art.jpg" class="comparison-img" alt="Styled Wall Art">
                     <div class="img-overlay-box" id="overlayBox1" style="width: 50%;">
-                        <img src="art.jpg" alt="Empty Wall">
+                        <img src="art_empty.png" alt="Empty Wall">
                     </div>
                     <div class="slider-handle" id="handle1" style="left: 50%;">↔</div>
                     <input type="range" min="0" max="100" value="50" class="slider-range-input" oninput="updateComparison(1, this.value)">
@@ -1675,7 +1674,7 @@
                 <div class="comparison-slider-box" id="compBox2">
                     <img src="clock.jpg" class="comparison-img" alt="Styled Wall Clock">
                     <div class="img-overlay-box" id="overlayBox2" style="width: 50%;">
-                        <img src="clock.jpg" alt="Empty Wall">
+                        <img src="clock_empty.png" alt="Empty Wall">
                     </div>
                     <div class="slider-handle" id="handle2" style="left: 50%;">↔</div>
                     <input type="range" min="0" max="100" value="50" class="slider-range-input" oninput="updateComparison(2, this.value)">
@@ -1691,7 +1690,7 @@
                 <div class="comparison-slider-box" id="compBox3">
                     <img src="mirror.jpg" class="comparison-img" alt="Styled Wall Mirror">
                     <div class="img-overlay-box" id="overlayBox3" style="width: 50%;">
-                        <img src="mirror.jpg" alt="Empty Wall">
+                        <img src="mirror_empty.png" alt="Empty Wall">
                     </div>
                     <div class="slider-handle" id="handle3" style="left: 50%;">↔</div>
                     <input type="range" min="0" max="100" value="50" class="slider-range-input" oninput="updateComparison(3, this.value)">
@@ -2373,6 +2372,57 @@
             const handle = document.getElementById(`handle${index}`);
             if (overlay) overlay.style.width = val + '%';
             if (handle) handle.style.left = val + '%';
+        }
+
+        // Automatic scroll from no-wall to wall and back to half-scrolled
+        const styleGuideObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSliders();
+                    styleGuideObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        const styleGuideSec = document.getElementById('style-guide');
+        if (styleGuideSec) {
+            styleGuideObserver.observe(styleGuideSec);
+        }
+
+        function animateSliders() {
+            const rangeInputs = document.querySelectorAll('.slider-range-input');
+            rangeInputs.forEach((input, index) => {
+                const id = index + 1;
+                let val = 100;
+                input.value = val;
+                updateComparison(id, val);
+
+                // Slide to 0% (Fully showing styled wall)
+                setTimeout(() => {
+                    let interval = setInterval(() => {
+                        val -= 2;
+                        if (val <= 0) {
+                            val = 0;
+                            clearInterval(interval);
+                            
+                            // Slide back to 50% (Half way)
+                            setTimeout(() => {
+                                let backInterval = setInterval(() => {
+                                    val += 2;
+                                    if (val >= 50) {
+                                        val = 50;
+                                        clearInterval(backInterval);
+                                    }
+                                    input.value = val;
+                                    updateComparison(id, val);
+                                }, 15);
+                            }, 600);
+                        }
+                        input.value = val;
+                        updateComparison(id, val);
+                    }, 15);
+                }, index * 300 + 400);
+            });
         }
 
         // Lazy load & autoplay videos on scroll

@@ -246,14 +246,14 @@
 
         function calculateDeliveryRange(orderDateStr) {
             const date = orderDateStr ? new Date(orderDateStr) : new Date();
-            const start = new Date(date); start.setDate(start.getDate() + 6);
-            const end = new Date(date); end.setDate(end.getDate() + 7);
+            const start = new Date(date); start.setDate(start.getDate() + 12);
+            const end = new Date(date); end.setDate(end.getDate() + 15);
 
             const options = { day: 'numeric', month: 'short', year: 'numeric' };
             const startStr = start.toLocaleDateString('en-IN', options);
             const endStr = end.toLocaleDateString('en-IN', options);
 
-            return `${startStr} – ${endStr} (6–7 business days)`;
+            return `${startStr} – ${endStr} (12–15 days)`;
         }
 
         window.addEventListener('DOMContentLoaded', async () => {
