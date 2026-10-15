@@ -327,117 +327,101 @@
 /* TEST PRODUCT CARD HIGHLIGHT */
 .product-card.test-product-card {
   border: 2px solid var(--brand-green);
-  background: linear-gradient(180deg, #F9FCF9 0%, #FFFFFF 100%);
+  background: var(--white);
   position: relative;
-  box-shadow: 0 8px 25px rgba(46, 125, 50, 0.16);
+  box-shadow: var(--shadow-sm);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
+  cursor: pointer;
 }
 .product-card.test-product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(46, 125, 50, 0.24);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--green);
 }
-.test-card-top-banner {
-  background: linear-gradient(135deg, #1B5E20, #2E7D32);
-  color: #fff;
-  padding: 6px 12px;
-  text-align: center;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+.test-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  overflow: hidden;
+  background: linear-gradient(145deg, #0d3812 0%, #1B5E20 50%, #2E7D32 100%) !important;
 }
-.test-card-pill {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.test-badge-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #E5C77A;
+  color: #1B5E20;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  z-index: 2;
 }
-.test-card-hero {
-  background: linear-gradient(145deg, #0e3a13, #1B5E20 50%, #2E7D32 100%);
-  padding: 22px 16px 18px 16px;
+.test-card-compact-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 10px;
   text-align: center;
   color: #ffffff;
-  position: relative;
-  overflow: hidden;
+  z-index: 1;
 }
-.test-card-hero::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
-  transform: rotate(25deg);
-  animation: shineBanner 4s infinite linear;
-}
-@keyframes shineBanner {
-  0% { transform: translateX(-100%) rotate(25deg); }
-  100% { transform: translateX(100%) rotate(25deg); }
-}
-.test-card-rupee {
+.test-card-compact-content .tc-num {
   font-family: 'Playfair Display', serif;
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: #E5C77A;
   line-height: 1;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
   margin-bottom: 4px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
-.test-card-title-main {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.78rem;
+.test-card-compact-content .tc-sub {
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #E8F5E9;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
-.test-card-steps-box {
+.tc-flow-box {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
   background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 10px;
-  padding: 8px 10px;
-  margin: 0 auto 10px auto;
-  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 6px 8px;
+  width: 90%;
+  margin-bottom: 6px;
   backdrop-filter: blur(4px);
 }
-.test-card-step-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.75rem;
+.tc-flow-line {
+  font-size: 0.68rem;
   font-weight: 600;
-  color: #FFFFFF;
-}
-.test-card-step-row.highlight {
-  color: #F3DC9B;
-}
-.step-num-badge {
-  background: #E5C77A;
-  color: #1B5E20;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.65rem;
-  font-weight: 800;
-  flex-shrink: 0;
+  gap: 4px;
 }
-.test-card-arrow-row {
-  text-align: center;
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.72rem;
-  line-height: 1;
-  margin: 2px 0;
+.tc-flow-line.gold {
+  color: #F3DC9B;
+  font-weight: 700;
 }
-.test-card-tap-notice {
-  font-size: 0.72rem;
+.tc-flow-sep {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.6rem;
+  line-height: 0.8;
+}
+.tc-tap-hint {
+  font-size: 0.68rem;
   color: #E5C77A;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  opacity: 0.95;
 }
 
 /* 3-STEP TRUST FLOW IN MODAL */
@@ -738,6 +722,8 @@
     <img src="" class="modal-img" id="modalImg">
     <div class="modal-caption" id="modalCaption"></div>
   </div>
+</div>
+
 <!-- MULTILINGUAL TEST PAYMENT MODAL -->
 <div class="modal-overlay" id="testPaymentModal" onclick="closeTestPaymentModal()">
   <div class="test-modal-content" onclick="event.stopPropagation()">
@@ -1141,39 +1127,28 @@
     if (isTestProduct) {
       return `
         <div class="product-card test-product-card" id="card-${p.id}" onclick="openTestPaymentModal()" style="cursor: pointer;">
-          <div class="test-card-top-banner">
-            <span class="test-card-pill">🛡️ 100% Risk-Free Verification</span>
-          </div>
-          <div class="test-card-hero">
-            <div class="test-card-rupee">₹1</div>
-            <div class="test-card-title-main">TEST ORDER GUARANTEE</div>
-            <div class="test-card-steps-box">
-              <div class="test-card-step-row">
-                <span class="step-num-badge">1</span>
-                <span>₹1 Test Payment</span>
+          <div class="product-img-wrap test-img-wrap">
+            <span class="test-badge-overlay">TEST</span>
+            <div class="test-card-compact-content">
+              <div class="tc-num">₹1</div>
+              <div class="tc-sub">Test Order Guarantee</div>
+              <div class="tc-flow-box">
+                <div class="tc-flow-line">1. Test Payment</div>
+                <div class="tc-flow-sep">↓</div>
+                <div class="tc-flow-line">2. Satisfied & Confirmed</div>
+                <div class="tc-flow-sep">↓</div>
+                <div class="tc-flow-line gold">3. Buy Real Metal Art</div>
               </div>
-              <div class="test-card-arrow-row">↓</div>
-              <div class="test-card-step-row">
-                <span class="step-num-badge">2</span>
-                <span>Successful & Satisfied</span>
-              </div>
-              <div class="test-card-arrow-row">↓</div>
-              <div class="test-card-step-row highlight">
-                <span class="step-num-badge">3</span>
-                <span>Then Buy Real Metal Art</span>
-              </div>
-            </div>
-            <div class="test-card-tap-notice">
-              <span>👉 Tap here to view details (Eng / हिं / मरा)</span>
+              <div class="tc-tap-hint">👉 Tap to view details</div>
             </div>
           </div>
           <div class="product-body">
-            <div class="product-name" style="font-weight: 700; color: var(--brand-green);">₹1 Test Payment Before Buying</div>
-            <div class="product-no"># WT-TEST1 • Instant Verification</div>
-            <div class="product-price">₹1 <span>(Zero Delivery Fee)</span></div>
+            <div class="product-name" style="font-weight: 700; color: var(--brand-green);">₹1 Test Payment</div>
+            <div class="product-no" style="color:var(--brand-green); font-weight:600;">Test ➔ Satisfied ➔ Buy Real Art</div>
+            <div class="product-price">₹1 <span>(Risk-Free)</span></div>
             <div class="product-actions">
               <button class="btn-buy" style="background: var(--brand-green); width: 100%;" onclick="event.stopPropagation(); openTestPaymentModal()">
-                Learn More / Pay ₹1 ➔
+                Try ₹1 Test Payment
               </button>
             </div>
           </div>

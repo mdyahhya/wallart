@@ -2407,12 +2407,15 @@
                         if (!isAutoPlaying) {
                             resumeAutoSlide();
                         }
-                        videos[currentSlide].pause();
-
+                        if (videos && videos[currentSlide] && typeof videos[currentSlide].pause === 'function') {
+                            videos[currentSlide].pause();
+                        }
                     } else {
                         console.log('Slider out of view - pausing');
                         pauseAutoSlide();
-                        videos[currentSlide].pause();
+                        if (videos && videos[currentSlide] && typeof videos[currentSlide].pause === 'function') {
+                            videos[currentSlide].pause();
+                        }
                     }
                 });
             }, { threshold: 0.5 });
