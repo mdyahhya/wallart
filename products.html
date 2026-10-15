@@ -324,36 +324,50 @@
   .pm-title { font-size: 1.6rem; }
   .pm-price { font-size: 1.4rem; }
   .pm-img-col { min-height: 250px; padding: 15px; }
-/* TEST PAYMENT BANNER */
-.test-payment-banner {
-  max-width: 1200px;
-  margin: 15px auto 25px auto;
-  padding: 14px 22px;
-  background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 60%, #388E3C 100%);
-  color: #ffffff;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.25);
-  cursor: pointer;
+/* TEST PRODUCT CARD HIGHLIGHT */
+.product-card.test-product-card {
+  border: 2px solid var(--brand-green);
+  background: linear-gradient(180deg, #F9FCF9 0%, #FFFFFF 100%);
+  position: relative;
+  box-shadow: 0 8px 25px rgba(46, 125, 50, 0.16);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.product-card.test-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(46, 125, 50, 0.24);
+}
+.test-card-top-banner {
+  background: linear-gradient(135deg, #1B5E20, #2E7D32);
+  color: #fff;
+  padding: 6px 12px;
+  text-align: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.test-card-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.test-card-hero {
+  background: linear-gradient(145deg, #0e3a13, #1B5E20 50%, #2E7D32 100%);
+  padding: 22px 16px 18px 16px;
+  text-align: center;
+  color: #ffffff;
   position: relative;
   overflow: hidden;
 }
-.test-payment-banner:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(46, 125, 50, 0.35);
-}
-.test-payment-banner::after {
+.test-card-hero::after {
   content: '';
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.15) 50%, transparent 60%);
+  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
   transform: rotate(25deg);
   animation: shineBanner 4s infinite linear;
 }
@@ -361,94 +375,125 @@
   0% { transform: translateX(-100%) rotate(25deg); }
   100% { transform: translateX(100%) rotate(25deg); }
 }
-.tpb-content {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  z-index: 1;
+.test-card-rupee {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #E5C77A;
+  line-height: 1;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  margin-bottom: 4px;
 }
-.tpb-badge {
-  background: rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(4px);
-  padding: 5px 12px;
-  border-radius: 20px;
+.test-card-title-main {
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #E8F5E9;
+  margin-bottom: 12px;
 }
-.tpb-text {
+.test-card-steps-box {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin: 0 auto 10px auto;
+  text-align: left;
+  backdrop-filter: blur(4px);
+}
+.test-card-step-row {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #FFFFFF;
 }
-.tpb-text strong {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+.test-card-step-row.highlight {
+  color: #F3DC9B;
 }
-.tpb-text span {
-  font-size: 0.85rem;
-  opacity: 0.9;
-  font-weight: 400;
-}
-.tpb-btn {
-  background: #FFFFFF;
+.step-num-badge {
+  background: #E5C77A;
   color: #1B5E20;
-  border: none;
-  padding: 10px 22px;
-  border-radius: 30px;
-  font-weight: 700;
-  font-size: 0.88rem;
-  font-family: 'Montserrat', sans-serif;
-  cursor: pointer;
-  white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.25s ease;
-  z-index: 1;
-}
-.tpb-btn:hover {
-  background: #E8F5E9;
-  transform: scale(1.04);
-}
-@media(max-width: 600px) {
-  .test-payment-banner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 14px 16px;
-    margin: 10px 15px 20px 15px;
-  }
-  .tpb-btn {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-/* TEST PRODUCT CARD HIGHLIGHT */
-.product-card.test-product-card {
-  border: 2px solid var(--brand-green);
-  background: linear-gradient(180deg, #FAFCFA 0%, #FFFFFF 100%);
-  position: relative;
-  box-shadow: 0 6px 22px rgba(46, 125, 50, 0.15);
-}
-.test-ribbon-tag {
-  background: linear-gradient(135deg, #2E7D32, #1B5E20);
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-align: center;
-  padding: 6px 10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  letter-spacing: 0.03em;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  flex-shrink: 0;
 }
-.test-img-wrap {
-  background: #f4fbf5 !important;
+.test-card-arrow-row {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.72rem;
+  line-height: 1;
+  margin: 2px 0;
+}
+.test-card-tap-notice {
+  font-size: 0.72rem;
+  color: #E5C77A;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* 3-STEP TRUST FLOW IN MODAL */
+.tpm-trust-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+.tpm-step-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #F9FCF9;
+  border: 1px solid #D5E8D4;
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+.tpm-step-card:hover {
+  background: #F1F8E9;
+  border-color: var(--green);
+}
+.tpm-step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2E7D32, #1B5E20);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(46, 125, 50, 0.25);
+}
+.tpm-step-info h4 {
+  font-size: 0.92rem;
+  color: #1B5E20;
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+.tpm-step-info p {
+  font-size: 0.8rem;
+  color: #444444;
+  line-height: 1.4;
+  margin: 0;
+}
+.tpm-step-divider-arrow {
+  text-align: center;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin: -3px 0;
 }
 
 /* TEST PAYMENT MULTILINGUAL MODAL */
@@ -620,18 +665,6 @@
   <h1>Our Products</h1>
   <p>Handcrafted Premium Metal Decor — Made in India</p>
   <div class="header-line"></div>
-
-  <!-- TEST PAYMENT ANNOUNCEMENT BANNER -->
-  <div class="test-payment-banner" onclick="openTestPaymentModal()">
-    <div class="tpb-content">
-      <div class="tpb-badge">⚡ Safe & Risk-Free</div>
-      <div class="tpb-text">
-        <strong>Try ₹1 test payment before buying!</strong>
-        <span>Experience our secure checkout & instant confirmation</span>
-      </div>
-    </div>
-    <button class="tpb-btn" onclick="event.stopPropagation(); openTestPaymentModal()">Try Now ₹1 ➔</button>
-  </div>
 </div>
 
 <!-- CATEGORY TABS -->
@@ -712,8 +745,6 @@
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </div>
     <div class="tpm-header">
-      <img src="walltone.png" alt="Walltone Decors Logo" class="tpm-logo" onerror="this.style.display='none'">
-      <br>
       <div class="tpm-badge-pill" id="tpmBadge">100% Secure • Risk-Free Checkout</div>
       <h2 class="tpm-title" id="tpmTitle">Try ₹1 Test Payment Before Buying</h2>
       
@@ -730,17 +761,44 @@
       Try ₹1 test payment before making actual payments. Don't worry, after making payments we will contact you!
     </div>
 
+    <!-- 3-STEP TRUST FLOW: 1 rupee test payment -> satisfied -> buy real product -->
+    <div class="tpm-trust-flow">
+      <div class="tpm-step-card">
+        <div class="tpm-step-num">1</div>
+        <div class="tpm-step-info">
+          <h4 id="tpmStep1Title">Step 1: ₹1 Test Payment</h4>
+          <p id="tpmStep1Desc">Pay just ₹1 to experience our instant online order checkout.</p>
+        </div>
+      </div>
+      <div class="tpm-step-divider-arrow">↓</div>
+      <div class="tpm-step-card">
+        <div class="tpm-step-num">2</div>
+        <div class="tpm-step-info">
+          <h4 id="tpmStep2Title">Step 2: Successful & Satisfied</h4>
+          <p id="tpmStep2Desc">Payment successful! Our team connects with you on WhatsApp / Phone immediately so you feel 100% satisfied.</p>
+        </div>
+      </div>
+      <div class="tpm-step-divider-arrow">↓</div>
+      <div class="tpm-step-card" style="border-color: #2E7D32; background: #F1F8E9;">
+        <div class="tpm-step-num" style="background:#C9A961;color:#1B5E20;">3</div>
+        <div class="tpm-step-info">
+          <h4 id="tpmStep3Title" style="color:#1B5E20;">Step 3: Then Buy Real Product</h4>
+          <p id="tpmStep3Desc">Once you are satisfied, choose from our 360+ handcrafted metal wall arts with total trust!</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Assurance Benefits -->
     <div class="tpm-benefits">
-      <div class="tpm-benefit-item" id="tpmBenefit1">✓ Test our instant payment & order confirmation flow</div>
-      <div class="tpm-benefit-item" id="tpmBenefit2">✓ Zero delivery charges (100% Free Shipping for test)</div>
-      <div class="tpm-benefit-item" id="tpmBenefit3">✓ Our team will contact you on WhatsApp / Phone immediately</div>
+      <div class="tpm-benefit-item" id="tpmBenefit1">✓ Real-time test order & payment verification</div>
+      <div class="tpm-benefit-item" id="tpmBenefit2">✓ ₹0 delivery charge (100% Free Shipping)</div>
+      <div class="tpm-benefit-item" id="tpmBenefit3">✓ Instant WhatsApp & phone call follow-up</div>
     </div>
 
     <!-- Pricing Box -->
     <div class="tpm-pricing-box">
       <div class="tpm-pricing-label">Test Order Amount:</div>
-      <div class="tpm-price-val" id="tpmPrice">₹1 <span>(Incl. all taxes & free shipping)</span></div>
+      <div class="tpm-price-val" id="tpmPrice">₹1 <span>(Zero Delivery Fee)</span></div>
     </div>
 
     <!-- CTA Button -->
@@ -884,7 +942,7 @@
   // ══════════════════════════════════════════════
   const TEST_PRODUCT = {
     id: 'test-product-1inr',
-    name: '₹1 Test Payment Product',
+    name: '₹1 Test Payment Before Buying',
     product_no: 'WT-TEST1',
     category: 'wall_art',
     price: 1,
@@ -897,30 +955,48 @@
       title: "Try ₹1 Test Payment Before Buying",
       badge: "100% Secure • Risk-Free Checkout",
       notice: "Try ₹1 test payment before making actual payments. Don't worry, after making payments we will contact you!",
-      benefit1: "✓ Test our instant payment & order confirmation flow",
-      benefit2: "✓ Zero delivery charges (100% Free Shipping for test)",
-      benefit3: "✓ Our team will contact you on WhatsApp / Phone immediately",
-      priceLabel: "₹1 <span>(Incl. all taxes & free shipping)</span>",
+      step1Title: "Step 1: ₹1 Test Payment",
+      step1Desc: "Pay just ₹1 to experience our instant online order checkout.",
+      step2Title: "Step 2: Successful & Satisfied",
+      step2Desc: "Payment successful! Our team connects with you on WhatsApp / Phone immediately so you feel 100% satisfied.",
+      step3Title: "Step 3: Then Buy Real Product",
+      step3Desc: "Once you are satisfied, choose from our 360+ handcrafted metal wall arts with total trust!",
+      benefit1: "✓ Real-time test order & payment verification",
+      benefit2: "✓ ₹0 delivery charge (100% Free Shipping)",
+      benefit3: "✓ Instant WhatsApp & phone call follow-up",
+      priceLabel: "₹1 <span>(Zero Delivery Fee)</span>",
       btnText: "Proceed to ₹1 Test Payment ➔"
     },
     hi: {
       title: "खरीदने से पहले ₹1 का टेस्ट पेमेंट करके देखें",
       badge: "100% सुरक्षित • जोखिम-मुक्त चेकआउट",
       notice: "असली भुगतान करने से पहले ₹1 का टेस्ट पेमेंट आज़माएं। चिंता न करें, भुगतान करने के बाद हम आपसे संपर्क करेंगे!",
-      benefit1: "✓ हमारे त्वरित भुगतान और ऑर्डर सिस्टम का अनुभव लें",
-      benefit2: "✓ कोई डिलीवरी शुल्क नहीं (टेस्ट के लिए पूरी तरह मुफ़्त)",
-      benefit3: "✓ पेमेंट के तुरंत बाद हमारी टीम आपसे व्हाट्सएप / फोन पर संपर्क करेगी",
-      priceLabel: "₹1 <span>(सभी कर शामिल और मुफ़्त डिलीवरी)</span>",
+      step1Title: "पहला कदम: ₹1 टेस्ट पेमेंट",
+      step1Desc: "सिर्फ ₹1 में हमारे त्वरित व सुरक्षित ऑनलाइन पेमेंट सिस्टम का अनुभव लें।",
+      step2Title: "दूसरा कदम: पेमेंट सफल और 100% संतुष्ट",
+      step2Desc: "पेमेंट सफल होते ही हमारी टीम तुरंत आपसे व्हाट्सएप/फोन पर संपर्क करेगी ताकि आप पूरी तरह संतुष्ट हों।",
+      step3Title: "तीसरा कदम: फिर असली प्रोडक्ट खरीदें",
+      step3Desc: "संतुष्ट होने के बाद, अपने घर के लिए हमारे 360+ खूबसूरत मेटल आर्ट्स पूरे विश्वास के साथ खरीदें!",
+      benefit1: "✓ लाइव टेस्ट ऑर्डर व भुगतान सत्यापन",
+      benefit2: "✓ ₹0 डिलीवरी शुल्क (टेस्ट के लिए पूरी तरह मुफ़्त)",
+      benefit3: "✓ तुरंत व्हाट्सएप व कॉल द्वारा संपर्क",
+      priceLabel: "₹1 <span>(शून्य डिलीवरी शुल्क)</span>",
       btnText: "₹1 टेस्ट पेमेंट करें ➔"
     },
     mr: {
       title: "खरेदी करण्यापूर्वी ₹1 चे टेस्ट पेमेंट करून पहा",
       badge: "100% सुरक्षित • विना-धोका चेकआउट",
       notice: "प्रत्यक्ष पेमेंट करण्यापूर्वी ₹1 चे टेस्ट पेमेंट करून पहा. काळजी करू नका, पेमेंट केल्यानंतर आम्ही तुमच्याशी संपर्क साधू!",
-      benefit1: "✓ आमच्या जलद आणि सुरक्षित ऑर्डर प्रक्रियेचा अनुभव घ्या",
-      benefit2: "✓ डिलिव्हरी शुल्क शून्य (टेस्टसाठी १००% मोफत डिलिव्हरी)",
-      benefit3: "✓ पेमेंट केल्यानंतर आमची टीम तुमच्याशी व्हॉट्सअॅप / फोनवर त्वरित संपर्क साधेल",
-      priceLabel: "₹1 <span>(सर्व करांसह आणि मोफत डिलिव्हरी)</span>",
+      step1Title: "पहिली पायरी: ₹1 टेस्ट पेमेंट",
+      step1Desc: "फक्त ₹1 मध्ये आमच्या सुरक्षित ऑनलाइन ऑर्डर प्रक्रियेचा प्रत्यक्ष अनुभव घ्या.",
+      step2Title: "दुसरी पायरी: पेमेंट यशस्वी आणि पूर्ण समाधान",
+      step2Desc: "पेमेंट यशस्वी होताच आमची टीम तुमच्याशी व्हॉट्सअॅप/फोनवर संपर्क करेल, जेणेकरून तुम्हाला पूर्ण खात्री पटेल.",
+      step3Title: "तिसरी पायरी: नंतर मूळ मेटल आर्ट खरेदी करा",
+      step3Desc: "समाधान झाल्यावर, आपल्या घरासाठी आमचे ३६०+ हँडमेड मेटल आर्ट्स पूर्ण विश्वासाने खरेदी करा!",
+      benefit1: "✓ थेट टेस्ट ऑर्डर व पेमेंट पडताळणी",
+      benefit2: "✓ ₹० डिलिव्हरी शुल्क (टेस्टसाठी १००% मोफत)",
+      benefit3: "✓ त्वरित व्हॉट्सअॅप व फोनद्वारे संपर्क",
+      priceLabel: "₹1 <span>(शून्य डिलिव्हरी शुल्क)</span>",
       btnText: "₹1 टेस्ट पेमेंट करा ➔"
     }
   };
@@ -936,6 +1012,12 @@
     const titleEl = document.getElementById('tpmTitle');
     const badgeEl = document.getElementById('tpmBadge');
     const noticeEl = document.getElementById('tpmNotice');
+    const s1t = document.getElementById('tpmStep1Title');
+    const s1d = document.getElementById('tpmStep1Desc');
+    const s2t = document.getElementById('tpmStep2Title');
+    const s2d = document.getElementById('tpmStep2Desc');
+    const s3t = document.getElementById('tpmStep3Title');
+    const s3d = document.getElementById('tpmStep3Desc');
     const b1 = document.getElementById('tpmBenefit1');
     const b2 = document.getElementById('tpmBenefit2');
     const b3 = document.getElementById('tpmBenefit3');
@@ -945,6 +1027,12 @@
     if (titleEl) titleEl.textContent = c.title;
     if (badgeEl) badgeEl.textContent = c.badge;
     if (noticeEl) noticeEl.textContent = c.notice;
+    if (s1t) s1t.textContent = c.step1Title;
+    if (s1d) s1d.textContent = c.step1Desc;
+    if (s2t) s2t.textContent = c.step2Title;
+    if (s2d) s2d.textContent = c.step2Desc;
+    if (s3t) s3t.textContent = c.step3Title;
+    if (s3d) s3d.textContent = c.step3Desc;
     if (b1) b1.textContent = c.benefit1;
     if (b2) b2.textContent = c.benefit2;
     if (b3) b3.textContent = c.benefit3;
@@ -972,6 +1060,7 @@
   // PRODUCT ORDER RESOLVER & HELPERS
   // ══════════════════════════════════════════════
   let savedProductOrderConfig = null;
+  let orderPromise = null;
 
   async function fetchSavedProductOrder() {
     try {
@@ -983,6 +1072,13 @@
       console.log('No custom order found or fetch failed, using default descending order:', e);
       return null;
     }
+  }
+
+  function getOrderConfig() {
+    if (!orderPromise) {
+      orderPromise = fetchSavedProductOrder();
+    }
+    return orderPromise;
   }
 
   function getProductNumberVal(productNo) {
@@ -1045,20 +1141,39 @@
     if (isTestProduct) {
       return `
         <div class="product-card test-product-card" id="card-${p.id}" onclick="openTestPaymentModal()" style="cursor: pointer;">
-          <div class="test-ribbon-tag">💡 Try ₹1 test payment before buying</div>
-          <div class="product-img-wrap test-img-wrap">
-            <img src="${p.image_url || 'walltone.png'}"
-                 alt="${p.name}" 
-                 loading="lazy">
-            <span class="product-no-badge" style="background:var(--brand-green);color:#fff;">TEST</span>
+          <div class="test-card-top-banner">
+            <span class="test-card-pill">🛡️ 100% Risk-Free Verification</span>
+          </div>
+          <div class="test-card-hero">
+            <div class="test-card-rupee">₹1</div>
+            <div class="test-card-title-main">TEST ORDER GUARANTEE</div>
+            <div class="test-card-steps-box">
+              <div class="test-card-step-row">
+                <span class="step-num-badge">1</span>
+                <span>₹1 Test Payment</span>
+              </div>
+              <div class="test-card-arrow-row">↓</div>
+              <div class="test-card-step-row">
+                <span class="step-num-badge">2</span>
+                <span>Successful & Satisfied</span>
+              </div>
+              <div class="test-card-arrow-row">↓</div>
+              <div class="test-card-step-row highlight">
+                <span class="step-num-badge">3</span>
+                <span>Then Buy Real Metal Art</span>
+              </div>
+            </div>
+            <div class="test-card-tap-notice">
+              <span>👉 Tap here to view details (Eng / हिं / मरा)</span>
+            </div>
           </div>
           <div class="product-body">
-            <div class="product-name" style="font-weight: 700; color: var(--brand-green);">${p.name}</div>
+            <div class="product-name" style="font-weight: 700; color: var(--brand-green);">₹1 Test Payment Before Buying</div>
             <div class="product-no"># WT-TEST1 • Instant Verification</div>
-            <div class="product-price">₹1 <span>(Free Delivery)</span></div>
+            <div class="product-price">₹1 <span>(Zero Delivery Fee)</span></div>
             <div class="product-actions">
               <button class="btn-buy" style="background: var(--brand-green); width: 100%;" onclick="event.stopPropagation(); openTestPaymentModal()">
-                Try ₹1 Test Payment
+                Learn More / Pay ₹1 ➔
               </button>
             </div>
           </div>
@@ -1105,34 +1220,46 @@
   }
 
   // ══════════════════════════════════════════════
-  // LOAD PRODUCTS FROM SUPABASE
+  // RETRY MECHANISM & LOAD PRODUCTS FROM SUPABASE
   // ══════════════════════════════════════════════
+  async function fetchProductsCategory(category, maxRetries = 2) {
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const { data, error } = await db
+          .from('products')
+          .select('*')
+          .eq('category', category);
+        if (error) throw error;
+        return data || [];
+      } catch (err) {
+        console.warn(`Fetch attempt ${attempt + 1} for ${category} failed:`, err);
+        if (attempt === maxRetries) throw err;
+        await new Promise(res => setTimeout(res, 500 * (attempt + 1)));
+      }
+    }
+    return [];
+  }
+
   async function loadCategory(category) {
     const gridEl  = document.getElementById(`grid-${category}`);
     const badgeEl = document.getElementById(`badge-${category}`);
     try {
-      if (savedProductOrderConfig === null && !window._fetchingOrder) {
-        window._fetchingOrder = true;
-        savedProductOrderConfig = await fetchSavedProductOrder();
+      if (!savedProductOrderConfig) {
+        savedProductOrderConfig = await getOrderConfig();
       }
 
-      const { data, error } = await db
-        .from('products')
-        .select('*')
-        .eq('category', category);
-
-      if (error) throw error;
-
-      const fetched = data || [];
+      const fetched = await fetchProductsCategory(category);
       const sorted = sortProductsList(fetched, category);
       const list = category === 'wall_art' ? [TEST_PRODUCT, ...sorted] : sorted;
       allProducts[category] = list;
 
       // Update counts
-      badgeEl.textContent = `${list.length} Products`;
-      document.getElementById(`count-${category}`).textContent = list.length;
+      if (badgeEl) badgeEl.textContent = `${list.length} Products`;
+      const countEl = document.getElementById(`count-${category}`);
+      if (countEl) countEl.textContent = list.length;
       const allCount = Object.values(allProducts).flat().length;
-      document.getElementById('count-all').textContent = allCount;
+      const countAllEl = document.getElementById('count-all');
+      if (countAllEl) countAllEl.textContent = allCount;
 
       // Render
       gridEl.classList.remove('loading-grid');
@@ -1147,8 +1274,15 @@
       }
     } catch (err) {
       console.error('Error loading', category, err);
-      badgeEl.textContent = 'Error';
-      gridEl.innerHTML = `<p style="color:red;padding:20px;grid-column:1/-1">Failed to load. Check Supabase config.</p>`;
+      if (badgeEl) badgeEl.textContent = 'Retry Available';
+      gridEl.classList.remove('loading-grid');
+      gridEl.innerHTML = `
+        <div class="empty-state" style="grid-column:1/-1; padding:30px; text-align:center;">
+          <p style="color:#666; margin-bottom:12px; font-weight:500;">Temporarily unable to load this category.</p>
+          <button class="btn-buy" style="max-width:170px; margin:0 auto; display:block;" onclick="loadCategory('${category}')">
+            🔄 Tap to Retry
+          </button>
+        </div>`;
     }
   }
 
@@ -1301,10 +1435,18 @@
   // ══════════════════════════════════════════════
   // INIT
   // ══════════════════════════════════════════════
-  updateCartCount();
-  loadCategory('wall_art');
-  loadCategory('wall_clock');
-  loadCategory('wall_mirror');
+  async function initCatalog() {
+    updateCartCount();
+    try {
+      savedProductOrderConfig = await getOrderConfig();
+    } catch (e) {
+      console.warn('Initial order config load fallback:', e);
+    }
+    await loadCategory('wall_art');
+    await loadCategory('wall_clock');
+    await loadCategory('wall_mirror');
+  }
+  initCatalog();
 </script>
 
 </body>

@@ -1378,7 +1378,7 @@
         }
 
         /* ============================================
-           FULLSCREEN LOADER SCREEN (SVG WALL ART / METAL CLOCK)
+           FULLSCREEN LOADER SCREEN (GILDED BOTANICAL LEAF ART)
         ============================================ */
         .site-loader-overlay {
             position: fixed;
@@ -1405,527 +1405,196 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            max-width: 420px;
+            max-width: 440px;
             width: 90%;
         }
-        .clock-art-container {
+        .botanical-art-container {
             position: relative;
-            margin-bottom: 22px;
-            filter: drop-shadow(0 12px 30px rgba(46, 125, 50, 0.18));
+            margin-bottom: 24px;
+            filter: drop-shadow(0 14px 28px rgba(46, 125, 50, 0.16));
         }
-        .clock-art-svg {
+        .botanical-art-svg {
             display: block;
             overflow: visible;
         }
-        .clock-outer-ring {
-            stroke-dasharray: 560;
-            stroke-dashoffset: 560;
-            animation: drawRing 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards, spinClockRing 24s linear infinite;
+        .leaf-stem {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: drawStroke 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .leaf-outline-primary {
+            stroke-dasharray: 480;
+            stroke-dashoffset: 480;
+            animation: drawStroke 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
+        }
+        .leaf-outline-secondary {
+            stroke-dasharray: 420;
+            stroke-dashoffset: 420;
+            animation: drawStroke 2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.35s;
+        }
+        .leaf-vein {
+            stroke-dasharray: 120;
+            stroke-dashoffset: 120;
+            animation: drawStroke 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .leaf-vein-1 { animation-delay: 0.4s; }
+        .leaf-vein-2 { animation-delay: 0.55s; }
+        .leaf-vein-3 { animation-delay: 0.7s; }
+        .leaf-vein-4 { animation-delay: 0.85s; }
+        .leaf-vein-5 { animation-delay: 1.0s; }
+        .leaf-vein-7 { animation-delay: 0.5s; }
+        .leaf-vein-8 { animation-delay: 0.65s; }
+        .leaf-vein-9 { animation-delay: 0.8s; }
+        .leaf-vein-10 { animation-delay: 0.95s; }
+
+        .botanical-halo {
+            animation: breatheHalo 3.5s ease-in-out infinite alternate;
             transform-origin: 100px 100px;
         }
-        .clock-mid-ring {
-            animation: spinClockCounter 18s linear infinite;
-            transform-origin: 100px 100px;
+        .botanical-sheen {
+            animation: gleamShimmer 4s ease-in-out infinite;
         }
-        .clock-inner-ring {
-            stroke-dasharray: 380;
-            stroke-dashoffset: 380;
-            animation: drawRing 2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.3s;
-        }
-        .clock-spokes {
-            animation: pulseSpokes 3s ease-in-out infinite alternate;
-            transform-origin: 100px 100px;
-        }
-        .clock-hour-hand {
-            transform-origin: 100px 100px;
-            animation: rotateHour 8s linear infinite;
-        }
-        .clock-minute-hand {
-            transform-origin: 100px 100px;
-            animation: rotateMinute 2.2s linear infinite;
-        }
-        @keyframes drawRing {
+        @keyframes drawStroke {
             to { stroke-dashoffset: 0; }
         }
-        @keyframes spinClockRing {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes breatheHalo {
+            0% { opacity: 0.45; transform: scale(0.96); }
+            100% { opacity: 0.95; transform: scale(1.03); }
         }
-        @keyframes spinClockCounter {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
+        @keyframes gleamShimmer {
+            0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 2px rgba(201, 169, 97, 0.4)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 10px rgba(201, 169, 97, 0.85)); }
         }
-        @keyframes pulseSpokes {
-            from { opacity: 0.65; transform: scale(0.97); }
-            to { opacity: 1; transform: scale(1.02); }
-        }
-        @keyframes rotateHour {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes rotateMinute {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .loader-logo-img {
-            height: 46px;
-            width: auto;
-            object-fit: contain;
-            margin-bottom: 12px;
-            animation: fadeInLogo 1.2s ease-out;
-        }
-        @keyframes fadeInLogo {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .loader-brand-title {
+
+        .loader-welcome-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.85rem;
             font-weight: 700;
-            letter-spacing: 0.18em;
+            letter-spacing: 0.08em;
             color: #111111;
-            margin-bottom: 4px;
-            text-transform: uppercase;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #C9A961 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .loader-brand-sub {
+        .loader-sub-status {
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.78rem;
-            font-weight: 600;
-            letter-spacing: 0.2em;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #555555;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: #C9A961;
             margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+        }
+        .loader-dots {
+            display: inline-block;
+            letter-spacing: 2px;
+            animation: pulseDots 1.4s infinite;
+        }
+        @keyframes pulseDots {
+            0%, 20% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
         }
         .loader-progress-track {
-            width: 180px;
-            height: 4px;
+            width: 190px;
+            height: 3.5px;
             background: #E8F5E9;
             border-radius: 4px;
             overflow: hidden;
-            margin-bottom: 10px;
         }
         .loader-progress-bar {
-            width: 25%;
+            width: 30%;
             height: 100%;
             background: linear-gradient(90deg, #2E7D32, #C9A961);
             border-radius: 4px;
             transition: width 0.3s ease;
-        }
-        .loader-status {
-            font-size: 0.75rem;
-            color: #888888;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-        }
-
-        /* ============================================
-           HOME TEST PAYMENT ANNOUNCEMENT BANNER
-        ============================================ */
-        .home-test-banner {
-            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 60%, #388E3C 100%);
-            color: #ffffff;
-            padding: 10px 20px;
-            position: relative;
-            z-index: 99;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
-            overflow: hidden;
-            margin-top: 75px; /* Offset below fixed navbar */
-        }
-        .home-test-banner::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.15) 50%, transparent 60%);
-            transform: rotate(25deg);
-            animation: shineBanner 4s infinite linear;
-        }
-        .htb-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
-        }
-        .htb-badge {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(4px);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-        }
-        .htb-text {
-            font-size: 0.92rem;
-            flex: 1;
-        }
-        .htb-text strong {
-            font-weight: 700;
-        }
-        .htb-btn {
-            background: #FFFFFF;
-            color: #1B5E20;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.84rem;
-            font-family: 'Montserrat', sans-serif;
-            cursor: pointer;
-            white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: all 0.25s ease;
-        }
-        .htb-btn:hover {
-            background: #E8F5E9;
-            transform: scale(1.04);
-        }
-        @media(max-width: 768px) {
-            .home-test-banner {
-                margin-top: 65px;
-                padding: 10px 15px;
-            }
-            .htb-container {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .htb-btn {
-                width: 100%;
-                text-align: center;
-            }
-        }
-
-        /* ============================================
-           HOME MULTILINGUAL TEST PAYMENT MODAL
-        ============================================ */
-        .home-modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(5px);
-            z-index: 999999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .home-modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-        .home-test-modal-card {
-            background: #FFFFFF;
-            border-radius: 20px;
-            max-width: 560px;
-            width: 100%;
-            max-height: 92vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-            padding: 30px;
-            animation: modalPop 0.3s ease-out;
-            border-top: 5px solid var(--brand-green);
-        }
-        @keyframes modalPop {
-            from { transform: scale(0.92) translateY(20px); opacity: 0; }
-            to { transform: scale(1) translateY(0); opacity: 1; }
-        }
-        .htm-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 36px;
-            height: 36px;
-            background: var(--green-light);
-            color: var(--green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .htm-close:hover {
-            background: var(--green);
-            color: #ffffff;
-        }
-        .htm-header {
-            text-align: center;
-            margin-bottom: 16px;
-        }
-        .htm-logo {
-            height: 48px;
-            margin-bottom: 10px;
-            object-fit: contain;
-        }
-        .htm-badge {
-            display: inline-block;
-            background: #E8F5E9;
-            color: #1B5E20;
-            border: 1px solid #A5D6A7;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin-bottom: 8px;
-        }
-        .htm-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            color: #111111;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-        .htm-lang-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            background: #F1F8E9;
-            padding: 6px;
-            border-radius: 30px;
-            margin: 12px auto 18px auto;
-            width: fit-content;
-            border: 1px solid var(--green-mid);
-        }
-        .htm-lang-btn {
-            padding: 6px 16px;
-            border-radius: 20px;
-            border: none;
-            background: transparent;
-            color: #2E7D32;
-            font-weight: 600;
-            font-size: 0.82rem;
-            font-family: 'Montserrat', sans-serif;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-        .htm-lang-btn.active {
-            background: #2E7D32;
-            color: #FFFFFF;
-            box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
-        }
-        .htm-notice-card {
-            background: #E8F5E9;
-            border-left: 4px solid var(--brand-green);
-            border-radius: 10px;
-            padding: 14px 18px;
-            margin: 16px 0;
-            font-size: 0.92rem;
-            color: #1B5E20;
-            font-weight: 500;
-            line-height: 1.5;
-            text-align: left;
-        }
-        .htm-benefits {
-            text-align: left;
-            margin: 16px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .htm-benefit-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.88rem;
-            color: #444;
-        }
-        .htm-pricing-box {
-            background: #F7FAF7;
-            border: 1px solid var(--green-mid);
-            border-radius: 12px;
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .htm-pricing-label {
-            font-size: 0.88rem;
-            color: #555;
-            font-weight: 500;
-        }
-        .htm-price-val {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #2E7D32;
-        }
-        .htm-price-val span {
-            font-size: 0.78rem;
-            font-weight: 400;
-            color: #777;
-        }
-        .htm-btn-proceed {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #2E7D32, #1B5E20);
-            color: #FFFFFF;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: 'Montserrat', sans-serif;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
-            transition: all 0.3s ease;
-        }
-        .htm-btn-proceed:hover {
-            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.45);
-            transform: translateY(-2px);
         }
     </style>
 </head>
 
 <body>
     <!-- ============================================
-         FULLSCREEN LOADER SCREEN (SVG WALL ART / METAL CLOCK)
+         FULLSCREEN LOADER SCREEN (GILDED BOTANICAL LEAF ART)
     ============================================ -->
     <div id="siteLoader" class="site-loader-overlay">
         <div class="loader-inner">
-            <!-- Animated Metal Wall Clock & Luxury Art Piece SVG -->
-            <div class="clock-art-container">
-                <svg class="clock-art-svg" viewBox="0 0 200 200" width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+            <!-- Animated Luxury Botanical Metal Leaf Artwork -->
+            <div class="botanical-art-container">
+                <svg class="botanical-art-svg" viewBox="0 0 200 200" width="170" height="170" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <linearGradient id="metalGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient id="leafGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#C9A961" />
-                            <stop offset="35%" stop-color="#E5C77A" />
-                            <stop offset="70%" stop-color="#A6833D" />
-                            <stop offset="100%" stop-color="#F3DC9B" />
+                            <stop offset="35%" stop-color="#F2DD9B" />
+                            <stop offset="70%" stop-color="#B89345" />
+                            <stop offset="100%" stop-color="#E5C77A" />
                         </linearGradient>
-                        <linearGradient id="metalDarkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient id="leafEmeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#1B5E20" />
                             <stop offset="50%" stop-color="#2E7D32" />
-                            <stop offset="100%" stop-color="#0E3812" />
+                            <stop offset="100%" stop-color="#4CAF50" />
                         </linearGradient>
-                        <filter id="metalGlow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="2.5" result="blur" />
+                        <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
                             <feComposite in="SourceGraphic" in2="blur" operator="over" />
                         </filter>
                     </defs>
 
-                    <!-- Radiating laser-cut metal art spokes (12 radial rays) -->
-                    <g class="clock-spokes">
-                        <line x1="100" y1="14" x2="100" y2="30" stroke="url(#metalGoldGrad)" stroke-width="2.5" stroke-linecap="round" />
-                        <line x1="143" y1="25" x2="135" y2="39" stroke="url(#metalGoldGrad)" stroke-width="2" stroke-linecap="round" />
-                        <line x1="175" y1="57" x2="161" y2="65" stroke="url(#metalGoldGrad)" stroke-width="2" stroke-linecap="round" />
-                        <line x1="186" y1="100" x2="170" y2="100" stroke="url(#metalGoldGrad)" stroke-width="2.5" stroke-linecap="round" />
-                        <line x1="175" y1="143" x2="161" y2="135" stroke="url(#metalGoldGrad)" stroke-width="2" stroke-linecap="round" />
-                        <line x1="143" y1="175" x2="135" y2="161" stroke="url(#metalGoldGrad)" stroke-width="2" stroke-linecap="round" />
-                        <line x1="100" y1="186" x2="100" y2="170" stroke="url(#metalGoldGrad)" stroke-width="2.5" stroke-linecap="round" />
-                        <line x1="57" y1="175" x2="65" y2="161" stroke="url(#metalGoldGrad)" stroke-width="2" stroke-linecap="round" />
-                        <line x1="25" y1="143" x2="39" y2="135" stroke="url(#metalGoldGrad)" stroke-width="2" stroke-linecap="round" />
-                        <line x1="14" y1="100" x2="30" y2="100" stroke="url(#metalGoldGrad)" stroke-width="2.5" stroke-linecap="round" />
-                        <line x1="25" y1="57" x2="39" y2="65" stroke="url(#metalGoldGrad)" stroke-width="2" stroke-linecap="round" />
-                        <line x1="57" y1="25" x2="65" y2="39" stroke="url(#metalGoldGrad)" stroke-width="2" stroke-linecap="round" />
+                    <!-- Ambient Luxury Halo Ring -->
+                    <circle class="botanical-halo" cx="100" cy="100" r="86" fill="none" stroke="url(#leafGoldGrad)" stroke-width="1.2" stroke-dasharray="3 6" opacity="0.7" />
+                    <circle cx="100" cy="100" r="92" fill="none" stroke="url(#leafEmeraldGrad)" stroke-width="0.75" opacity="0.35" />
+
+                    <!-- Metallic Decorative Dots -->
+                    <circle cx="100" cy="10" r="2.5" fill="url(#leafGoldGrad)" />
+                    <circle cx="190" cy="100" r="2.5" fill="url(#leafGoldGrad)" />
+                    <circle cx="100" cy="190" r="2.5" fill="url(#leafGoldGrad)" />
+                    <circle cx="10" cy="100" r="2.5" fill="url(#leafGoldGrad)" />
+
+                    <g class="botanical-sheen">
+                        <!-- Central Sculpted Metal Stem -->
+                        <path class="leaf-stem" d="M100 182 C100 145 98 100 100 32" fill="none" stroke="url(#leafEmeraldGrad)" stroke-width="3" stroke-linecap="round" />
+
+                        <!-- Primary Right Leaf (Sculpted Metallic Contour) -->
+                        <path class="leaf-outline-primary" d="M100 55 C125 45 165 70 162 108 C158 135 132 152 100 158" fill="rgba(46, 125, 50, 0.04)" stroke="url(#leafGoldGrad)" stroke-width="2.2" stroke-linecap="round" />
+
+                        <!-- Right Leaf Delicate Laser Veins -->
+                        <path class="leaf-vein leaf-vein-1" d="M100 68 C118 64 140 76 154 90" fill="none" stroke="url(#leafGoldGrad)" stroke-width="1.6" stroke-linecap="round" />
+                        <path class="leaf-vein leaf-vein-2" d="M100 86 C122 84 146 96 158 112" fill="none" stroke="url(#leafGoldGrad)" stroke-width="1.6" stroke-linecap="round" />
+                        <path class="leaf-vein leaf-vein-3" d="M100 106 C122 106 142 118 150 130" fill="none" stroke="url(#leafGoldGrad)" stroke-width="1.6" stroke-linecap="round" />
+                        <path class="leaf-vein leaf-vein-4" d="M100 124 C116 126 132 136 138 144" fill="none" stroke="url(#leafGoldGrad)" stroke-width="1.6" stroke-linecap="round" />
+                        <path class="leaf-vein leaf-vein-5" d="M100 142 C110 144 120 150 124 153" fill="none" stroke="url(#leafGoldGrad)" stroke-width="1.5" stroke-linecap="round" />
+
+                        <!-- Secondary Left Leaf (Graceful Arching Sculptural Metal Curve) -->
+                        <path class="leaf-outline-secondary" d="M100 78 C76 70 40 92 42 125 C45 148 68 162 100 168" fill="rgba(201, 169, 97, 0.04)" stroke="url(#leafEmeraldGrad)" stroke-width="2.2" stroke-linecap="round" />
+
+                        <!-- Left Leaf Delicate Laser Veins -->
+                        <path class="leaf-vein leaf-vein-7" d="M100 90 C84 86 64 96 52 108" fill="none" stroke="url(#leafEmeraldGrad)" stroke-width="1.6" stroke-linecap="round" />
+                        <path class="leaf-vein leaf-vein-8" d="M100 106 C80 106 60 116 50 128" fill="none" stroke="url(#leafEmeraldGrad)" stroke-width="1.6" stroke-linecap="round" />
+                        <path class="leaf-vein leaf-vein-9" d="M100 124 C82 126 66 136 60 144" fill="none" stroke="url(#leafEmeraldGrad)" stroke-width="1.6" stroke-linecap="round" />
+                        <path class="leaf-vein leaf-vein-10" d="M100 142 C88 144 76 150 72 154" fill="none" stroke="url(#leafEmeraldGrad)" stroke-width="1.5" stroke-linecap="round" />
+
+                        <!-- Golden Accent Pearl Bud -->
+                        <circle cx="100" cy="32" r="4.5" fill="url(#leafGoldGrad)" filter="url(#softGlow)" />
+                        <circle cx="162" cy="108" r="3" fill="url(#leafGoldGrad)" />
+                        <circle cx="42" cy="125" r="3" fill="url(#leafGoldGrad)" />
                     </g>
-
-                    <!-- Outer Geometric Metal Art Ring (Animated Stroke) -->
-                    <circle class="clock-outer-ring" cx="100" cy="100" r="88" fill="none" stroke="url(#metalDarkGrad)" stroke-width="2" />
-                    
-                    <!-- Middle Filigree Ring with golden dots -->
-                    <circle class="clock-mid-ring" cx="100" cy="100" r="74" fill="none" stroke="url(#metalGoldGrad)" stroke-width="1.5" stroke-dasharray="4 6" />
-                    
-                    <!-- Inner Dial Ring -->
-                    <circle class="clock-inner-ring" cx="100" cy="100" r="58" fill="none" stroke="url(#metalDarkGrad)" stroke-width="2" />
-
-                    <!-- Decorative metal geometry diamonds at 12, 3, 6, 9 -->
-                    <polygon points="100,44 104,49 100,54 96,49" fill="url(#metalGoldGrad)" />
-                    <polygon points="156,100 151,104 146,100 151,96" fill="url(#metalGoldGrad)" />
-                    <polygon points="100,156 104,151 100,146 96,151" fill="url(#metalGoldGrad)" />
-                    <polygon points="44,100 49,104 54,100 49,96" fill="url(#metalGoldGrad)" />
-
-                    <!-- Rotating Clock Hands -->
-                    <!-- Hour Hand -->
-                    <g class="clock-hour-hand">
-                        <line x1="100" y1="100" x2="100" y2="66" stroke="url(#metalDarkGrad)" stroke-width="3.5" stroke-linecap="round" />
-                        <polygon points="100,60 103,67 97,67" fill="url(#metalDarkGrad)" />
-                    </g>
-                    <!-- Minute Hand -->
-                    <g class="clock-minute-hand">
-                        <line x1="100" y1="100" x2="100" y2="48" stroke="url(#metalGoldGrad)" stroke-width="2.2" stroke-linecap="round" />
-                        <polygon points="100,42 102.5,49 97.5,49" fill="url(#metalGoldGrad)" />
-                    </g>
-
-                    <!-- Center Pivot and Cap -->
-                    <circle cx="100" cy="100" r="7" fill="url(#metalGoldGrad)" filter="url(#metalGlow)" />
-                    <circle cx="100" cy="100" r="3.5" fill="#1B5E20" />
                 </svg>
             </div>
 
-            <!-- Brand Logo -->
-            <img src="walltone.png" alt="Walltone Decors Logo" class="loader-logo-img" onerror="this.style.display='none'">
+            <!-- Welcome to Walltone Title -->
+            <h1 class="loader-welcome-title">Welcome to Walltone</h1>
+            
+            <!-- Loading Status Indicator -->
+            <div class="loader-sub-status">Loading<span class="loader-dots">...</span></div>
 
-            <!-- Brand Name & Subtitle -->
-            <div class="loader-brand-title">WALLTONE DECORS</div>
-            <div class="loader-brand-sub">Handmade Luxury Metal Art</div>
-
-            <!-- Smooth Luxury Progress Bar -->
+            <!-- Luxury Progress Bar -->
             <div class="loader-progress-track">
                 <div class="loader-progress-bar" id="loaderBar"></div>
             </div>
-            <div class="loader-status" id="loaderStatus">Crafting your visual experience...</div>
-        </div>
-    </div>
-
-    <!-- ============================================
-         MULTILINGUAL TEST PAYMENT MODAL
-    ============================================ -->
-    <div class="home-modal-overlay" id="homeTestPaymentModal" onclick="closeTestPaymentModal()">
-        <div class="home-test-modal-card" onclick="event.stopPropagation()">
-            <div class="htm-close" onclick="closeTestPaymentModal()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </div>
-            <div class="htm-header">
-                <img src="walltone.png" alt="Walltone Decors Logo" class="htm-logo" onerror="this.style.display='none'">
-                <br>
-                <div class="htm-badge" id="htmBadge">100% Secure • Risk-Free Checkout</div>
-                <h2 class="htm-title" id="htmTitle">Try ₹1 Test Payment Before Buying</h2>
-                
-                <!-- Language Selector Tabs -->
-                <div class="htm-lang-tabs">
-                    <button class="htm-lang-btn active" data-lang="en" onclick="setTestLanguage('en')">🇬🇧 English</button>
-                    <button class="htm-lang-btn" data-lang="hi" onclick="setTestLanguage('hi')">🇮🇳 हिन्दी</button>
-                    <button class="htm-lang-btn" data-lang="mr" onclick="setTestLanguage('mr')">🇮🇳 मराठी</button>
-                </div>
-            </div>
-
-            <!-- Notice Box as specifically requested -->
-            <div class="htm-notice-card" id="htmNotice">
-                Try ₹1 test payment before making actual payments. Don't worry, after making payments we will contact you!
-            </div>
-
-            <!-- Assurance Benefits -->
-            <div class="htm-benefits">
-                <div class="htm-benefit-item" id="htmBenefit1">✓ Test our instant payment & order confirmation flow</div>
-                <div class="htm-benefit-item" id="htmBenefit2">✓ Zero delivery charges (100% Free Shipping for test)</div>
-                <div class="htm-benefit-item" id="htmBenefit3">✓ Our team will contact you on WhatsApp / Phone immediately</div>
-            </div>
-
-            <!-- Pricing Box -->
-            <div class="htm-pricing-box">
-                <div class="htm-pricing-label">Test Order Amount:</div>
-                <div class="htm-price-val" id="htmPrice">₹1 <span>(Incl. all taxes & free shipping)</span></div>
-            </div>
-
-            <!-- CTA Button -->
-            <button class="htm-btn-proceed" id="htmProceedBtn" onclick="proceedTestPayment()">
-                Proceed to ₹1 Test Payment ➔
-            </button>
         </div>
     </div>
 
@@ -1997,18 +1666,6 @@
         </a>
     </div>
 
-    <!-- Test Payment Announcement Bar -->
-    <div class="home-test-banner" onclick="openTestPaymentModal()">
-        <div class="htb-container">
-            <span class="htb-badge">⚡ Safe & Risk-Free</span>
-            <span class="htb-text">
-                <strong>Try ₹1 test payment before buying!</strong> Experience our secure checkout & instant confirmation.
-            </span>
-            <button class="htb-btn" onclick="event.stopPropagation(); openTestPaymentModal()">
-                Try ₹1 Test Payment ➔
-            </button>
-        </div>
-    </div>
 
     <!-- Hero Section -->
     <section class="hero-section" id="home">
@@ -3136,115 +2793,6 @@
 
             setTimeout(dismissLoader, maxTimeoutMs);
         })();
-
-        // ============================================
-        // TEST PAYMENT & MULTILINGUAL MODAL
-        // ============================================
-        const TEST_PRODUCT = {
-            id: 'test-product-1inr',
-            name: '₹1 Test Payment Product',
-            product_no: 'WT-TEST1',
-            category: 'wall_art',
-            price: 1,
-            in_stock: true,
-            image_url: 'walltone.png'
-        };
-
-        const TEST_LANG_CONTENT = {
-            en: {
-                title: "Try ₹1 Test Payment Before Buying",
-                badge: "100% Secure • Risk-Free Checkout",
-                notice: "Try ₹1 test payment before making actual payments. Don't worry, after making payments we will contact you!",
-                benefit1: "✓ Test our instant payment & order confirmation flow",
-                benefit2: "✓ Zero delivery charges (100% Free Shipping for test)",
-                benefit3: "✓ Our team will contact you on WhatsApp / Phone immediately",
-                priceLabel: "₹1 <span>(Incl. all taxes & free shipping)</span>",
-                btnText: "Proceed to ₹1 Test Payment ➔"
-            },
-            hi: {
-                title: "खरीदने से पहले ₹1 का टेस्ट पेमेंट करके देखें",
-                badge: "100% सुरक्षित • जोखिम-मुक्त चेकआउट",
-                notice: "असली भुगतान करने से पहले ₹1 का टेस्ट पेमेंट आज़माएं। चिंता न करें, भुगतान करने के बाद हम आपसे संपर्क करेंगे!",
-                benefit1: "✓ हमारे त्वरित भुगतान और ऑर्डर सिस्टम का अनुभव लें",
-                benefit2: "✓ कोई डिलीवरी शुल्क नहीं (टेस्ट के लिए पूरी तरह मुफ़्त)",
-                benefit3: "✓ पेमेंट के तुरंत बाद हमारी टीम आपसे व्हाट्सएप / फोन पर संपर्क करेगी",
-                priceLabel: "₹1 <span>(सभी कर शामिल और मुफ़्त डिलीवरी)</span>",
-                btnText: "₹1 टेस्ट पेमेंट करें ➔"
-            },
-            mr: {
-                title: "खरेदी करण्यापूर्वी ₹1 चे टेस्ट पेमेंट करून पहा",
-                badge: "100% सुरक्षित • विना-धोका चेकआउट",
-                notice: "प्रत्यक्ष पेमेंट करण्यापूर्वी ₹1 चे टेस्ट पेमेंट करून पहा. काळजी करू नका, पेमेंट केल्यानंतर आम्ही तुमच्याशी संपर्क साधू!",
-                benefit1: "✓ आमच्या जलद आणि सुरक्षित ऑर्डर प्रक्रियेचा अनुभव घ्या",
-                benefit2: "✓ डिलिव्हरी शुल्क शून्य (टेस्टसाठी १००% मोफत डिलिव्हरी)",
-                benefit3: "✓ पेमेंट केल्यानंतर आमची टीम तुमच्याशी व्हॉट्सअॅप / फोनवर त्वरित संपर्क साधेल",
-                priceLabel: "₹1 <span>(सर्व करांसह आणि मोफत डिलिव्हरी)</span>",
-                btnText: "₹1 टेस्ट पेमेंट करा ➔"
-            }
-        };
-
-        let currentTestLang = 'en';
-
-        window.setTestLanguage = function (lang) {
-            currentTestLang = lang;
-            const c = TEST_LANG_CONTENT[lang] || TEST_LANG_CONTENT.en;
-            document.querySelectorAll('.htm-lang-btn').forEach(b => {
-                b.classList.toggle('active', b.dataset.lang === lang);
-            });
-            const titleEl = document.getElementById('htmTitle');
-            const badgeEl = document.getElementById('htmBadge');
-            const noticeEl = document.getElementById('htmNotice');
-            const b1 = document.getElementById('htmBenefit1');
-            const b2 = document.getElementById('htmBenefit2');
-            const b3 = document.getElementById('htmBenefit3');
-            const priceEl = document.getElementById('htmPrice');
-            const btnEl = document.getElementById('htmProceedBtn');
-
-            if (titleEl) titleEl.textContent = c.title;
-            if (badgeEl) badgeEl.textContent = c.badge;
-            if (noticeEl) noticeEl.textContent = c.notice;
-            if (b1) b1.textContent = c.benefit1;
-            if (b2) b2.textContent = c.benefit2;
-            if (b3) b3.textContent = c.benefit3;
-            if (priceEl) priceEl.innerHTML = c.priceLabel;
-            if (btnEl) btnEl.textContent = c.btnText;
-        };
-
-        window.openTestPaymentModal = function () {
-            setTestLanguage(currentTestLang);
-            const m = document.getElementById('homeTestPaymentModal');
-            if (m) m.classList.add('active');
-        };
-
-        window.closeTestPaymentModal = function () {
-            const m = document.getElementById('homeTestPaymentModal');
-            if (m) m.classList.remove('active');
-        };
-
-        function getCart() {
-            return JSON.parse(localStorage.getItem('walltone_cart') || '[]');
-        }
-
-        function saveCart(cart) {
-            localStorage.setItem('walltone_cart', JSON.stringify(cart));
-            const total = cart.reduce((sum, i) => sum + i.quantity, 0);
-            document.querySelectorAll('.cart-count').forEach(el => el.textContent = total);
-        }
-
-        function addToCart(product) {
-            const cart = getCart();
-            const idx = cart.findIndex(i => i.id === product.id);
-            if (idx > -1) cart[idx].quantity += 1;
-            else cart.push({ ...product, quantity: 1 });
-            saveCart(cart);
-        }
-
-        window.proceedTestPayment = function () {
-            addToCart(TEST_PRODUCT);
-            setTimeout(() => {
-                window.location.href = 'cart.html';
-            }, 300);
-        };
     </script>
 </body>
 
