@@ -1734,11 +1734,36 @@
             try {
                 showSpinner();
 
-                // Fetch all normal products
-                // Fetch all normal products ordered by product_no
-                const { data: prods, error: prodErr } = await db.from('products').select('*').order('product_no', { ascending: true });
+                // Fetch saved custom order if available
+                let savedOrder = null;
+                try {
+                    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/public/product-images/settings/product_order.json?t=${Date.now()}`);
+                    if (res.ok) savedOrder = await res.json();
+                } catch (err) {}
 
+                // Fetch all normal products
+                const { data: prodsRaw, error: prodErr } = await db.from('products').select('*');
                 if (prodErr) throw prodErr;
+
+                let prods = (prodsRaw || []).slice();
+                if (savedOrder && Array.isArray(savedOrder.order_ids) && savedOrder.order_ids.length > 0) {
+                    const idMap = new Map();
+                    savedOrder.order_ids.forEach((id, idx) => idMap.set(id, idx));
+                    prods.sort((a, b) => {
+                        const posA = idMap.has(a.id) ? idMap.get(a.id) : 999999;
+                        const posB = idMap.has(b.id) ? idMap.get(b.id) : 999999;
+                        if (posA !== posB) return posA - posB;
+                        const numA = parseInt((a.product_no || '').replace(/\D/g, '')) || 0;
+                        const numB = parseInt((b.product_no || '').replace(/\D/g, '')) || 0;
+                        return numB - numA;
+                    });
+                } else {
+                    prods.sort((a, b) => {
+                        const numA = parseInt((a.product_no || '').replace(/\D/g, '')) || 0;
+                        const numB = parseInt((b.product_no || '').replace(/\D/g, '')) || 0;
+                        return numB - numA;
+                    });
+                }
 
                 // Fetch all AI assets (transparent images mapping)
                 const { data: aiAssets, error: aiErr } = await db.from('ai_assets').select('*');

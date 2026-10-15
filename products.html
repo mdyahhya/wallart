@@ -324,9 +324,273 @@
   .pm-title { font-size: 1.6rem; }
   .pm-price { font-size: 1.4rem; }
   .pm-img-col { min-height: 250px; padding: 15px; }
-  .pm-actions { flex-direction: column; }
+/* TEST PAYMENT BANNER */
+.test-payment-banner {
+  max-width: 1200px;
+  margin: 15px auto 25px auto;
+  padding: 14px 22px;
+  background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 60%, #388E3C 100%);
+  color: #ffffff;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.25);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.test-payment-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(46, 125, 50, 0.35);
+}
+.test-payment-banner::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.15) 50%, transparent 60%);
+  transform: rotate(25deg);
+  animation: shineBanner 4s infinite linear;
+}
+@keyframes shineBanner {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(100%) rotate(25deg); }
+}
+.tpb-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  z-index: 1;
+}
+.tpb-badge {
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(4px);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.tpb-text {
+  display: flex;
+  flex-direction: column;
+}
+.tpb-text strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.tpb-text span {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+.tpb-btn {
+  background: #FFFFFF;
+  color: #1B5E20;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+  z-index: 1;
+}
+.tpb-btn:hover {
+  background: #E8F5E9;
+  transform: scale(1.04);
+}
+@media(max-width: 600px) {
+  .test-payment-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 16px;
+    margin: 10px 15px 20px 15px;
+  }
+  .tpb-btn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
+/* TEST PRODUCT CARD HIGHLIGHT */
+.product-card.test-product-card {
+  border: 2px solid var(--brand-green);
+  background: linear-gradient(180deg, #FAFCFA 0%, #FFFFFF 100%);
+  position: relative;
+  box-shadow: 0 6px 22px rgba(46, 125, 50, 0.15);
+}
+.test-ribbon-tag {
+  background: linear-gradient(135deg, #2E7D32, #1B5E20);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 6px 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.test-img-wrap {
+  background: #f4fbf5 !important;
+}
+
+/* TEST PAYMENT MULTILINGUAL MODAL */
+.test-modal-content {
+  background: #FFFFFF;
+  border-radius: 20px;
+  max-width: 580px;
+  width: 95%;
+  max-height: 92vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  padding: 30px;
+  animation: slideUp 0.3s ease-out;
+  border-top: 5px solid var(--green);
+}
+.tpm-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.tpm-logo {
+  height: 48px;
+  margin-bottom: 12px;
+  object-fit: contain;
+}
+.tpm-lang-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  background: #F1F8E9;
+  padding: 6px;
+  border-radius: 30px;
+  margin: 15px auto 20px auto;
+  width: fit-content;
+  border: 1px solid var(--green-mid);
+}
+.tpm-lang-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: none;
+  background: transparent;
+  color: #2E7D32;
+  font-weight: 600;
+  font-size: 0.82rem;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.tpm-lang-btn.active {
+  background: #2E7D32;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+}
+.tpm-badge-pill {
+  display: inline-block;
+  background: #E8F5E9;
+  color: #1B5E20;
+  border: 1px solid #A5D6A7;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tpm-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.65rem;
+  color: #111111;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.tpm-notice-card {
+  background: #E8F5E9;
+  border-left: 4px solid var(--green);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 18px 0;
+  font-size: 0.92rem;
+  color: #1B5E20;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+}
+.tpm-benefits {
+  text-align: left;
+  margin: 18px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tpm-benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #444;
+}
+.tpm-pricing-box {
+  background: #F7FAF7;
+  border: 1px solid var(--green-mid);
+  border-radius: 12px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+.tpm-pricing-label {
+  font-size: 0.88rem;
+  color: #555;
+  font-weight: 500;
+}
+.tpm-price-val {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2E7D32;
+}
+.tpm-price-val span {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #777;
+}
+.tpm-btn-proceed {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #2E7D32, #1B5E20);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
+  transition: all 0.3s ease;
+}
+.tpm-btn-proceed:hover {
+  box-shadow: 0 8px 25px rgba(46, 125, 50, 0.45);
+  transform: translateY(-2px);
+}
   </style>
 </head>
 <body>
@@ -356,6 +620,18 @@
   <h1>Our Products</h1>
   <p>Handcrafted Premium Metal Decor — Made in India</p>
   <div class="header-line"></div>
+
+  <!-- TEST PAYMENT ANNOUNCEMENT BANNER -->
+  <div class="test-payment-banner" onclick="openTestPaymentModal()">
+    <div class="tpb-content">
+      <div class="tpb-badge">⚡ Safe & Risk-Free</div>
+      <div class="tpb-text">
+        <strong>Try ₹1 test payment before buying!</strong>
+        <span>Experience our secure checkout & instant confirmation</span>
+      </div>
+    </div>
+    <button class="tpb-btn" onclick="event.stopPropagation(); openTestPaymentModal()">Try Now ₹1 ➔</button>
+  </div>
 </div>
 
 <!-- CATEGORY TABS -->
@@ -428,6 +704,49 @@
     </div>
     <img src="" class="modal-img" id="modalImg">
     <div class="modal-caption" id="modalCaption"></div>
+  </div>
+<!-- MULTILINGUAL TEST PAYMENT MODAL -->
+<div class="modal-overlay" id="testPaymentModal" onclick="closeTestPaymentModal()">
+  <div class="test-modal-content" onclick="event.stopPropagation()">
+    <div class="pm-close" onclick="closeTestPaymentModal()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+    <div class="tpm-header">
+      <img src="walltone.png" alt="Walltone Decors Logo" class="tpm-logo" onerror="this.style.display='none'">
+      <br>
+      <div class="tpm-badge-pill" id="tpmBadge">100% Secure • Risk-Free Checkout</div>
+      <h2 class="tpm-title" id="tpmTitle">Try ₹1 Test Payment Before Buying</h2>
+      
+      <!-- Language Selector Tabs -->
+      <div class="tpm-lang-tabs">
+        <button class="tpm-lang-btn active" data-lang="en" onclick="setTestLanguage('en')">🇬🇧 English</button>
+        <button class="tpm-lang-btn" data-lang="hi" onclick="setTestLanguage('hi')">🇮🇳 हिन्दी</button>
+        <button class="tpm-lang-btn" data-lang="mr" onclick="setTestLanguage('mr')">🇮🇳 मराठी</button>
+      </div>
+    </div>
+
+    <!-- Notice Box as specifically requested -->
+    <div class="tpm-notice-card" id="tpmNotice">
+      Try ₹1 test payment before making actual payments. Don't worry, after making payments we will contact you!
+    </div>
+
+    <!-- Assurance Benefits -->
+    <div class="tpm-benefits">
+      <div class="tpm-benefit-item" id="tpmBenefit1">✓ Test our instant payment & order confirmation flow</div>
+      <div class="tpm-benefit-item" id="tpmBenefit2">✓ Zero delivery charges (100% Free Shipping for test)</div>
+      <div class="tpm-benefit-item" id="tpmBenefit3">✓ Our team will contact you on WhatsApp / Phone immediately</div>
+    </div>
+
+    <!-- Pricing Box -->
+    <div class="tpm-pricing-box">
+      <div class="tpm-pricing-label">Test Order Amount:</div>
+      <div class="tpm-price-val" id="tpmPrice">₹1 <span>(Incl. all taxes & free shipping)</span></div>
+    </div>
+
+    <!-- CTA Button -->
+    <button class="tpm-btn-proceed" id="tpmProceedBtn" onclick="proceedTestPayment()">
+      Proceed to ₹1 Test Payment ➔
+    </button>
   </div>
 </div>
 
@@ -561,6 +880,158 @@
 
 
   // ══════════════════════════════════════════════
+  // MULTILINGUAL TEST PAYMENT CONFIG & HANDLERS
+  // ══════════════════════════════════════════════
+  const TEST_PRODUCT = {
+    id: 'test-product-1inr',
+    name: '₹1 Test Payment Product',
+    product_no: 'WT-TEST1',
+    category: 'wall_art',
+    price: 1,
+    in_stock: true,
+    image_url: 'walltone.png'
+  };
+
+  const TEST_LANG_CONTENT = {
+    en: {
+      title: "Try ₹1 Test Payment Before Buying",
+      badge: "100% Secure • Risk-Free Checkout",
+      notice: "Try ₹1 test payment before making actual payments. Don't worry, after making payments we will contact you!",
+      benefit1: "✓ Test our instant payment & order confirmation flow",
+      benefit2: "✓ Zero delivery charges (100% Free Shipping for test)",
+      benefit3: "✓ Our team will contact you on WhatsApp / Phone immediately",
+      priceLabel: "₹1 <span>(Incl. all taxes & free shipping)</span>",
+      btnText: "Proceed to ₹1 Test Payment ➔"
+    },
+    hi: {
+      title: "खरीदने से पहले ₹1 का टेस्ट पेमेंट करके देखें",
+      badge: "100% सुरक्षित • जोखिम-मुक्त चेकआउट",
+      notice: "असली भुगतान करने से पहले ₹1 का टेस्ट पेमेंट आज़माएं। चिंता न करें, भुगतान करने के बाद हम आपसे संपर्क करेंगे!",
+      benefit1: "✓ हमारे त्वरित भुगतान और ऑर्डर सिस्टम का अनुभव लें",
+      benefit2: "✓ कोई डिलीवरी शुल्क नहीं (टेस्ट के लिए पूरी तरह मुफ़्त)",
+      benefit3: "✓ पेमेंट के तुरंत बाद हमारी टीम आपसे व्हाट्सएप / फोन पर संपर्क करेगी",
+      priceLabel: "₹1 <span>(सभी कर शामिल और मुफ़्त डिलीवरी)</span>",
+      btnText: "₹1 टेस्ट पेमेंट करें ➔"
+    },
+    mr: {
+      title: "खरेदी करण्यापूर्वी ₹1 चे टेस्ट पेमेंट करून पहा",
+      badge: "100% सुरक्षित • विना-धोका चेकआउट",
+      notice: "प्रत्यक्ष पेमेंट करण्यापूर्वी ₹1 चे टेस्ट पेमेंट करून पहा. काळजी करू नका, पेमेंट केल्यानंतर आम्ही तुमच्याशी संपर्क साधू!",
+      benefit1: "✓ आमच्या जलद आणि सुरक्षित ऑर्डर प्रक्रियेचा अनुभव घ्या",
+      benefit2: "✓ डिलिव्हरी शुल्क शून्य (टेस्टसाठी १००% मोफत डिलिव्हरी)",
+      benefit3: "✓ पेमेंट केल्यानंतर आमची टीम तुमच्याशी व्हॉट्सअॅप / फोनवर त्वरित संपर्क साधेल",
+      priceLabel: "₹1 <span>(सर्व करांसह आणि मोफत डिलिव्हरी)</span>",
+      btnText: "₹1 टेस्ट पेमेंट करा ➔"
+    }
+  };
+
+  let currentTestLang = 'en';
+
+  window.setTestLanguage = function(lang) {
+    currentTestLang = lang;
+    const c = TEST_LANG_CONTENT[lang] || TEST_LANG_CONTENT.en;
+    document.querySelectorAll('.tpm-lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    const titleEl = document.getElementById('tpmTitle');
+    const badgeEl = document.getElementById('tpmBadge');
+    const noticeEl = document.getElementById('tpmNotice');
+    const b1 = document.getElementById('tpmBenefit1');
+    const b2 = document.getElementById('tpmBenefit2');
+    const b3 = document.getElementById('tpmBenefit3');
+    const priceEl = document.getElementById('tpmPrice');
+    const btnEl = document.getElementById('tpmProceedBtn');
+
+    if (titleEl) titleEl.textContent = c.title;
+    if (badgeEl) badgeEl.textContent = c.badge;
+    if (noticeEl) noticeEl.textContent = c.notice;
+    if (b1) b1.textContent = c.benefit1;
+    if (b2) b2.textContent = c.benefit2;
+    if (b3) b3.textContent = c.benefit3;
+    if (priceEl) priceEl.innerHTML = c.priceLabel;
+    if (btnEl) btnEl.textContent = c.btnText;
+  };
+
+  window.openTestPaymentModal = function() {
+    setTestLanguage(currentTestLang);
+    document.getElementById('testPaymentModal').classList.add('active');
+  };
+
+  window.closeTestPaymentModal = function() {
+    document.getElementById('testPaymentModal').classList.remove('active');
+  };
+
+  window.proceedTestPayment = function() {
+    addToCart(TEST_PRODUCT);
+    setTimeout(() => {
+      window.location.href = 'cart.html';
+    }, 300);
+  };
+
+  // ══════════════════════════════════════════════
+  // PRODUCT ORDER RESOLVER & HELPERS
+  // ══════════════════════════════════════════════
+  let savedProductOrderConfig = null;
+
+  async function fetchSavedProductOrder() {
+    try {
+      const url = `https://sujqcavxkoxkoxwvlzci.supabase.co/storage/v1/object/public/product-images/settings/product_order.json?t=${Date.now()}`;
+      const res = await fetch(url);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) {
+      console.log('No custom order found or fetch failed, using default descending order:', e);
+      return null;
+    }
+  }
+
+  function getProductNumberVal(productNo) {
+    if (!productNo) return 0;
+    const m = String(productNo).match(/\d+/);
+    return m ? parseInt(m[0], 10) : 0;
+  }
+
+  function sortProductsList(products, category) {
+    if (!products || products.length === 0) return [];
+
+    // Check if custom order config exists
+    if (savedProductOrderConfig) {
+      const config = savedProductOrderConfig;
+      let orderIds = [];
+      if (config.category_orders && Array.isArray(config.category_orders[category])) {
+        orderIds = config.category_orders[category];
+      } else if (Array.isArray(config.order_ids)) {
+        orderIds = config.order_ids;
+      }
+
+      if (orderIds.length > 0) {
+        const idMap = new Map();
+        orderIds.forEach((id, idx) => idMap.set(id, idx));
+        const noMap = new Map();
+        if (Array.isArray(config.order_product_nos)) {
+          config.order_product_nos.forEach((no, idx) => noMap.set(no, idx));
+        }
+
+        return [...products].sort((a, b) => {
+          const posA = idMap.has(a.id) ? idMap.get(a.id) : (noMap.has(a.product_no) ? noMap.get(a.product_no) : 999999);
+          const posB = idMap.has(b.id) ? idMap.get(b.id) : (noMap.has(b.product_no) ? noMap.get(b.product_no) : 999999);
+          if (posA !== posB) return posA - posB;
+          // Fallback tie-breaker: descending by product number (199 -> 001)
+          return getProductNumberVal(b.product_no) - getProductNumberVal(a.product_no);
+        });
+      }
+    }
+
+    // Default order requested: 199 down to 001 (descending)
+    return [...products].sort((a, b) => {
+      const numA = getProductNumberVal(a.product_no);
+      const numB = getProductNumberVal(b.product_no);
+      if (numB !== numA) return numB - numA;
+      return (b.product_no || '').localeCompare(a.product_no || '');
+    });
+  }
+
+  // ══════════════════════════════════════════════
   // BUILD PRODUCT CARD HTML
   // ══════════════════════════════════════════════
   const allProducts = {};
@@ -569,6 +1040,30 @@
     const inStock = p.in_stock !== false;
     const cart = getCart();
     const isInCart = cart.some(i => i.id === p.id);
+    const isTestProduct = p.id === 'test-product-1inr';
+
+    if (isTestProduct) {
+      return `
+        <div class="product-card test-product-card" id="card-${p.id}" onclick="openTestPaymentModal()" style="cursor: pointer;">
+          <div class="test-ribbon-tag">💡 Try ₹1 test payment before buying</div>
+          <div class="product-img-wrap test-img-wrap">
+            <img src="${p.image_url || 'walltone.png'}"
+                 alt="${p.name}" 
+                 loading="lazy">
+            <span class="product-no-badge" style="background:var(--brand-green);color:#fff;">TEST</span>
+          </div>
+          <div class="product-body">
+            <div class="product-name" style="font-weight: 700; color: var(--brand-green);">${p.name}</div>
+            <div class="product-no"># WT-TEST1 • Instant Verification</div>
+            <div class="product-price">₹1 <span>(Free Delivery)</span></div>
+            <div class="product-actions">
+              <button class="btn-buy" style="background: var(--brand-green); width: 100%;" onclick="event.stopPropagation(); openTestPaymentModal()">
+                Try ₹1 Test Payment
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }
 
     return `
       <div class="product-card" id="card-${p.id}" onclick="openProductModal('${p.id}')" style="cursor: pointer;">
@@ -612,30 +1107,25 @@
   // ══════════════════════════════════════════════
   // LOAD PRODUCTS FROM SUPABASE
   // ══════════════════════════════════════════════
-  const TEST_PRODUCT = {
-    id: 'test-product-1inr',
-    name: '₹1 Test Payment Product',
-    product_no: 'WT-TEST1',
-    category: 'wall_art',
-    price: 1,
-    in_stock: true,
-    image_url: 'walltone.png'
-  };
-
   async function loadCategory(category) {
     const gridEl  = document.getElementById(`grid-${category}`);
     const badgeEl = document.getElementById(`badge-${category}`);
     try {
+      if (savedProductOrderConfig === null && !window._fetchingOrder) {
+        window._fetchingOrder = true;
+        savedProductOrderConfig = await fetchSavedProductOrder();
+      }
+
       const { data, error } = await db
         .from('products')
         .select('*')
-        .eq('category', category)
-        .order('product_no', { ascending: true });
+        .eq('category', category);
 
       if (error) throw error;
 
       const fetched = data || [];
-      const list = category === 'wall_art' ? [TEST_PRODUCT, ...fetched] : fetched;
+      const sorted = sortProductsList(fetched, category);
+      const list = category === 'wall_art' ? [TEST_PRODUCT, ...sorted] : sorted;
       allProducts[category] = list;
 
       // Update counts
@@ -704,7 +1194,6 @@
       ctx.font = `800 ${size * 0.7}px Montserrat, sans-serif`;
       ctx.fillText("walltone.in", canvas.width - (size), canvas.height - (size));
 
-
       // Trigger download
       const link = document.createElement("a");
       link.download = `WALLTONE_${pNo}.jpg`;
@@ -727,12 +1216,21 @@
   // ══════════════════════════════════════════════
 
   window.handleAddCart = function(productId) {
+    if (productId === 'test-product-1inr') {
+      addToCart(TEST_PRODUCT);
+      return;
+    }
     const product = Object.values(allProducts).flat().find(p => p.id === productId);
     if (product) addToCart(product);
   };
 
   window.handleBuyNow = function(e, productId) {
     if(e) e.preventDefault();
+    if (productId === 'test-product-1inr') {
+      addToCart(TEST_PRODUCT);
+      setTimeout(() => window.location.href = 'cart.html', 400);
+      return;
+    }
     const product = Object.values(allProducts).flat().find(p => p.id === productId);
     if (product) {
       addToCart(product);
@@ -741,6 +1239,10 @@
   };
 
   window.openProductModal = function(productId) {
+    if (productId === 'test-product-1inr') {
+      openTestPaymentModal();
+      return;
+    }
     const product = Object.values(allProducts).flat().find(p => p.id === productId);
     if (!product) return;
     
@@ -795,8 +1297,6 @@
     });
   }
 };
-
-
 
   // ══════════════════════════════════════════════
   // INIT

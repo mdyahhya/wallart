@@ -189,11 +189,38 @@
         async function loadArt() {
             const loader = document.getElementById('loadingContainer');
             try {
-                const { data, error } = await db.from('products').select('*').eq('category', 'wall_art').order('product_no', { ascending: true });
+                let savedOrder = null;
+                try {
+                    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/public/product-images/settings/product_order.json?t=${Date.now()}`);
+                    if (res.ok) savedOrder = await res.json();
+                } catch (err) {}
+
+                const { data, error } = await db.from('products').select('*').eq('category', 'wall_art');
                 if (error) throw error;
                 
+                let sorted = (data || []).slice();
+                if (savedOrder && Array.isArray(savedOrder.category_orders?.wall_art) && savedOrder.category_orders.wall_art.length > 0) {
+                    const idMap = new Map();
+                    savedOrder.category_orders.wall_art.forEach((id, idx) => idMap.set(id, idx));
+                    sorted.sort((a, b) => {
+                        const posA = idMap.has(a.id) ? idMap.get(a.id) : 999999;
+                        const posB = idMap.has(b.id) ? idMap.get(b.id) : 999999;
+                        if (posA !== posB) return posA - posB;
+                        const numA = parseInt((a.product_no || '').replace(/\D/g, '')) || 0;
+                        const numB = parseInt((b.product_no || '').replace(/\D/g, '')) || 0;
+                        return numB - numA;
+                    });
+                } else {
+                    // Default descending 199 -> 001
+                    sorted.sort((a, b) => {
+                        const numA = parseInt((a.product_no || '').replace(/\D/g, '')) || 0;
+                        const numB = parseInt((b.product_no || '').replace(/\D/g, '')) || 0;
+                        return numB - numA;
+                    });
+                }
+
                 const grid = document.getElementById('galleryGrid');
-                data.forEach(p => {
+                sorted.forEach(p => {
                     const card = document.createElement('div');
                     card.className = 'gallery-card';
                     card.innerHTML = `
