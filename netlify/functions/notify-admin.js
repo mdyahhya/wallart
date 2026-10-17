@@ -46,16 +46,41 @@ exports.handler = async (event, context) => {
             return { statusCode: 200, body: JSON.stringify({ success: true, message: 'No subscribers' }) };
         }
 
-        // Build notification payload
-        const firstItem = items && items[0];
-        const itemsText = items && items.length > 1
-            ? `${firstItem?.name} + ${items.length - 1} more`
-            : firstItem?.name || 'Products';
+        // Build notification payload based on order status and type
+        const isTest = body.isTestOrder || Number(totalAmount) === 1 || (items && items.some(i => i.id === 'test-product-1inr' || (i.name && i.name.toLowerCase().includes('test'))));
+        const isPending = body.status === 'pending' || body.type === 'started_order';
 
+        let notifTitle = '';
+        let notifBody = '';
+
+        if (isTest) {
+            if (isPending) {
+                notifTitle = '🧪 ₹1 Test Order Started (Payment Pending)';
+                notifBody = `👤 ${userName || 'Customer'} (${phone || 'No phone'})\nStarted ₹1 Test Payment • Payment Pending`;
+            } else {
+                notifTitle = '🎉 ₹1 Test Payment Received!';
+                notifBody = `👤 ${userName || 'Customer'} (${phone || 'No phone'})\n₹1 Instant Verification Successful!`;
+            }
+        } else {
+            const firstItem = items && items[0];
+            const itemsText = items && items.length > 1
+                ? `${firstItem?.name} + ${items.length - 1} more`
+                : (firstItem?.name || 'Walltone Metal Art');
+
+            if (isPending) {
+                notifTitle = `⏳ Started Order (Payment Pending) — ₹${Number(totalAmount).toLocaleString('en-IN')}`;
+                notifBody = `👤 ${userName || 'Customer'} (${phone || 'No phone'})\n${itemsText} • Payment Pending`;
+            } else {
+                notifTitle = `🛍️ New Order Paid — ₹${Number(totalAmount).toLocaleString('en-IN')}`;
+                notifBody = `👤 ${userName || 'Customer'} (${phone || 'No phone'})\n${itemsText} • Order Placed`;
+            }
+        }
+
+        const firstItem = items && items[0];
         const payload = JSON.stringify({
-            title: `🛍️ New Order — ₹${Number(totalAmount).toLocaleString('en-IN')}`,
-            body: `${userName} (${phone})\n${itemsText}`,
-            image: firstItem?.image_url || undefined,
+            title: notifTitle,
+            body: notifBody,
+            image: firstItem?.image_url || 'https://walltone.in/walltone.png',
             orderId: orderId,
             url: '/'
         });
@@ -77,12 +102,12 @@ exports.handler = async (event, context) => {
                 expiredIds.push(subscriptions[i].id);
             }
         });
-        if (expiredIds.length > 0 && SUPABASE_SERVICE_KEY) {
+        if (expiredIds.length > 0 && apiKey) {
             await fetch(`${SUPABASE_URL}/rest/v1/admin_push_subscriptions?id=in.(${expiredIds.join(',')})`, {
                 method: 'DELETE',
                 headers: {
-                    'apikey': SUPABASE_SERVICE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
+                    'apikey': apiKey,
+                    'Authorization': `Bearer ${apiKey}`
                 }
             });
         }

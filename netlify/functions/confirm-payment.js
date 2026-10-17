@@ -64,14 +64,16 @@ exports.handler = async (event, context) => {
                         : (firstItem.name || 'Walltone Metal Decor');
 
                     const thumbnail = firstItem.image_url || 'https://walltone.in/walltone.png';
-                    const totalAmt = orderRecord?.total_amount || 0;
+                    const isTest = Number(totalAmt) === 1 || items.some(i => i.id === 'test-product-1inr' || (i.name && i.name.toLowerCase().includes('test')));
 
                     const payload = JSON.stringify({
-                        title: `💳 Order Placed — ₹${Number(totalAmt).toLocaleString('en-IN')}`,
-                        body: `Client: ${clientName}\nOrder #${orderId.slice(0, 8).toUpperCase()}\nProduct: ${productTitle}`,
+                        title: isTest ? '🎉 ₹1 Test Payment Received!' : `💳 Order Placed — ₹${Number(totalAmt).toLocaleString('en-IN')}`,
+                        body: isTest 
+                            ? `Client: ${clientName} (${orderRecord?.phone || ''})\n₹1 Test Verification Successful!`
+                            : `Client: ${clientName} (${orderRecord?.phone || ''})\nOrder #${orderId.slice(0, 8).toUpperCase()}\nProduct: ${productTitle}`,
                         image: thumbnail,
                         orderId: orderId,
-                        url: '/myprofile.html'
+                        url: '/'
                     });
 
                     await Promise.allSettled(

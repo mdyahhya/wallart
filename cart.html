@@ -565,6 +565,25 @@
 
             const orderId = orderData.id;
 
+            // Notify Admin immediately: Customer Started Order (Payment Pending)
+            const isTestPayment = total === 1 || itemsToBuy.some(i => i.id === 'test-product-1inr' || (i.name && i.name.toLowerCase().includes('test')));
+            try {
+                fetch('/.netlify/functions/notify-admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        orderId: orderId,
+                        userName: name,
+                        phone: phone,
+                        totalAmount: total,
+                        status: 'pending',
+                        type: 'started_order',
+                        isTestOrder: isTestPayment,
+                        items: itemsToBuy
+                    })
+                }).catch(e => console.warn('Pending order admin notify notice:', e));
+            } catch(e) {}
+
             localStorage.setItem('walltone_last_order', JSON.stringify({
                 order_id: orderId,
                 items: itemsToBuy,
